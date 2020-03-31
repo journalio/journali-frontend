@@ -1,0 +1,5 @@
+.env
+
+# Frontend files
+/node_modules/
+/public/
