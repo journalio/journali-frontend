@@ -1,69 +1,69 @@
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const { resolve } = require("path");
-const VueLoaderPlugin = require("vue-loader/lib/plugin");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const { resolve } = require('path')
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 const getFinalCssLoader = (mode) => {
-    if (mode === "production") {
+    if (mode === 'production') {
         return {
             loader: MiniCssExtractPlugin.loader,
             options: {
                 esModule: true,
             },
-        };
+        }
     }
-    return "vue-style-loader";
-};
+    return 'vue-style-loader'
+}
 
 const getPostCssPlugins = (mode) => {
-    const plugins = [require("tailwindcss")];
-    if (mode === "production") {
+    const plugins = [require('tailwindcss')]
+    if (mode === 'production') {
         plugins.push(
-            require("@fullhuman/postcss-purgecss")({
-                content: ["app/**/*.html", "app/**/*.vue"],
+            require('@fullhuman/postcss-purgecss')({
+                content: ['app/**/*.html', 'app/**/*.vue'],
                 defaultExtractor: (content) =>
                     content.match(/[\w-/:]+(?<!:)/g) || [],
-            })
-        );
+            }),
+        )
     }
-    return plugins;
-};
+    return plugins
+}
 
 module.exports = (env, { mode }) => {
     const config = {
-        entry: resolve(__dirname, "app", "index.js"),
-        context: resolve(__dirname, "app"),
+        entry: resolve(__dirname, 'app', 'index.js'),
+        context: resolve(__dirname, 'app'),
         output: {
-            path: resolve(__dirname, "public"),
+            path: resolve(__dirname, 'public'),
         },
         module: {
             rules: [
                 {
                     test: /\.vue$/,
-                    loader: "vue-loader",
+                    loader: 'vue-loader',
                 },
                 {
                     test: /\.js$/,
-                    loader: "babel-loader",
+                    loader: 'babel-loader',
                     exclude: /node_modules/,
                     options: {
                         presets: [
                             [
-                                "@babel/preset-env",
+                                '@babel/preset-env',
                                 {
                                     modules: false,
                                     targets: {
                                         browsers: [
-                                            "> 1%",
-                                            "last 2 versions",
-                                            "not ie <= 8",
+                                            '> 1%',
+                                            'last 2 versions',
+                                            'not ie <= 8',
                                         ],
                                     },
                                 },
                             ],
                         ],
-                        plugins: ["@babel/plugin-transform-runtime"],
+                        plugins: ['@babel/plugin-transform-runtime'],
                     },
                 },
                 {
@@ -71,13 +71,13 @@ module.exports = (env, { mode }) => {
                     use: [
                         getFinalCssLoader(mode),
                         {
-                            loader: "css-loader",
+                            loader: 'css-loader',
                             options: {
                                 importLoaders: 1,
                             },
                         },
                         {
-                            loader: "postcss-loader",
+                            loader: 'postcss-loader',
                             options: {
                                 plugins: getPostCssPlugins(mode),
                             },
@@ -87,22 +87,22 @@ module.exports = (env, { mode }) => {
             ],
         },
         resolve: {
-            extensions: [".vue", ".css", ".wasm", ".mjs", ".js", ".json"],
+            extensions: ['.vue', '.css', '.wasm', '.mjs', '.js', '.json'],
         },
         plugins: [
             new CleanWebpackPlugin(),
             new VueLoaderPlugin(),
             new HtmlWebpackPlugin({
-                title: "Test rocket app",
+                title: 'Test rocket app',
                 inject: true,
-                template: "index.html",
+                template: 'index.html',
             }),
         ],
-    };
-
-    if (mode === "production") {
-        config.plugins.push(new MiniCssExtractPlugin());
     }
 
-    return config;
-};
+    if (mode === 'production') {
+        config.plugins.push(new MiniCssExtractPlugin())
+    }
+
+    return config
+}
