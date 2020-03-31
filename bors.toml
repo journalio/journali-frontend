@@ -1,0 +1,2 @@
+status = ["prettier", "build"]
+delete-merged-branches = true
