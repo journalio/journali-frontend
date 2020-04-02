@@ -53,3 +53,10 @@ jobs:
                         ${{ runner.os }}-yarn-
             -   run: yarn --frozen-lockfile
             -   run: yarn build:prod
+
+    deploy:
+        name: deploy
+        runs-on: self-hosted
+        needs: [prettier,build]
+        steps:
+            -   run: docker service update --with-registry-auth journali-staging_web
