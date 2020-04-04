@@ -59,4 +59,19 @@ jobs:
         runs-on: self-hosted
         needs: [prettier,build]
         steps:
+            -   name: start deployment
+                uses: bobheadxi/deployments@master
+                id: deployment
+                with:
+                    step: start
+                    token: ${{ secrets.GITHUB_TOKEN }}
+                    env: staging
             -   run: docker service update --with-registry-auth journali-staging_web
+            -   name: update deployment status
+                uses: bobheadxi/deployments@master
+                if: always()
+                with:
+                    step: finish
+                    token: ${{ secrets.GITHUB_TOKEN }}
+                    status: ${{ job.status }}
+                    deployment_id: ${{ steps.deployment.outputs.deployment_id }}
