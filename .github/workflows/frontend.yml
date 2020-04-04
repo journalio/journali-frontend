@@ -74,4 +74,5 @@ jobs:
                     step: finish
                     token: ${{ secrets.GITHUB_TOKEN }}
                     status: ${{ job.status }}
+                    env_url: 'http://staging.journali.nl'
                     deployment_id: ${{ steps.deployment.outputs.deployment_id }}
