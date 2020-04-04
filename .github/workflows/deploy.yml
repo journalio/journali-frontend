@@ -1,0 +1,45 @@
+name: deploy-frontend
+
+on:
+    push:
+        branches:
+            - production
+            - staging
+
+jobs:
+    deliver:
+        runs-on: ubuntu-latest
+        steps:
+            -   uses: actions/checkout@v2
+            -   name: Publish frontend
+                uses: elgohr/Publish-Docker-Github-Action@master
+                with:
+                    name: journali/frontend
+                    username: ${{ github.actor }}
+                    password: ${{ github.token }}
+                    registry: docker.pkg.github.com
+                    dockerfile: Dockerfile
+                    tags: ${GITHUB_REF##*/}
+    deploy:
+        name: deploy
+        runs-on: self-hosted
+        needs: [deliver]
+        steps:
+            -   name: start deployment
+                uses: bobheadxi/deployments@master
+                id: deployment
+                with:
+                    step: start
+                    token: ${{ github.token }}
+                    env: staging
+            -   name: run deployment
+                run: docker service update --with-registry-auth journali-staging_web
+            -   name: update deployment status
+                uses: bobheadxi/deployments@master
+                if: always()
+                with:
+                    step: finish
+                    token: ${{ github.token }}
+                    status: ${{ job.status }}
+                    env_url: 'http://staging.journali.nl'
+                    deployment_id: ${{ steps.deployment.outputs.deployment_id }}
