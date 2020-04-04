@@ -31,9 +31,9 @@ jobs:
                 with:
                     step: start
                     token: ${{ github.token }}
-                    env: staging
+                    env: ${GITHUB_REF##*/}
             -   name: run deployment
-                run: docker service update --with-registry-auth journali-staging_web
+                run: docker service update --with-registry-auth journali-${GITHUB_REF##*/}_web
             -   name: update deployment status
                 uses: bobheadxi/deployments@master
                 if: always()
