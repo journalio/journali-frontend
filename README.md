@@ -1,4 +1,4 @@
-# Front end application for IPSEN
+# Frontend application for IPSENH
 
 [![License:EUPL](https://img.shields.io/badge/License-EUPLv.1.2-brightgreen.svg)](https://opensource.org/licenses/EUPL-1.2)
 ![test frontend](https://github.com/WesleyKlop/journali-frontend/workflows/test%20frontend/badge.svg)
