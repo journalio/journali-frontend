@@ -26,6 +26,8 @@ jobs:
         runs-on: self-hosted
         needs: [deliver]
         steps:
+            -   name: login to registry
+                run: docker login docker.pkg.github.com -u wesleyklop -p ${{ github.token }}
             -   name: start deployment
                 uses: bobheadxi/deployments@master
                 id: deployment
@@ -53,6 +55,8 @@ jobs:
         runs-on: self-hosted
         needs: [deliver]
         steps:
+            -   name: login to registry
+                run: docker login docker.pkg.github.com -u wesleyklop -p ${{ github.token }}
             -   name: start deployment
                 uses: bobheadxi/deployments@master
                 id: deployment
