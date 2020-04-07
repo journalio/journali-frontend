@@ -1,14 +1,9 @@
 <template>
-    <h1>Journali!!!</h1>
+    <h1 class="font-bold text-3xl text-yellow-500 px-4 py-2">
+        Journali is geweldig!!!
+    </h1>
 </template>
 
 <script>
 export default {}
 </script>
-
-<style scoped>
-h1 {
-    color: #404040;
-    font-family: sans-serif;
-}
-</style>
