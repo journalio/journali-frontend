@@ -3,12 +3,12 @@
 </template>
 
 <script>
-    export default {}
+export default {}
 </script>
 
 <style scoped>
-    h1 {
-        color: #404040;
-        font-family: sans-serif;
-    }
+h1 {
+    color: #404040;
+    font-family: sans-serif;
+}
 </style>
