@@ -1,17 +1,10 @@
-name: web
+name: test-frontend
 
 on:
     push:
         branches:
             - master
-            - staging
-            - trying
     pull_request:
-        paths:
-            - '**.js'
-            - '**.vue'
-            - '**.json'
-            - '**.css'
 
 jobs:
     prettier:
@@ -36,6 +29,7 @@ jobs:
 
     build:
         name: build
+        needs: [prettier]
         runs-on: ubuntu-latest
         steps:
             -   uses: actions/checkout@v2
@@ -53,3 +47,4 @@ jobs:
                         ${{ runner.os }}-yarn-
             -   run: yarn --frozen-lockfile
             -   run: yarn build:prod
+
