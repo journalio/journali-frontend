@@ -25,7 +25,7 @@ jobs:
                     name: wesleyklop/journali-frontend/journali-frontend
                     username: ${{ github.actor }}
                     password: ${{ github.token }}
-                    registry: $REGISTRY_HOST
+                    registry: ${{ REGISTRY_HOST }}
                     tag_semver: true
     deploy-staging:
         name: deploy to staging
@@ -34,7 +34,7 @@ jobs:
         needs: [deliver]
         steps:
             -   name: login to registry
-                run: echo ${{ github.token }} | docker login $REGISTRY_HOST -u ${{ github.actor }} --password-stdin
+                run: echo ${{ github.token }} | docker login ${{ REGISTRY_HOST }} -u ${{ github.actor }} --password-stdin
             -   name: start deployment
                 uses: bobheadxi/deployments@master
                 id: deployment
@@ -43,10 +43,10 @@ jobs:
                     token: ${{ github.token }}
                     env: staging
             -   name: run deployment
-                run: docker service update --with-registry-auth --force $STAGING_SERVICE_NAME
+                run: docker service update --with-registry-auth --force ${{ STAGING_SERVICE_NAME }}
             -   name: rollback on deployment failure
                 if: failure()
-                run: docker service rollback $STAGING_SERVICE_NAME
+                run: docker service rollback ${{ STAGING_SERVICE_NAME }}
             -   name: update deployment status
                 uses: bobheadxi/deployments@master
                 if: always()
@@ -54,11 +54,11 @@ jobs:
                     step: finish
                     token: ${{ github.token }}
                     status: ${{ job.status }}
-                    env_url: $STAGING_URL
+                    env_url: ${{ STAGING_URL }}
                     deployment_id: ${{ steps.deployment.outputs.deployment_id }}
             -   name: logout from registry
                 if: always()
-                run: docker logout $REGISTRY_HOST
+                run: docker logout ${{ REGISTRY_HOST }}
     deploy-production:
         name: deploy production
         if: ${{ github.event_name == 'release' }}
@@ -66,7 +66,7 @@ jobs:
         needs: [deliver]
         steps:
             -   name: login to registry
-                run: echo ${{ github.token }} | docker login $REGISTRY_HOST -u ${{ github.actor }} --password-stdin
+                run: echo ${{ github.token }} | docker login ${{ REGISTRY_HOST }} -u ${{ github.actor }} --password-stdin
             -   name: start deployment
                 uses: bobheadxi/deployments@master
                 id: deployment
@@ -75,10 +75,10 @@ jobs:
                     token: ${{ github.token }}
                     env: production
             -   name: run deployment
-                run: docker service update --with-registry-auth --force $PRODUCTION_SERVICE_NAME
+                run: docker service update --with-registry-auth --force ${{ PRODUCTION_SERVICE_NAME }}
             -   name: rollback on failure
                 if: failure()
-                run: docker service rollback $PRODUCTION_SERVICE_NAME
+                run: docker service rollback ${{ PRODUCTION_SERVICE_NAME }}
             -   name: update deployment status
                 uses: bobheadxi/deployments@master
                 if: always()
@@ -86,8 +86,8 @@ jobs:
                     step: finish
                     token: ${{ github.token }}
                     status: ${{ job.status }}
-                    env_url: $PRODUCTION_URL
+                    env_url: ${{ PRODUCTION_URL }}
                     deployment_id: ${{ steps.deployment.outputs.deployment_id }}
             -   name: logout from registry
                 if: always()
-                run: docker logout $REGISTRY_HOST
+                run: docker logout ${{ REGISTRY_HOST }}
