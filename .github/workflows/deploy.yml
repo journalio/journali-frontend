@@ -15,7 +15,7 @@ jobs:
             -   name: Publish frontend
                 uses: elgohr/Publish-Docker-Github-Action@master
                 with:
-                    name: journali/frontend/journali-frontend
+                    name: wesleyklop/journali-frontend/journali-frontend
                     username: ${{ github.actor }}
                     password: ${{ github.token }}
                     registry: docker.pkg.github.com
