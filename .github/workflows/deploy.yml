@@ -3,8 +3,9 @@ name: deploy-frontend
 on:
     push:
         branches:
-            - production
-            - staging
+            - master
+    release:
+        types: [created]
 
 jobs:
     deliver:
@@ -19,11 +20,13 @@ jobs:
                     password: ${{ github.token }}
                     registry: docker.pkg.github.com
                     dockerfile: Dockerfile
-                    tags: ${GITHUB_REF##*/}
     deploy:
         name: deploy
         runs-on: self-hosted
         needs: [deliver]
+        env:
+            DEPLOY: |
+                ${{ github.event_name == 'push' ? 'staging' : 'production' }}
         steps:
             -   name: start deployment
                 uses: bobheadxi/deployments@master
@@ -31,9 +34,12 @@ jobs:
                 with:
                     step: start
                     token: ${{ github.token }}
-                    env: ${GITHUB_REF##*/}
+                    env: ${{ DEPLOY }}
             -   name: run deployment
-                run: docker service update --with-registry-auth journali-${GITHUB_REF##*/}_web
+                run: docker service update --with-registry-auth journali-${{ DEPLOY }}_web
+            -   name: rollback on failure
+                if: failure()
+                run: docker service rollback journali-${{ DEPLOY }}_web
             -   name: update deployment status
                 uses: bobheadxi/deployments@master
                 if: always()
@@ -41,5 +47,6 @@ jobs:
                     step: finish
                     token: ${{ github.token }}
                     status: ${{ job.status }}
-                    env_url: 'http://staging.journali.nl'
+                    env_url: |
+                        ${{ DEPLOY == 'production' ? 'http://journali.nl' : 'http://staging.journali.nl' }}
                     deployment_id: ${{ steps.deployment.outputs.deployment_id }}
