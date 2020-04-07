@@ -20,13 +20,11 @@ jobs:
                     password: ${{ github.token }}
                     registry: docker.pkg.github.com
                     dockerfile: Dockerfile
-    deploy:
-        name: deploy
+    deploy-staging:
+        name: deploy staging
+        if: ${{ github.event_name == 'push' }}
         runs-on: self-hosted
         needs: [deliver]
-        env:
-            DEPLOY: |
-                ${{ github.event_name == 'push' ? 'staging' : 'production' }}
         steps:
             -   name: start deployment
                 uses: bobheadxi/deployments@master
@@ -34,12 +32,12 @@ jobs:
                 with:
                     step: start
                     token: ${{ github.token }}
-                    env: ${{ DEPLOY }}
+                    env: staging
             -   name: run deployment
-                run: docker service update --with-registry-auth journali-${{ DEPLOY }}_web
+                run: docker service update --with-registry-auth journali-staging_web
             -   name: rollback on failure
                 if: failure()
-                run: docker service rollback journali-${{ DEPLOY }}_web
+                run: docker service rollback journali-staging_web
             -   name: update deployment status
                 uses: bobheadxi/deployments@master
                 if: always()
@@ -47,6 +45,32 @@ jobs:
                     step: finish
                     token: ${{ github.token }}
                     status: ${{ job.status }}
-                    env_url: |
-                        ${{ DEPLOY == 'production' ? 'http://journali.nl' : 'http://staging.journali.nl' }}
+                    env_url: http://staging.journali.nl
+                    deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+    deploy-production:
+        name: deploy production
+        if: ${{ github.event_name == 'release' }}
+        runs-on: self-hosted
+        needs: [deliver]
+        steps:
+            -   name: start deployment
+                uses: bobheadxi/deployments@master
+                id: deployment
+                with:
+                    step: start
+                    token: ${{ github.token }}
+                    env: production
+            -   name: run deployment
+                run: docker service update --with-registry-auth journali-production_web
+            -   name: rollback on failure
+                if: failure()
+                run: docker service rollback journali-production_web
+            -   name: update deployment status
+                uses: bobheadxi/deployments@master
+                if: always()
+                with:
+                    step: finish
+                    token: ${{ github.token }}
+                    status: ${{ job.status }}
+                    env_url: http://journali.nl
                     deployment_id: ${{ steps.deployment.outputs.deployment_id }}
