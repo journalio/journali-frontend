@@ -1,4 +1,4 @@
-name: deploy-frontend
+name: deploy frontend
 
 on:
     push:
@@ -7,27 +7,34 @@ on:
     release:
         types: [created]
 
+env:
+    REGISTRY_HOST: docker.pkg.github.com
+    STAGING_URL: http://staging.journali.nl
+    STAGING_SERVICE_NAME: journali-staging_web
+    PRODUCTION_URL: http://journali.nl
+    PRODUCTION_SERVICE_NAME: journali-production_web
+
 jobs:
     deliver:
         runs-on: ubuntu-latest
         steps:
             -   uses: actions/checkout@v2
-            -   name: Publish frontend
+            -   name: publish frontend docker image
                 uses: elgohr/Publish-Docker-Github-Action@master
                 with:
                     name: wesleyklop/journali-frontend/journali-frontend
                     username: ${{ github.actor }}
                     password: ${{ github.token }}
-                    registry: docker.pkg.github.com
-                    dockerfile: Dockerfile
+                    registry: $REGISTRY_HOST
+                    tag_semver: true
     deploy-staging:
-        name: deploy staging
+        name: deploy to staging
         if: ${{ github.event_name == 'push' }}
         runs-on: self-hosted
         needs: [deliver]
         steps:
             -   name: login to registry
-                run: docker login docker.pkg.github.com -u wesleyklop -p ${{ github.token }}
+                run: echo ${{ github.token }} | docker login $REGISTRY_HOST -u ${{ github.actor }} --password-stdin
             -   name: start deployment
                 uses: bobheadxi/deployments@master
                 id: deployment
@@ -36,10 +43,10 @@ jobs:
                     token: ${{ github.token }}
                     env: staging
             -   name: run deployment
-                run: docker service update --with-registry-auth --force journali-staging_web
-            -   name: rollback on failure
+                run: docker service update --with-registry-auth --force $STAGING_SERVICE_NAME
+            -   name: rollback on deployment failure
                 if: failure()
-                run: docker service rollback journali-staging_web
+                run: docker service rollback $STAGING_SERVICE_NAME
             -   name: update deployment status
                 uses: bobheadxi/deployments@master
                 if: always()
@@ -47,8 +54,11 @@ jobs:
                     step: finish
                     token: ${{ github.token }}
                     status: ${{ job.status }}
-                    env_url: http://staging.journali.nl
+                    env_url: $STAGING_URL
                     deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+            -   name: logout from registry
+                if: always()
+                run: docker logout $REGISTRY_HOST
     deploy-production:
         name: deploy production
         if: ${{ github.event_name == 'release' }}
@@ -56,7 +66,7 @@ jobs:
         needs: [deliver]
         steps:
             -   name: login to registry
-                run: docker login docker.pkg.github.com -u wesleyklop -p ${{ github.token }}
+                run: echo ${{ github.token }} | docker login $REGISTRY_HOST -u ${{ github.actor }} --password-stdin
             -   name: start deployment
                 uses: bobheadxi/deployments@master
                 id: deployment
@@ -65,10 +75,10 @@ jobs:
                     token: ${{ github.token }}
                     env: production
             -   name: run deployment
-                run: docker service update --with-registry-auth --force journali-production_web
+                run: docker service update --with-registry-auth --force $PRODUCTION_SERVICE_NAME
             -   name: rollback on failure
                 if: failure()
-                run: docker service rollback journali-production_web
+                run: docker service rollback $PRODUCTION_SERVICE_NAME
             -   name: update deployment status
                 uses: bobheadxi/deployments@master
                 if: always()
@@ -76,5 +86,8 @@ jobs:
                     step: finish
                     token: ${{ github.token }}
                     status: ${{ job.status }}
-                    env_url: http://journali.nl
+                    env_url: $PRODUCTION_URL
                     deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+            -   name: logout from registry
+                if: always()
+                run: docker logout $REGISTRY_HOST

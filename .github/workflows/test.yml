@@ -1,4 +1,4 @@
-name: test-frontend
+name: test frontend
 
 on:
     push:
