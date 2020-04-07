@@ -34,7 +34,7 @@ jobs:
                     token: ${{ github.token }}
                     env: staging
             -   name: run deployment
-                run: docker service update --with-registry-auth journali-staging_web
+                run: docker service update --with-registry-auth --force journali-staging_web
             -   name: rollback on failure
                 if: failure()
                 run: docker service rollback journali-staging_web
@@ -61,7 +61,7 @@ jobs:
                     token: ${{ github.token }}
                     env: production
             -   name: run deployment
-                run: docker service update --with-registry-auth journali-production_web
+                run: docker service update --with-registry-auth --force journali-production_web
             -   name: rollback on failure
                 if: failure()
                 run: docker service rollback journali-production_web
