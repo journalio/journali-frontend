@@ -1,10 +1,9 @@
-# Front end application for IPSEN
+# Frontend application for IPSENH
 
 [![License:EUPL](https://img.shields.io/badge/License-EUPLv.1.2-brightgreen.svg)](https://opensource.org/licenses/EUPL-1.2)
-![Integration](https://github.com/journalio/frontend/workflows/web/badge.svg)
-![Deployment](https://github.com/journalio/frontend/workflows/Publish%20Api%20Docker%20Image/badge.svg)
-[![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=journalio/frontend)](https://dependabot.com)
-[![Bors enabled](https://bors.tech/images/badge_small.svg)](https://app.bors.tech/repositories/23668)
+![test frontend](https://github.com/WesleyKlop/journali-frontend/workflows/test%20frontend/badge.svg)
+![deploy frontend](https://github.com/WesleyKlop/journali-frontend/workflows/deploy%20frontend/badge.svg)
+[![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=wesleyklop/journali-frontend)](https://dependabot.com)
 
 This is the repository containing the front end of the Journali application.
 
