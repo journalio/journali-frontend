@@ -31,11 +31,14 @@ const getPostCssPlugins = (mode) => {
 }
 
 module.exports = (env, { mode }) => {
+    const context = resolve(__dirname, 'app')
+    const entry = resolve(context, 'index.js')
+    const outputPath = resolve(__dirname, 'public')
     const config = {
-        entry: resolve(__dirname, 'app', 'index.js'),
-        context: resolve(__dirname, 'app'),
+        entry,
+        context,
         output: {
-            path: resolve(__dirname, 'public'),
+            path: outputPath,
         },
         module: {
             rules: [
@@ -93,11 +96,19 @@ module.exports = (env, { mode }) => {
             new CleanWebpackPlugin(),
             new VueLoaderPlugin(),
             new HtmlWebpackPlugin({
-                title: 'Test rocket app',
+                title: 'Journali',
                 inject: true,
                 template: 'index.html',
             }),
         ],
+        devServer: {
+            port: 8080,
+            contentBase: outputPath,
+            historyApiFallback: true,
+            proxy: {
+                '/api': 'http://api:8000',
+            },
+        },
     }
 
     if (mode === 'production') {
