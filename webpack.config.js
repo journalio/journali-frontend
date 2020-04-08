@@ -102,6 +102,7 @@ module.exports = (env, { mode }) => {
             }),
         ],
         devServer: {
+            host: '0.0.0.0',
             port: 8080,
             contentBase: outputPath,
             historyApiFallback: true,
