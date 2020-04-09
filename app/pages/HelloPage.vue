@@ -1,8 +1,5 @@
 <template>
-    <form
-        class="flex flex-col"
-        @submit.prevent="handleSubmit"
-    >
+    <form class="flex flex-col" @submit.prevent="handleSubmit">
         Please enter your name and age:
 
         <label class="my-4">

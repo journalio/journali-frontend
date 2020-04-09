@@ -1,14 +1,11 @@
 <template>
-<div class="text-gray-100">
-    Welcome to the Journali application!
-</div>
+    <div class="text-gray-100">
+        Welcome to the Journali application!
+    </div>
 </template>
 
 <script>
-export default {
-}
+export default {}
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
