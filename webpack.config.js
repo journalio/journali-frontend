@@ -110,6 +110,9 @@ module.exports = (env, { mode }) => {
                 '/api': 'http://api:8000',
             },
         },
+        watchOptions: {
+            poll: true,
+        },
     }
 
     if (mode === 'production') {
