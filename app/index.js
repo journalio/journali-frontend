@@ -1,11 +1,20 @@
 import Vue from 'vue'
-import AppTitle from './AppTitle'
+import VueRouter from 'vue-router'
+
+import routes from './routes'
+import JournaliApp from './JournaliApp'
 
 import './style.css'
 
-new Vue({
-    el: '#app',
-    render: (h) => h(AppTitle),
+Vue.use(VueRouter)
+
+const router = new VueRouter({
+    mode: 'history',
+    routes,
 })
 
-// EErst even lokaal testen!!
+new Vue({
+    el: '#app',
+    router,
+    render: (h) => h(JournaliApp),
+})
