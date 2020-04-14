@@ -1,3 +1,7 @@
+<script>
+export default {}
+</script>
+
 <template>
     <div class="container mx-auto pt-4">
         <h1 class="font-bold text-3xl text-yellow-500 py-2">
@@ -15,9 +19,5 @@
         <router-view class="py-4 text-white"></router-view>
     </div>
 </template>
-
-<script>
-export default {}
-</script>
 
 <style scoped></style>
