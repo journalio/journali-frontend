@@ -39,6 +39,12 @@ module.exports = (env, { mode }) => {
         context,
         output: {
             path: outputPath,
+            filename:
+                mode === 'production' ? '[name].[contenthash].js' : '[name].js',
+            chunkFilename:
+                mode === 'production'
+                    ? 'chunks/[chunkhash].js'
+                    : 'chunks/[id].js',
         },
         module: {
             rules: [
@@ -57,11 +63,7 @@ module.exports = (env, { mode }) => {
                                 {
                                     modules: false,
                                     targets: {
-                                        browsers: [
-                                            '> 1%',
-                                            'last 2 versions',
-                                            'not ie <= 8',
-                                        ],
+                                        browsers: ['defaults'],
                                     },
                                 },
                             ],
@@ -109,6 +111,9 @@ module.exports = (env, { mode }) => {
             proxy: {
                 '/api': 'http://api:8000',
             },
+        },
+        watchOptions: {
+            poll: true,
         },
     }
 
