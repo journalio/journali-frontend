@@ -3,8 +3,8 @@
  * Use the dynamic import statements for automatic code splitting
  */
 const routes = [
-    { path: '', component: () => import('./pages/IndexPage') },
-    { path: '/hello', component: () => import('./pages/HelloPage') },
+    { path: '', component: () => import('./views/IndexPage') },
+    { path: '/hello', component: () => import('./views/HelloPage') },
 ]
 
 export default routes
