@@ -7,8 +7,8 @@ on:
     pull_request:
 
 jobs:
-    prettier:
-        name: prettier
+    analyse:
+        name: analyse
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v2
@@ -29,7 +29,7 @@ jobs:
 
     build:
         name: build
-        needs: [prettier]
+        needs: [analyse]
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v2

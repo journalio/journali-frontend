@@ -1,3 +1,21 @@
+<script>
+export default {
+    data() {
+        return {
+            name: '',
+            age: 18,
+            response: '',
+        }
+    },
+    methods: {
+        async handleSubmit() {
+            const response = await fetch(`/api/hello/${this.name}/${this.age}`)
+            this.response = await response.text()
+        },
+    },
+}
+</script>
+
 <template>
     <form class="flex flex-col" @submit.prevent="handleSubmit">
         Please enter your name and age:
@@ -32,23 +50,5 @@
         </p>
     </form>
 </template>
-
-<script>
-export default {
-    methods: {
-        async handleSubmit() {
-            const response = await fetch(`/api/hello/${this.name}/${this.age}`)
-            this.response = await response.text()
-        },
-    },
-    data() {
-        return {
-            name: '',
-            age: 18,
-            response: '',
-        }
-    },
-}
-</script>
 
 <style scoped></style>
