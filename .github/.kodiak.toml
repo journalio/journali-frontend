@@ -1,4 +1,4 @@
-version = "1"
+version = 1
 
 [merge]
 require_automerge_label = false
