@@ -1,0 +1,15 @@
+updateBranch: true
+deleteBranchAfterMerge: true
+reportStatus: true
+
+minApprovals:
+    COLLABORATOR: 1
+maxRequestedChanges:
+    NONE: 0
+blockingLabels:
+    - do not merge
+
+mergeCommitMessage: |
+    {title} (#{number})
+
+    {body}
