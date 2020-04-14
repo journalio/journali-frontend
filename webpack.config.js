@@ -63,9 +63,7 @@ module.exports = (env, { mode }) => {
                                 {
                                     modules: false,
                                     targets: {
-                                        browsers: [
-                                            'defaults',
-                                        ],
+                                        browsers: ['defaults'],
                                     },
                                 },
                             ],
