@@ -25,7 +25,7 @@ jobs:
                   GITHUB_TOKEN: ${{ github.token }}
                   test: true
                   reviewers: true
-                  labels: ready, merge
+                  labels:
                   blocking-labels: do not merge
                   checks: true
                   method: merge
