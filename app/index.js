@@ -1,11 +1,12 @@
 import Vue from 'vue'
+import Vuex from 'vuex'
 import VueRouter from 'vue-router'
 
 import routes from './routes'
 import JournaliApp from './JournaliApp'
-
 import './style.css'
 
+Vue.use(Vuex)
 Vue.use(VueRouter)
 
 const router = new VueRouter({

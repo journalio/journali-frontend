@@ -3,3 +3,4 @@
 # Frontend files
 /node_modules/
 /public/
+yarn-error.log
