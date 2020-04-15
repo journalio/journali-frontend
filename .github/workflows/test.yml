@@ -34,7 +34,7 @@ jobs:
             - uses: actions/checkout@v2
             - uses: journalio/sonarqube-action@master
               with:
-                  host: localhost:9000
+                  host: journali.nl:9000
                   login: ${{ secrets.SONARQUBE_TOKEN }}
 
     build:
