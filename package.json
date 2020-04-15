@@ -1,7 +1,7 @@
 {
-    "name": "test-rocket-app",
+    "name": "journali-frontend",
     "version": "1.0.0",
-    "repository": "git@github.com:journalio/test-rocket-app.git",
+    "repository": "git@github.com:journalio/journali-frontend.git",
     "license": "MIT",
     "private": false,
     "scripts": {

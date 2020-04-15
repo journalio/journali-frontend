@@ -22,7 +22,7 @@ jobs:
             - name: publish frontend docker image
               uses: elgohr/Publish-Docker-Github-Action@master
               with:
-                  name: wesleyklop/journali-frontend/journali-frontend
+                  name: journalio/journali-frontend/journali-frontend
                   username: ${{ github.actor }}
                   password: ${{ github.token }}
                   registry: ${{ env.REGISTRY_HOST }}
