@@ -27,6 +27,16 @@ jobs:
             - run: yarn --frozen-lockfile
             - run: yarn lint:check
 
+    sonarqube:
+        name: sonarqube
+        runs-on: self-hosted
+        steps:
+            - uses: actions/checkout@v2
+            - uses: kitabisa/sonarqube-action@master
+              with:
+                  host: localhost:9000
+                  login: ${{ secrets.SONARQUBE_TOKEN }}
+
     build:
         name: build
         needs: [analyse]
