@@ -32,11 +32,12 @@ jobs:
         runs-on: self-hosted
         steps:
             - uses: actions/checkout@v2
-            - uses: journalio/sonarqube-action@master
-              with:
-                  projectKey: journali-frontend
-                  host: http://journali.nl:9000
-                  login: ${{ secrets.SONARQUBE_TOKEN }}
+            -   uses: mathrix-education/sonar-scanner@master
+                with:
+                    version: 4.2.0.1873 # required
+                    typescript: true
+                    scan: true
+                    args: --debug -Dsonar.login=${{ secrets.SONARQUBE_TOKEN }}
 
     build:
         name: build
