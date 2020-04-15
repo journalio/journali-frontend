@@ -32,7 +32,7 @@ jobs:
         runs-on: self-hosted
         steps:
             - uses: actions/checkout@v2
-            - uses: itsecholot/sonarqube-action@master
+            - uses: journalio/sonarqube-action@master
               with:
                   host: localhost:9000
                   login: ${{ secrets.SONARQUBE_TOKEN }}
