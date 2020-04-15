@@ -36,7 +36,8 @@ jobs:
             - uses: mathrix-education/sonar-scanner@master
               with:
                   version: 4.2.0.1873 # required
-                  typescript: true
+                  typescript: false
+                  with-jre: true
                   scan: true
                   args: --debug -Dsonar.login=${{ secrets.SONARQUBE_TOKEN }}
 
