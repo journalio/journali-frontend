@@ -12,7 +12,7 @@
         "lint:fix": "yarn eslint --fix && yarn prettier --write",
         "lint:check": "yarn eslint && yarn prettier --check",
         "serve:dev": "webpack-dev-server",
-        "eslint": "eslint --ext .js,.vue app",
+        "eslint": "eslint --ext .js,.vue app __tests__",
         "prettier": "prettier \"app/**/*.css\" \"*.{json,yml,md,js}\" \".github/**/*.yml\"",
         "test": "jest"
     },
