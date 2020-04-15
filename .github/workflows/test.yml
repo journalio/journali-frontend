@@ -37,7 +37,7 @@ jobs:
                 docker run \
                   -e SONAR_HOST_URL=http://journali.nl:9000 \
                   -e SONAR_TOKEN=${{ secrets.SONARQUBE_TOKEN }} \
-                  -it -v "$PWD:/usr/src" \
+                  -v "$PWD:/usr/src" \
                   sonarsource/sonar-scanner-cli:latest
 
     build:
