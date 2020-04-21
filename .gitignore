@@ -10,6 +10,7 @@ yarn-error.log
 
 # Coverage reports
 /coverage
+/.codacy-coverage
 
 # Storybook output
 /storybook-static
