@@ -35,20 +35,25 @@ jobs:
             - uses: actions/setup-node@v1
               with:
                   node-version: '13.x'
-            - id: yarn-cache-dir-path
-              run: echo "::set-output name=dir::$(yarn cache dir)"
-            - uses: actions/cache@v1
-              id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
-              with:
-                  path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-                  key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-                  restore-keys: |
-                      ${{ runner.os }}-yarn-
-            - run: yarn --frozen-lockfile
-            - run: yarn test
-            - uses: romeovs/lcov-reporter-action@v0.2.17
-              with:
-                  github-token: ${{ github.token }}
+            -   id: yarn-cache-dir-path
+                run: echo "::set-output name=dir::$(yarn cache dir)"
+            -   uses: actions/cache@v1
+                id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+                with:
+                    path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+                    key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+                    restore-keys: |
+                        ${{ runner.os }}-yarn-
+            -   run: yarn --frozen-lockfile
+            -   run: yarn test
+            -   name: Archive code coverage results
+                uses: actions/upload-artifact@v1
+                with:
+                    name: code-coverage-report
+                    path: coverage
+            -   uses: romeovs/lcov-reporter-action@v0.2.17
+                with:
+                    github-token: ${{ github.token }}
 
     build:
         name: build
