@@ -1,9 +1,5 @@
 @tailwind base;
 
-html {
-    background-color: #15537f;
-}
-
 @tailwind components;
 
 @tailwind utilities;

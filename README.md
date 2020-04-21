@@ -1,11 +1,14 @@
 # Frontend application for IPSENH
 
 [![License:EUPL](https://img.shields.io/badge/License-EUPLv.1.2-brightgreen.svg)](https://opensource.org/licenses/EUPL-1.2)
-![test frontend](https://github.com/wesleyklop/journali-frontend/workflows/test%20frontend/badge.svg)
-![deploy frontend](https://github.com/wesleyklop/journali-frontend/workflows/deploy%20frontend/badge.svg)
-[![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=wesleyklop/journali-frontend&identifier=251608610)](https://dependabot.com)
+![test frontend](https://github.com/WesleyKlop/journali-frontend/workflows/test%20frontend/badge.svg)
+![deploy frontend](https://github.com/WesleyKlop/journali-frontend/workflows/deploy%20frontend/badge.svg)
+![deploy storybook](https://github.com/WesleyKlop/journali-frontend/workflows/deploy%20storybook/badge.svg)
+[![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=WesleyKlop/journali-frontend&identifier=251608610)](https://dependabot.com)
 
 This is the repository containing the front end of the Journali application.
+
+[Component library](https://wesleyklop.github.io/journali-frontend/)
 
 ## Getting started
 
