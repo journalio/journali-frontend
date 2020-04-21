@@ -56,9 +56,9 @@ jobs:
               with:
                   github-token: ${{ github.token }}
             - name: Run codacy-coverage-reporter
-              uses: codacy/codacy-coverage-reporter-action@master
+              uses: WesleyKlop/codacy-coverage-reporter-action@add-report-file-argument
               with:
-                  args: report -r coverage/lcov.info
+                  report-file: coverage/lcov.info
                   project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
 
     build:
