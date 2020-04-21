@@ -1,6 +1,12 @@
+# User specific
 .env
-
-# Frontend files
-/node_modules/
-/public/
 yarn-error.log
+
+# Dependencies
+/node_modules
+
+# Build output
+/public
+
+# Coverage reports
+/coverage
