@@ -5,6 +5,8 @@
 ![deploy frontend](https://github.com/WesleyKlop/journali-frontend/workflows/deploy%20frontend/badge.svg)
 ![deploy storybook](https://github.com/WesleyKlop/journali-frontend/workflows/deploy%20storybook/badge.svg)
 [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=WesleyKlop/journali-frontend&identifier=251608610)](https://dependabot.com)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/ede859d2301a44cead35302eaec1afaf)](https://www.codacy.com?utm_source=github.com&utm_medium=referral&utm_content=WesleyKlop/journali-frontend&utm_campaign=Badge_Grade)
+[![Codacy Badge](https://api.codacy.com/project/badge/Coverage/ede859d2301a44cead35302eaec1afaf)](https://www.codacy.com?utm_source=github.com&utm_medium=referral&utm_content=WesleyKlop/journali-frontend&utm_campaign=Badge_Coverage)
 
 This is the repository containing the front end of the Journali application.
 

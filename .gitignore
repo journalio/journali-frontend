@@ -17,6 +17,7 @@ yarn-error.log*
 # Test generated files
 /tests/e2e/videos
 /coverage
+/.codacy-coverage
 
 # Editor directories and files
 .idea
