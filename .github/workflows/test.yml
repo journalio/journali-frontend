@@ -55,6 +55,11 @@ jobs:
               if: ${{ github.event_name == 'pull_request' }}
               with:
                   github-token: ${{ github.token }}
+            - name: Run codacy-coverage-reporter
+              uses: WesleyKlop/codacy-coverage-reporter-action@add-report-file-argument
+              with:
+                  report-file: coverage/lcov.info
+                  project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
 
     build:
         name: build
