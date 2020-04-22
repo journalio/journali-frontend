@@ -1,2 +1,7 @@
-node_modules/
-public/
+/node_modules/
+/tests/
+/dist/
+/src/stories
+/storybook-static
+/coverage
+

@@ -1,15 +1,28 @@
-# User specific
-.env
-yarn-error.log
-
-# Dependencies
+.DS_Store
 /node_modules
 
 # Build output
-/public
+/dist
+/storybook-static
 
-# Coverage reports
+# local env files
+.env.local
+.env.*.local
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Test generated files
+/tests/e2e/videos
 /coverage
 
-# Storybook output
-/storybook-static
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
