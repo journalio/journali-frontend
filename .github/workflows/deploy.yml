@@ -1,7 +1,6 @@
 name: deploy frontend
 
 on:
-    pull_request:
     push:
         branches:
             - master
