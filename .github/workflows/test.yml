@@ -26,6 +26,7 @@ jobs:
                       ${{ runner.os }}-yarn-
             - run: yarn --frozen-lockfile
             - run: yarn lint --no-fix
+            - run: yarn prettier --check
 
     unit:
         name: unit tests
