@@ -55,7 +55,7 @@ jobs:
               with:
                   step: start
                   token: ${{ github.token }}
-                  env: '${ENV_NAME}'
+                  env: ${{ env.ENV_NAME }}
             - name: run deployment
               run: docker service update --with-registry-auth --force "${SERVICE_NAME}"
             - name: rollback on deployment failure
@@ -68,7 +68,7 @@ jobs:
                   step: finish
                   token: ${{ github.token }}
                   status: ${{ job.status }}
-                  env_url: '${ URL }'
+                  env_url: ${{ env.URL }}
                   deployment_id: ${{ steps.deployment.outputs.deployment_id }}
             - name: logout from registry
               if: always()
