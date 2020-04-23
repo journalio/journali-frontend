@@ -38,4 +38,3 @@ export default class ApiTest extends Vue {
     }
 }
 </script>
-
