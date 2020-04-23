@@ -27,7 +27,7 @@ jobs:
                   restore-keys: |
                       ${{ runner.os }}-yarn-
             - run: yarn --frozen-lockfile
-            - run: yarn build-storybook
+            - run: yarn storybook:build
             - uses: JamesIves/github-pages-deploy-action@releases/v3
               with:
                   GITHUB_TOKEN: ${{ github.token }}
