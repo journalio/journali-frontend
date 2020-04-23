@@ -55,12 +55,12 @@ jobs:
               with:
                   step: start
                   token: ${{ github.token }}
-                  env: ${{ ENV_NAME }}
+                  env: '${ENV_NAME}'
             - name: run deployment
-              run: docker service update --with-registry-auth --force ${{ SERVICE_NAME }}
+              run: docker service update --with-registry-auth --force "${SERVICE_NAME}"
             - name: rollback on deployment failure
               if: failure()
-              run: docker service rollback ${{ SERVICE_NAME }}
+              run: docker service rollback "${SERVICE_NAME}"
             - name: update deployment status
               uses: bobheadxi/deployments@master
               if: always()
@@ -68,7 +68,7 @@ jobs:
                   step: finish
                   token: ${{ github.token }}
                   status: ${{ job.status }}
-                  env_url: ${{ URL }}
+                  env_url: '${ URL }'
                   deployment_id: ${{ steps.deployment.outputs.deployment_id }}
             - name: logout from registry
               if: always()
