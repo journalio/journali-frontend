@@ -24,6 +24,7 @@ jobs:
         steps:
             - uses: actions/checkout@v2
             - name: publish frontend docker image
+              id: publish
               uses: elgohr/Publish-Docker-Github-Action@master
               with:
                   name: ${{ env.IMAGE_NAME }}
