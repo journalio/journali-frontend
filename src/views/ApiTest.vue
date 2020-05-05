@@ -1,27 +1,30 @@
 <template>
-    <form class="flex flex-col items-center" @submit.prevent="handleSubmit">
-        Please enter your name and age:
+    <div>
+        <h1>Journali!</h1>
+        <form class="flex flex-col items-center" @submit.prevent="handleSubmit">
+            Please enter your name and age:
 
-        <label class="my-4">
-            Name:
+            <label class="my-4">
+                Name:
+                <input
+                    v-model="name"
+                    type="text"
+                    autocomplete="name"
+                    class="text-black bg-gray-200 px-2 py-1 border-2 rounded"
+                />
+            </label>
+
             <input
-                v-model="name"
-                type="text"
-                autocomplete="name"
-                class="text-black bg-gray-200 px-2 py-1 border-2 rounded"
+                class="my-4 rounded px-4 py-1 bg-white text-gray-800 border-gray-800 border font-bold uppercase w-24"
+                type="submit"
+                value="submit"
             />
-        </label>
 
-        <input
-            class="my-4 rounded px-4 py-1 bg-white text-gray-800 border-gray-800 border font-bold uppercase w-24"
-            type="submit"
-            value="submit"
-        />
-
-        <p v-if="response" class="p-4 border rounded">
-            {{ response }}
-        </p>
-    </form>
+            <p v-if="response" class="p-4 border rounded">
+                {{ response }}
+            </p>
+        </form>
+    </div>
 </template>
 
 <script lang="ts">
