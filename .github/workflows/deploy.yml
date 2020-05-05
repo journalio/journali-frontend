@@ -71,6 +71,7 @@ jobs:
                     --update-failure-action=rollback \
                     --with-registry-auth \
                     --image ${{ needs.deliver.outputs.image }} \
+                    --force \
                   ${{ env.SERVICE }}
 
             - name: update deployment status
