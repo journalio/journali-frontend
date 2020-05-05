@@ -5,7 +5,7 @@ RUN yarn --frozen-lockfile
 COPY . .
 
 # Set embedded environment variables
-ENV VUE_APP_VERSION $GITHUB_SHA
+ARG VUE_APP_VERSION="development"
 
 RUN yarn build
 
