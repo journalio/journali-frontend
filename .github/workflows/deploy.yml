@@ -12,9 +12,9 @@ env:
     IMAGE_NAME: wesleyklop/journali-frontend/journali-frontend
     REGISTRY_HOST: docker.pkg.github.com
     STAGING_URL: http://staging.journali.nl
-    STAGING_SERVICE_NAME: journali-staging_web
+    STAGING_SERVICE: journali-staging_web
     PRODUCTION_URL: http://journali.nl
-    PRODUCTION_SERVICE_NAME: journali-production_web
+    PRODUCTION_SERVICE: journali-production_web
 
 jobs:
     deliver:
@@ -40,14 +40,14 @@ jobs:
               if: ${{ github.event_name == 'pull_request' }}
               uses: allenevans/set-env@v1.0.0
               with:
-                  SERVICE_NAME: ${{ env.STAGING_SERVICE_NAME }}
+                  SERVICE: ${{ env.STAGING_SERVICE }}
                   URL: ${{ env.STAGING_URL }}
                   ENV_NAME: staging
             - name: set environment variables if production
               if: ${{ github.event_name == 'release' }}
               uses: allenevans/set-env@v1.0.0
               with:
-                  SERVICE_NAME: ${{ env.PRODUCTION_SERVICE_NAME }}
+                  SERVICE: ${{ env.PRODUCTION_SERVICE }}
                   URL: ${{ env.PRODUCTION_URL }}
                   ENV_NAME: production
 
