@@ -25,12 +25,15 @@ jobs:
             - name: publish frontend docker image
               id: publish
               uses: elgohr/Publish-Docker-Github-Action@master
+              env:
+                  VUE_APP_VERSION: ${{ github.sha }}
               with:
                   name: ${{ env.IMAGE_NAME }}
                   username: ${{ github.actor }}
                   password: ${{ github.token }}
                   registry: ${{ env.REGISTRY_HOST }}
                   tag_semver: true
+                  buildargs: VUE_APP_VERSION
     deploy:
         name: deploy to an environment
         runs-on: self-hosted
