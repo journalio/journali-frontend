@@ -1,6 +1,7 @@
 name: deploy frontend
 
 on:
+    pull_request:
     push:
         branches:
             - master
@@ -8,6 +9,7 @@ on:
         types: [created]
 
 env:
+    IMAGE_NAME: wesleyklop/journali-frontend/journali-frontend
     REGISTRY_HOST: docker.pkg.github.com
     STAGING_URL: http://staging.journali.nl
     STAGING_SERVICE_NAME: journali-staging_web
@@ -17,12 +19,21 @@ env:
 jobs:
     deliver:
         runs-on: self-hosted
+        outputs:
+            image: ${{ env.REGISTRY_HOST }}/${{ env.IMAGE_NAME }}:${{ steps.publish.outputs.tag }}
         steps:
             - uses: actions/checkout@v2
+            - id: yarn-cache-dir-path
+              run: echo "::set-output name=dir::$(yarn cache dir)"
+            - uses: actions/cache@v1
+              id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+              with:
+                  path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+                  key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
             - name: publish frontend docker image
               uses: elgohr/Publish-Docker-Github-Action@master
               with:
-                  name: wesleyklop/journali-frontend/journali-frontend
+                  name: ${{ env.IMAGE_NAME }}
                   username: ${{ github.actor }}
                   password: ${{ github.token }}
                   registry: ${{ env.REGISTRY_HOST }}
@@ -33,7 +44,7 @@ jobs:
         needs: [deliver]
         steps:
             - name: set environment variables if staging
-              if: ${{ github.event_name == 'push' }}
+              if: ${{ github.event_name == 'pull_request' }}
               uses: allenevans/set-env@v1.0.0
               with:
                   SERVICE_NAME: ${{ env.STAGING_SERVICE_NAME }}
@@ -56,11 +67,16 @@ jobs:
                   step: start
                   token: ${{ github.token }}
                   env: ${{ env.ENV_NAME }}
-            - name: run deployment
-              run: docker service update --with-registry-auth --force "${SERVICE_NAME}"
-            - name: rollback on deployment failure
-              if: failure()
-              run: docker service rollback "${SERVICE_NAME}"
+
+            # Deploy new frontend version
+            - name: deploy new frontend version
+              run: |
+                  docker service update \
+                    --update-failure-action=rollback \
+                    --with-registry-auth \
+                    --image ${{ needs.deliver.outputs.image }} \
+                  ${{ env.SERVICE }}
+
             - name: update deployment status
               uses: bobheadxi/deployments@master
               if: always()
@@ -70,6 +86,7 @@ jobs:
                   status: ${{ job.status }}
                   env_url: ${{ env.URL }}
                   deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+                  desc: image ${{ needs.deliver.outputs.image }}
             - name: logout from registry
               if: always()
               run: docker logout ${{ env.REGISTRY_HOST }}
