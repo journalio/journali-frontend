@@ -24,6 +24,11 @@ const routes: Array<RouteConfig> = [
         name: 'api-test',
         component: () => import('../views/ApiTest.vue'),
     },
+    {
+        path: '/demo',
+        name: 'demo',
+        component: () => import('../views/Demo.vue'),
+    },
 ]
 
 const router = new VueRouter({
