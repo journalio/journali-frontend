@@ -2,7 +2,7 @@
     <div>
         <h1>Journali!</h1>
         <form class="flex flex-col items-center" @submit.prevent="handleSubmit">
-            Please enter your name and age:
+            Please enter your name:
 
             <label class="my-4">
                 Name:
