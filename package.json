@@ -58,6 +58,9 @@
     "lint-staged": {
         "*.{js,jsx,vue,ts,tsx}": [
             "vue-cli-service lint"
+        ],
+        "*.{css,json,yml}": [
+            "prettier --write"
         ]
     }
 }
