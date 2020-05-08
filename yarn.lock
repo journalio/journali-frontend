@@ -1064,7 +1064,7 @@
   resolved "https://registry.yarnpkg.com/@emotion/weak-memoize/-/weak-memoize-0.2.5.tgz#8eed982e2ee6f7f4e44c253e12962980791efd46"
   integrity sha512-6U71C2Wp7r5XtFtQzYrW5iKFT67OixrSxjI4MptCHzdSVlgabczzqLe0ZSgnub/5Kp4hSbpDB1tMytZY9pwxxA==
 
-"@fullhuman/postcss-purgecss@^2.1.2":
+"@fullhuman/postcss-purgecss@^2.1.2", "@fullhuman/postcss-purgecss@^2.2.0":
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/@fullhuman/postcss-purgecss/-/postcss-purgecss-2.2.0.tgz#2b3699287163ff515f25ccdae5b96a244eebb41a"
   integrity sha512-q4zYAn8L9olA5uneaLhxkHRBoug9dnAqytbdX9R5dbzSORobhYr1yGR2JN3Q1UMd5RB0apm1NvJekHaymal/BQ==
@@ -13128,7 +13128,7 @@ table@^5.2.3:
     slice-ansi "^2.1.0"
     string-width "^3.0.0"
 
-tailwindcss@^1.4.4, tailwindcss@^1.4.5:
+tailwindcss@^1.4.5:
   version "1.4.5"
   resolved "https://registry.yarnpkg.com/tailwindcss/-/tailwindcss-1.4.5.tgz#893ccddd226dc264f2bd53acd11e58077149e11d"
   integrity sha512-MJW96Rz3G3RrFDbDuQCU893y4bf5hMWeVbMgcCqUfLNPbO9wRogDibCEvdKitD6aX9Y90SDT2FOKD17+WmIFLQ==
@@ -14023,13 +14023,13 @@ vue-cli-plugin-storybook@~1.2.2:
     commander "^2.19.0"
     semver "^7.1.1"
 
-vue-cli-plugin-tailwind@~1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/vue-cli-plugin-tailwind/-/vue-cli-plugin-tailwind-1.4.0.tgz#a8118373960d87a8485fcacacc3cec0507f0e552"
-  integrity sha512-Cd4Fb02XS+bd5LPq+8/huM3DuePZfjlA9WxEPpP5reEZK100eOqhXDdGOfRQq6bJrMPix0t6prHb5J/qfGGX2A==
+vue-cli-plugin-tailwind@~1.4.1:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/vue-cli-plugin-tailwind/-/vue-cli-plugin-tailwind-1.4.1.tgz#b1cfba53115c5e02b1e1f8a08b672d3aacd24093"
+  integrity sha512-IEm6a3F6hJp6bLs48x3SHU5jgy4y+29/oio7HhzpPSZmBNCGMD2gDJzr9Nq2S96+liac3XkkZaDWBv3Bpm9iug==
   dependencies:
-    "@fullhuman/postcss-purgecss" "^2.1.2"
-    tailwindcss "^1.4.4"
+    "@fullhuman/postcss-purgecss" "^2.2.0"
+    tailwindcss "^1.4.5"
 
 vue-docgen-api@^4.1.0:
   version "4.19.2"
