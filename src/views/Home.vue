@@ -45,14 +45,12 @@ export default class Home extends Vue {
         }
 
         this.$http
-            .post('login', credentials)
-            .then(async data => {
-                const response = await data.json()
-
-                if (response && response.token) {
+            .auth(credentials)
+            .then(async res => {
+                // console.log(data)
+                const data = await res.json()
+                if (data && data.token) {
                     // TODO: encapsulate this properly
-                    const storage = window.localStorage
-                    storage.setItem('journali-token', response.token)
                     this.$router.push('hello-world')
                 }
             })

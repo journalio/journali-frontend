@@ -47,10 +47,8 @@ export default class Registration extends Vue {
 
         this.$http
             .post('register', userData)
-            .then(async data => {
-                const response = await data.json()
-
-                console.log(response) // for dev purposes
+            .then(async res => {
+                console.log(res) // for dev purposes
                 // TODO: add proper user feedback
             })
             .catch(error => {
