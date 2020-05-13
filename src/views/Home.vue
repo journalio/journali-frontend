@@ -46,7 +46,7 @@ export default class Home extends Vue {
 
         this.$http
             .auth(credentials)
-            .then(async res => {
+            .then(async (res) => {
                 // console.log(data)
                 const data = await res.json()
                 if (data && data.token) {
@@ -54,7 +54,7 @@ export default class Home extends Vue {
                     this.$router.push('hello-world')
                 }
             })
-            .catch(error => {
+            .catch((error) => {
                 console.log(error)
             })
     }
