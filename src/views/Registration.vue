@@ -1,6 +1,7 @@
 <template>
-    <div class="home">
-        <form class="flex flex-col items-center" @submit.prevent="login()">
+    <div class="Registration">
+        <h1 class="text-3xl">Create an account</h1>
+        <form class="flex flex-col items-center" @submit.prevent="register()">
             <label for="username">Username</label>
             <input
                 v-model="username"
@@ -23,7 +24,6 @@
                 value="submit"
             />
         </form>
-        <button @click="toRegistration()">Create an account</button>
     </div>
 </template>
 
@@ -34,35 +34,28 @@ import { Component, Vue } from 'vue-property-decorator'
 @Component // ({ TODO: remove this note once you get used to TS in vue
 //     components: { HelloWorld },
 // })
-export default class Home extends Vue {
+export default class Registration extends Vue {
     username = ''
     password = ''
 
-    async login() {
-        const credentials = {
+    async register() {
+        //Called this userdata instead of credentials because it could theoretically contain more than just the credentials in the future
+        const userData = {
             username: this.username,
             password: this.password,
         }
 
         this.$http
-            .post('login', credentials)
+            .post('register', userData)
             .then(async data => {
                 const response = await data.json()
 
-                if (response && response.token) {
-                    // TODO: encapsulate this properly
-                    const storage = window.localStorage
-                    storage.setItem('journali-token', response.token)
-                    this.$router.push('hello-world')
-                }
+                console.log(response) // for dev purposes
+                // TODO: add proper user feedback
             })
             .catch(error => {
                 console.log(error)
             })
-    }
-
-    toRegistration() {
-        this.$router.push('register')
     }
 }
 </script>
