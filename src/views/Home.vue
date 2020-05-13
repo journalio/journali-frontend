@@ -30,41 +30,39 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
 // @ is an alias to /src
 import HelloWorld from '@/components/HelloWorld.vue'
+import { Component, Vue } from 'vue-property-decorator'
 
-export default {
-    name: 'Home',
-    components: {
-        HelloWorld,
-    },
-    data() {
-        return {
-            username: '',
-            password: '',
+@Component({
+    components: { HelloWorld },
+})
+export default class Home extends Vue {
+    username = ''
+    password = ''
+
+    async login() {
+        const credentials = {
+            username: this.username,
+            password: this.password,
         }
-    },
-    methods: {
-        async login() {
-            // const data = {
-            //     username: this.username,
-            //     password: this.password,
-            // }
-            // const response = await fetch(`/api/login/`, { body: data })
-            // const responseObject = response.json()
 
-            // testing purposes, pls remove
-            const responseObject = {
-                token: this.password,
-            }
+        this.$http
+            .post('login', credentials)
+            .then(async data => {
+                const response = await data.json()
 
-            if (responseObject.token) {
-                const storage = window.localStorage
-                storage.setItem('journali-token', responseObject.token)
-                this.$router.push('hello-world')
-            }
-        },
-    },
+                if (response && response.token) {
+                    // TODO: encapsulate this properly
+                    const storage = window.localStorage
+                    storage.setItem('journali-token', response.token)
+                    this.$router.push('hello-world')
+                }
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
 }
 </script>
