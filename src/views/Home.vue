@@ -1,5 +1,6 @@
 <template>
     <div class="home">
+        <h1>Welcome to Your Vue.js App</h1>
         <form class="flex flex-col items-center" @submit.prevent="login()">
             <label for="username">Username</label>
             <input
