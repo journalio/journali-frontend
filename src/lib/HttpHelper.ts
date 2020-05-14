@@ -16,7 +16,7 @@ export default class HttpHelper {
 
     async auth(data: object): Promise<Response> {
         //Send request
-        const response = await fetch('api/login', {
+        const response = await fetch('/api/login', {
             method: 'POST',
             headers: this.header,
             body: JSON.stringify(data),
