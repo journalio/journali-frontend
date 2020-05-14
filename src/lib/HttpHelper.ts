@@ -24,27 +24,20 @@ export default class HttpHelper {
 
         const responseClone = response.clone()
 
-        console.log(response)
+        // console.log(response)
         // put token in localStorage
         const responseObject = await response.json()
-
+        console.log(responseObject.token)
         const storage = window.localStorage
         storage.setItem('journali-token', responseObject.token)
 
-        if (this.header.get('Authorization')) {
-            this.header.set('Authorization', 'Bearer ' + responseObject.token)
-        } else {
-            this.header.append(
-                'Authorization',
-                'Bearer ' + responseObject.token,
-            )
-        }
+        this.header.append('Authorization', 'Bearer ' + responseObject.token)
 
         return responseClone
     }
 
     post(url: string, data: object): Promise<Response> {
-        return fetch('api/' + url, {
+        return fetch('/api/' + url, {
             method: 'POST',
             headers: this.header,
             body: JSON.stringify(data),

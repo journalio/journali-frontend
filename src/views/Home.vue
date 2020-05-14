@@ -46,9 +46,9 @@ export default class Home extends Vue {
 
         this.$http
             .auth(credentials)
-            .then((res) => res.json())
+            .then((res) => res.text())
             .then((data) => {
-                if (data?.token) {
+                if (data) {
                     // TODO: encapsulate this properly
                     this.$router.push('hello-world')
                 }
