@@ -46,10 +46,9 @@ export default class Home extends Vue {
 
         this.$http
             .auth(credentials)
-            .then(async (res) => {
-                // console.log(data)
-                const data = await res.json()
-                if (data && data.token) {
+            .then((res) => res.json())
+            .then((data) => {
+                if (data?.token) {
                     // TODO: encapsulate this properly
                     this.$router.push('hello-world')
                 }
