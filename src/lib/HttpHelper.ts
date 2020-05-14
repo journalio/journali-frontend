@@ -24,10 +24,9 @@ export default class HttpHelper {
 
         const responseClone = response.clone()
 
-        // console.log(response)
         // put token in localStorage
         const responseObject = await response.json()
-        console.log(responseObject.token)
+
         const storage = window.localStorage
         storage.setItem('journali-token', responseObject.token)
 
