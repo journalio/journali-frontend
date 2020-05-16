@@ -12,6 +12,7 @@ export interface AppState {
 }
 
 const store = new Vuex.Store<AppState>({
+    strict: process.env.NODE_ENV !== 'production',
     state: {
         user: localStorage.getItem(JOURNALI_TOKEN),
         pages: [],
