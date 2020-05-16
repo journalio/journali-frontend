@@ -30,7 +30,10 @@
 </template>
 
 <script lang="ts">
+import AuthenticationClient from '@/lib/http/AuthenticationClient'
 import { Component, Vue } from 'vue-property-decorator'
+
+const client = new AuthenticationClient()
 
 @Component
 export default class Home extends Vue {
@@ -43,21 +46,14 @@ export default class Home extends Vue {
             password: this.password,
         }
 
-        this.$http
-            .auth(credentials)
-            .then((res) => res.json())
-            .then((data) => {
-                if (data?.token) {
-                    this.$router.push('hello-world')
-                }
-            })
-            .catch((error) => {
-                console.log(error)
-            })
+        const success = await client.login(credentials)
+        if (success) {
+            await this.$router.push('/')
+        }
     }
 
     toRegistration() {
-        this.$router.push('register')
+        this.$router.push('/register')
     }
 }
 </script>

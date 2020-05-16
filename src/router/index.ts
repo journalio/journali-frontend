@@ -1,29 +1,16 @@
+import register from '@/router/auth-middleware'
+import routes from '@/router/routes'
 import Vue from 'vue'
-import VueRouter, { RouteConfig } from 'vue-router'
-import Login from '../views/Home.vue'
+import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
-
-const routes: Array<RouteConfig> = [
-    {
-        path: '/login',
-        name: 'Login',
-        component: Login,
-    },
-    {
-        path: '/register',
-        name: 'Registration',
-        component: () =>
-            import(
-                /* webpackChunkName: "registration" */ '../views/Registration.vue'
-            ),
-    },
-]
 
 const router = new VueRouter({
     mode: 'history',
     base: process.env.BASE_URL,
     routes,
 })
+
+register(router)
 
 export default router

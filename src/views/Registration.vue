@@ -4,14 +4,16 @@
         <form class="flex flex-col items-center" @submit.prevent="register()">
             <label for="username">Username</label>
             <input
+                id="username"
                 v-model="username"
-                type="test"
+                type="text"
                 name="username"
                 class="text-black bg-gray-200 px-2 py-1 border-2 rounded"
             />
 
             <label for="password">Password</label>
             <input
+                id="password"
                 v-model="password"
                 type="password"
                 name="password"
@@ -28,32 +30,26 @@
 </template>
 
 <script lang="ts">
-// @ is an alias to /src
+import AuthenticationClient from '@/lib/http/AuthenticationClient'
 import { Component, Vue } from 'vue-property-decorator'
 
-@Component // ({ TODO: remove this note once you get used to TS in vue
-//     components: { HelloWorld },
-// })
+const client = new AuthenticationClient()
+
+@Component
 export default class Registration extends Vue {
     username = ''
     password = ''
 
     async register() {
-        //Called this userdata instead of credentials because it could theoretically contain more than just the credentials in the future
-        const userData = {
+        const credentials = {
             username: this.username,
             password: this.password,
         }
 
-        this.$http
-            .post('register', userData)
-            .then(async (res) => {
-                console.log(res) // for dev purposes
-                // TODO: add proper user feedback
-            })
-            .catch((error) => {
-                console.log(error)
-            })
+        const registered = client.register(credentials)
+        if (registered) {
+            await this.$router.push('Login')
+        }
     }
 }
 </script>

@@ -2,7 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 
 import './assets/tailwind.css'
-import HttpHelper from './lib/HttpHelper'
+import AbstractHttpClient from './lib/http/AbstractHttpClient'
 import router from './router'
 import store from './store'
 
@@ -11,7 +11,7 @@ console.log(
 )
 
 // add library to Vue globally
-Vue.prototype.$http = new HttpHelper()
+Vue.prototype.$http = new AbstractHttpClient()
 
 new Vue({
     router,
