@@ -10,6 +10,7 @@ export default class ItemsClient extends AbstractHttpClient {
                 item_type: 100,
             })),
         )
+        // Uncomment when endpoint is implemented
         // return this.get<Page[]>('/api/pages')
     }
 }

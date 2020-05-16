@@ -1,11 +1,10 @@
 <template>
-    <div class="flex-1 overflow-hidden">
-        aasdf
-    </div>
+    <div class="flex-1 overflow-hidden flex items-center justify-center"></div>
 </template>
 
-<script>
-export default {
-    name: 'JournaliContent',
-}
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator'
+
+@Component
+export default class JournaliHeader extends Vue {}
 </script>

@@ -1,9 +1,11 @@
 import store from '@/store'
 
 type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type RequestBody = string | Blob | Record<string, any> | null
 
 export default abstract class AbstractHttpClient {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     protected async request<T extends Record<string, any>>(
         method: HttpMethod,
         route: string,
