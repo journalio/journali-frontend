@@ -8,5 +8,5 @@
 import { Component, Vue } from 'vue-property-decorator'
 
 @Component
-export default class JournaliHeader extends Vue {}
+export default class JournaliContent extends Vue {}
 </script>

@@ -2,10 +2,12 @@
 import JournaliContent from '@/components/JournaliContent.vue'
 import JournaliHeader from '@/components/JournaliHeader.vue'
 import JournaliSidebar from '@/components/JournaliSidebar.vue'
+import { Component, Vue } from 'vue-property-decorator'
 
-export default {
+@Component({
     components: { JournaliHeader, JournaliSidebar, JournaliContent },
-}
+})
+export default class JournaliShell extends Vue {}
 </script>
 
 <template>
