@@ -5,6 +5,7 @@
             :key="page.id"
             :to="`/page/${page.id}`"
             class="w-full py-3 text-gray-900"
+            active-class="font-bold text-black"
         >
             {{ page.title }}
         </router-link>
