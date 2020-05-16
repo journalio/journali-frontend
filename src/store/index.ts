@@ -10,6 +10,7 @@ const store = new Vuex.Store({
     },
     mutations: {
         login(state, user) {
+            localStorage.setItem(JOURNALI_TOKEN, user)
             state.user = user
         },
     },

@@ -2,22 +2,17 @@
     <div class="Registration">
         <h1 class="text-3xl">Create an account</h1>
         <form class="flex flex-col items-center" @submit.prevent="register()">
-            <label for="username">Username</label>
-            <input
-                id="username"
+            <text-input
                 v-model="username"
-                type="text"
+                label="Username"
+                type="username"
                 name="username"
-                class="text-black bg-gray-200 px-2 py-1 border-2 rounded"
             />
-
-            <label for="password">Password</label>
-            <input
-                id="password"
+            <text-input
                 v-model="password"
+                label="Password"
                 type="password"
                 name="password"
-                class="text-black bg-gray-200 px-2 py-1 border-2 rounded"
             />
 
             <input
@@ -30,12 +25,15 @@
 </template>
 
 <script lang="ts">
+import TextInput from '@/components/TextInput.vue'
 import AuthenticationClient from '@/lib/http/AuthenticationClient'
 import { Component, Vue } from 'vue-property-decorator'
 
 const client = new AuthenticationClient()
 
-@Component
+@Component({
+    components: { TextInput },
+})
 export default class Registration extends Vue {
     username = ''
     password = ''

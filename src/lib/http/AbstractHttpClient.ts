@@ -1,3 +1,5 @@
+import store from '@/store'
+
 type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'
 type RequestBody = string | Blob | Record<string, any> | null
 
@@ -34,10 +36,16 @@ export default abstract class AbstractHttpClient {
         return JSON.stringify(body)
     }
 
-    private createHeaders = (extraOptions: object) =>
-        new Headers({
+    private createHeaders = (extraOptions: object) => {
+        const headers = new Headers({
             'Content-Type': 'application/json',
             Accept: 'application/json',
             ...extraOptions,
         })
+
+        if (store.state.user) {
+            headers.append('Authorization', `Bearer ${store.state.user}`)
+        }
+        return headers
+    }
 }

@@ -1,22 +1,17 @@
 <template>
     <div>
         <form class="flex flex-col items-center" @submit.prevent="login()">
-            <label for="username">Username</label>
-            <input
-                id="username"
+            <text-input
                 v-model="username"
-                type="text"
+                label="Username"
+                type="username"
                 name="username"
-                class="text-black bg-gray-200 px-2 py-1 border-2 rounded"
             />
-
-            <label for="password">Password</label>
-            <input
-                id="password"
+            <text-input
                 v-model="password"
-                type="password"
+                label="Password"
                 name="password"
-                class="text-black bg-gray-200 px-2 py-1 border-2 rounded"
+                type="password"
             />
 
             <input
@@ -30,12 +25,15 @@
 </template>
 
 <script lang="ts">
+import TextInput from '@/components/TextInput.vue'
 import AuthenticationClient from '@/lib/http/AuthenticationClient'
 import { Component, Vue } from 'vue-property-decorator'
 
 const client = new AuthenticationClient()
 
-@Component
+@Component({
+    components: { TextInput },
+})
 export default class Home extends Vue {
     username = ''
     password = ''
