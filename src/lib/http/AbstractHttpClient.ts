@@ -11,7 +11,8 @@ export default abstract class AbstractHttpClient {
         extraOptions: object = {},
     ): Promise<T> {
         const headers = this.createHeaders(extraOptions)
-        const body = this.prepareBody(requestBody)
+        const body =
+            method === 'GET' ? undefined : this.prepareBody(requestBody)
 
         return fetch(route, { method, headers, body }).then((response) =>
             response.json(),
