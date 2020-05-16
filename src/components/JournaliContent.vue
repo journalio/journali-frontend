@@ -1,5 +1,7 @@
 <template>
-    <div class="flex-1 overflow-hidden flex items-center justify-center"></div>
+    <div class="flex-1 overflow-hidden flex items-center justify-center">
+        <router-view></router-view>
+    </div>
 </template>
 
 <script lang="ts">
