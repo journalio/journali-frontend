@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>Journali!</h1>
+        <h1>{{ message }}</h1>
         <form class="flex flex-col items-center" @submit.prevent="handleSubmit">
             Please enter your name:
 
@@ -28,10 +28,11 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Prop } from 'vue-property-decorator'
 
 @Component
 export default class ApiTest extends Vue {
+    @Prop({ default: 'Journali!' }) readonly message: string | undefined
     name = ''
     response = ''
 
