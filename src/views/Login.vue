@@ -1,17 +1,18 @@
 <template>
-    <div class="home">
-        <h1>Welcome to Your Vue.js App</h1>
+    <div>
         <form class="flex flex-col items-center" @submit.prevent="login()">
             <label for="username">Username</label>
             <input
+                id="username"
                 v-model="username"
-                type="test"
+                type="text"
                 name="username"
                 class="text-black bg-gray-200 px-2 py-1 border-2 rounded"
             />
 
             <label for="password">Password</label>
             <input
+                id="password"
                 v-model="password"
                 type="password"
                 name="password"
@@ -29,12 +30,9 @@
 </template>
 
 <script lang="ts">
-// @ is an alias to /src
 import { Component, Vue } from 'vue-property-decorator'
 
-@Component // ({ TODO: remove this note once you get used to TS in vue
-//     components: { HelloWorld },
-// })
+@Component
 export default class Home extends Vue {
     username = ''
     password = ''
@@ -50,7 +48,6 @@ export default class Home extends Vue {
             .then((res) => res.json())
             .then((data) => {
                 if (data?.token) {
-                    // TODO: encapsulate this properly
                     this.$router.push('hello-world')
                 }
             })
