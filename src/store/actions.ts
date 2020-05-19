@@ -1,6 +1,6 @@
 import ItemsClient from '@/lib/http/ItemsClient'
-import { Uuid } from '@/models'
-import Page from '@/models/Page'
+import { NewItem, Page } from '@/models'
+import { Uuid } from '@/models/types'
 import { AppState } from '@/store/index'
 import { ActionContext } from 'vuex'
 
@@ -30,5 +30,10 @@ export default {
             .catch((error) => {
                 console.error(error)
             })
+    },
+    async createItem<T>({ commit }: ActionHandler, item: NewItem<T>) {
+        const createdItem = await itemsClient.createItem(item)
+        commit('addItem', createdItem)
+        return createdItem
     },
 }

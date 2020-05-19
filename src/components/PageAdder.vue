@@ -11,8 +11,8 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import ItemsClient from '@/lib/http/ItemsClient'
-import Page from '@/models/Page'
-import { ItemType } from '@/models'
+import { Page } from '@/models/entities'
+import { ItemType } from '@/models/types'
 
 const client = new ItemsClient()
 

@@ -26,7 +26,7 @@ export default class JournalPageContainer extends Vue {
     }
 
     get items() {
-        return this.$store.getters.getItemsByParent(this.pageId)
+        return this.$store.state.items
     }
 
     @Watch('$route')

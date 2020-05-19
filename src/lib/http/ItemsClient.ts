@@ -1,7 +1,14 @@
 import AbstractHttpClient from '@/lib/http/AbstractHttpClient'
-import { Uuid } from '@/models'
-import Item from '@/models/Item'
-import Page from '@/models/Page'
+import { NewItem } from '@/models'
+import { Item, Page } from '@/models/entities'
+import { ItemType, Uuid } from '@/models/types'
+
+const endPoints: Record<ItemType, string> = {
+    [ItemType.PAGE]: 'pages',
+    [ItemType.TEXT_FIELD]: 'text_fields',
+    [ItemType.TODO]: 'todos',
+    [ItemType.TODO_ITEM]: 'todo-items',
+}
 
 export default class ItemsClient extends AbstractHttpClient {
     public fetchPages(): Promise<Page[]> {
@@ -22,20 +29,14 @@ export default class ItemsClient extends AbstractHttpClient {
     }
 
     async fetchItemsByParent(parentId: Uuid): Promise<Item[]> {
-        return Promise.resolve(
-            [
-                {
-                    id: '0332e919-346a-41fa-afe8-b87a30a6d7e4',
-                    item_type: 200,
-                    parent_id: 'a6182029-f30f-43fb-bb2d-981df3150e94',
-                    parent_type: 100,
-                    created_at: new Date('2020-05-14 12:33:11.660025'),
-                    updated_at: new Date('2020-05-14 12:33:44.250501'),
-                },
-            ].filter((e: Item) => e.parent_id === parentId),
-        )
+        const items = await this.get<Item[]>(`/api/items?parent_id=${parentId}`)
         // Uncomment when endpoint is implemented
-        // return this.get<Item[]>(`/api/items?parent_id=${pageId}`)
+
+        return items.map((e) => Object.values(e)[0])
+    }
+
+    createItem<T>(item: NewItem<T>) {
+        return this.post<T>(`/api/${endPoints[item.item_type]}`, item)
     }
 
     async createPage(data: Page): Promise<Page> {

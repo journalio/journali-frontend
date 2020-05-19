@@ -1,6 +1,6 @@
 <template>
     <header
-        class="w-full h-20 px-4 py-6 flex bg-white shadow-md z-10 leading-8"
+        class="w-full h-20 px-4 py-6 flex bg-white shadow-md z-20 leading-8"
     >
         <h1 class="text-bold text-xl">Journali</h1>
         <span v-if="currentPageName" class="text-gray-900 ml-6">
