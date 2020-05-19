@@ -3,6 +3,19 @@ import { RouteConfig } from 'vue-router'
 
 const routes: Array<RouteConfig> = [
     {
+        path: '/login',
+        name: 'Login',
+        component: () => import('../views/Login.vue'),
+    },
+    {
+        path: '/register',
+        name: 'Registration',
+        component: () =>
+            import(
+                /* webpackChunkName: "registration" */ '../views/Registration.vue'
+            ),
+    },
+    {
         path: '/',
         name: 'Home',
         component: () => import('../views/JournaliShell.vue'),
@@ -24,19 +37,6 @@ const routes: Array<RouteConfig> = [
                 component: EmptyJournalPage,
             },
         ],
-    },
-    {
-        path: '/login',
-        name: 'Login',
-        component: () => import('../views/Login.vue'),
-    },
-    {
-        path: '/register',
-        name: 'Registration',
-        component: () =>
-            import(
-                /* webpackChunkName: "registration" */ '../views/Registration.vue'
-            ),
     },
 ]
 
