@@ -21,7 +21,7 @@ export default class ItemsClient extends AbstractHttpClient {
         // return this.get<Page[]>('/api/pages')
     }
 
-    async fetchPage(pageId: Uuid): Promise<Item[]> {
+    async fetchItemsByParent(parentId: Uuid): Promise<Item[]> {
         return Promise.resolve(
             [
                 {
@@ -32,9 +32,9 @@ export default class ItemsClient extends AbstractHttpClient {
                     created_at: new Date('2020-05-14 12:33:11.660025'),
                     updated_at: new Date('2020-05-14 12:33:44.250501'),
                 },
-            ].filter((e) => e.parent_id === pageId),
+            ].filter((e: Item) => e.parent_id === parentId),
         )
         // Uncomment when endpoint is implemented
-        // return this.get<Item[]>(`/api/items?page_id=${pageId}`)
+        // return this.get<Item[]>(`/api/items?parent_id=${pageId}`)
     }
 }

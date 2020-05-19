@@ -1,7 +1,7 @@
 import { ItemType, Uuid } from '@/models'
 
-export default interface Page {
+export default interface Todo {
     id: Uuid
-    item_type: ItemType.PAGE
+    item_type: ItemType.TODO
     title: string
 }

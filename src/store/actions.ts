@@ -9,11 +9,13 @@ type ActionHandler = ActionContext<AppState, AppState>
 
 export default {
     async loadPages({ commit }: ActionHandler) {
+        commit('loadPages')
         const pages = await itemsClient.fetchPages()
         commit('pagesLoaded', pages)
     },
-    async loadPage({ commit }: ActionHandler, pageId: Uuid) {
-        const items = await itemsClient.fetchPage(pageId)
-        commit('pageLoaded', { pageId, items })
+    async loadItems({ commit }: ActionHandler, parentId: Uuid) {
+        commit('loadItems')
+        const items = await itemsClient.fetchItemsByParent(parentId)
+        commit('itemsLoaded', items)
     },
 }

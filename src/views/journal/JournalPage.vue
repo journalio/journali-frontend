@@ -1,40 +1,31 @@
 <template>
-    <div v-if="loading">
-        Loading...
-    </div>
-    <div v-else>
-        haha
+    <div class="bg-white w-64 h-64 rounded p-4 relative">
+        <component
+            :is="componentName[item.item_type]"
+            v-for="item of items"
+            :key="item.id"
+            v-bind="item"
+        ></component>
     </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator'
+import TodoList from '@/components/items/TodoList.vue'
+import { ItemType, RenderableItem } from '@/models'
+import Item from '@/models/Item'
+import Page from '@/models/Page'
+import { Component, Prop, Vue } from 'vue-property-decorator'
 
-@Component
+@Component({
+    components: { TodoList },
+})
 export default class JournalPage extends Vue {
-    get loading() {
-        return !(this.pageId in this.$store.state.items)
-    }
+    @Prop(Array) readonly items!: Item[]
+    @Prop(Object) readonly page!: Page
 
-    get pageId() {
-        return this.$route.params.pageId
-    }
-
-    get page() {
-        return this.$store.getters.getPageById(this.pageId)
-    }
-
-    get items() {
-        return this.$store.getters.getPageItems(this.pageId)
-    }
-
-    @Watch('$route')
-    protected loadPage() {
-        this.$store.dispatch('loadPage', this.pageId)
-    }
-
-    protected created() {
-        this.loadPage()
+    readonly componentName: Record<RenderableItem, string> = {
+        [ItemType.TODO]: 'TodoList',
+        [ItemType.TEXT_FIELD]: 'TextField', // TODO: Implement
     }
 }
 </script>

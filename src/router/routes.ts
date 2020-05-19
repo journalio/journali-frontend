@@ -10,7 +10,8 @@ const routes: Array<RouteConfig> = [
             {
                 path: 'page/:pageId',
                 name: 'Page',
-                component: () => import('../views/journal/JournalPage.vue'),
+                component: () =>
+                    import('../containers/JournalPageContainer.vue'),
             },
             { path: '*', component: EmptyJournalPage },
         ],
