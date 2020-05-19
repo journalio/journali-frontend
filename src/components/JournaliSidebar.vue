@@ -1,5 +1,5 @@
 <template>
-    <div class="w-64 bg-white shadow px-4 py-8">
+    <div class="w-64 bg-white shadow px-4 py-8 z-10">
         <div class="text-sm mb-1 text-gray-700">Pages</div>
         <pages-list :pages="pages"></pages-list>
         <hr />

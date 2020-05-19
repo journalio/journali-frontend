@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="p-2">
         <span>{{ title }}</span>
         <ul>
             <li v-for="item of childItems" :key="item.id">
@@ -11,11 +11,11 @@
 
 <script lang="ts">
 import AbstractJournalItem from '@/components/items/AbstractJournalItem'
-import TodoItem from '@/models/TodoItem'
-import { Component } from 'vue-property-decorator'
+import { TodoItem } from '@/models'
+import { Component, Prop } from 'vue-property-decorator'
 
 @Component
 export default class TodoList extends AbstractJournalItem<TodoItem> {
-    title = 'Hello world'
+    @Prop(String) readonly title!: string
 }
 </script>
