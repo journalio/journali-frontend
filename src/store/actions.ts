@@ -1,5 +1,6 @@
 import ItemsClient from '@/lib/http/ItemsClient'
 import { Uuid } from '@/models'
+import Page from '@/models/Page'
 import { AppState } from '@/store/index'
 import { ActionContext } from 'vuex'
 
@@ -17,5 +18,17 @@ export default {
         commit('loadItems')
         const items = await itemsClient.fetchItemsByParent(parentId)
         commit('itemsLoaded', items)
+    },
+    async createPage({ commit }: ActionHandler, data: Page) {
+        commit('loadPages')
+        itemsClient
+            .createPage(data)
+            .then((newPage) => {
+                commit('pagesLoaded', newPage)
+                return newPage.id
+            })
+            .catch((error) => {
+                console.error(error)
+            })
     },
 }

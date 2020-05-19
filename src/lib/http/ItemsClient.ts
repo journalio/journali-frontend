@@ -37,4 +37,13 @@ export default class ItemsClient extends AbstractHttpClient {
         // Uncomment when endpoint is implemented
         // return this.get<Item[]>(`/api/items?parent_id=${pageId}`)
     }
+
+    async createPage(data: Page): Promise<Page> {
+        try {
+            const newPage = await this.post<Page>('/api/pages', data)
+            return newPage
+        } catch {
+            throw 'Creating page failed'
+        }
+    }
 }
