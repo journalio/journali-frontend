@@ -1,12 +1,29 @@
 <template>
-    <div class="flex-1 overflow-hidden flex items-center justify-center">
+    <div
+        class="flex-1 overflow-hidden flex items-center justify-center relative"
+    >
         <router-view></router-view>
+        <router-link
+            v-if="currentPageId"
+            :to="{ name: 'createItem', params: { pageId: currentPageId } }"
+            active-class="hidden"
+            class="absolute bottom-0 right-0 m-6 w-20 h-20 rounded-full shadow bg-gray-300 hover:bg-gray-500"
+        >
+            Create item
+        </router-link>
     </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Watch } from 'vue-property-decorator'
 
 @Component
-export default class JournaliContent extends Vue {}
+export default class JournaliContent extends Vue {
+    currentPageId: string | null = null
+
+    @Watch('$route')
+    updatePageId() {
+        this.currentPageId = this.$route.params.pageId
+    }
+}
 </script>

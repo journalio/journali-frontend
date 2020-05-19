@@ -33,7 +33,7 @@ const store = new Vuex.Store<AppState>({
             state.pagesLoading = true
         },
         itemsLoaded(state, items) {
-            state.items = state.items.concat(items)
+            state.items = items
             state.itemsLoading = false
         },
         pagesLoaded(state, pages) {
