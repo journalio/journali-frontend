@@ -13,6 +13,7 @@ module.exports = {
         'no-console': 'off',
         'no-debugger': 'off',
         'prettier/prettier': 'error',
+        '@typescript-eslint/camelcase': 'off',
     },
 
     overrides: [

@@ -1,7 +1,6 @@
 <template>
-    <div class="Registration">
-        <h1 class="text-3xl">Create an account</h1>
-        <form class="flex flex-col items-center" @submit.prevent="register()">
+    <div>
+        <form class="flex flex-col items-center" @submit.prevent="login()">
             <text-input
                 v-model="username"
                 label="Username"
@@ -11,8 +10,8 @@
             <text-input
                 v-model="password"
                 label="Password"
-                type="password"
                 name="password"
+                type="password"
             />
 
             <input
@@ -21,6 +20,7 @@
                 value="submit"
             />
         </form>
+        <button @click="toRegistration()">Create an account</button>
     </div>
 </template>
 
@@ -34,20 +34,24 @@ const client = new AuthenticationClient()
 @Component({
     components: { TextInput },
 })
-export default class Registration extends Vue {
+export default class Home extends Vue {
     username = ''
     password = ''
 
-    async register() {
+    async login() {
         const credentials = {
             username: this.username,
             password: this.password,
         }
 
-        const registered = client.register(credentials)
-        if (registered) {
-            await this.$router.push('Login')
+        const success = await client.login(credentials)
+        if (success) {
+            await this.$router.push('/')
         }
+    }
+
+    toRegistration() {
+        this.$router.push('/register')
     }
 }
 </script>
