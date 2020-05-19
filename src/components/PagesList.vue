@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts">
-import Page from '@/models/Page'
+import { Page } from '@/models'
 import { Component, Prop, Vue } from 'vue-property-decorator'
 
 @Component

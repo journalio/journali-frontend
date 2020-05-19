@@ -1,8 +1,7 @@
-import { JOURNALI_TOKEN } from '@/constants'
-import { ItemType, Uuid } from '@/models'
-import Item from '@/models/Item'
-import Page from '@/models/Page'
+import { Item, Page } from '@/models/entities'
+import { Uuid } from '@/models/types'
 import actions from '@/store/actions'
+import { JOURNALI_TOKEN } from '@/store/constants'
 import Vue from 'vue'
 import Vuex from 'vuex'
 
@@ -33,7 +32,7 @@ const store = new Vuex.Store<AppState>({
             state.pagesLoading = true
         },
         itemsLoaded(state, items) {
-            state.items = state.items.concat(items)
+            state.items = items
             state.itemsLoading = false
         },
         pagesLoaded(state, pages) {
@@ -48,16 +47,15 @@ const store = new Vuex.Store<AppState>({
             localStorage.setItem(JOURNALI_TOKEN, '')
             state.user = null
         },
+        addItem(state, item) {
+            state.items.push(item)
+        },
     },
     getters: {
         getPageById: (state) => (id: Uuid) =>
             state.pages.find((page) => page.id === id),
         getItemsByParent: (state) => (id: Uuid) =>
             state.items.filter((item) => item.parent_id === id),
-        getItemById: (state) => (id: Uuid, type: ItemType) =>
-            state.items.filter(
-                (item) => item.id === id && item.item_type === type,
-            ),
     },
     actions,
     modules: {},

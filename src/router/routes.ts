@@ -26,7 +26,16 @@ const routes: Array<RouteConfig> = [
                 component: () =>
                     import('../containers/JournalPageContainer.vue'),
             },
-            { path: '*', component: EmptyJournalPage },
+            {
+                path: 'page/:pageId/create',
+                name: 'createItem',
+                component: () =>
+                    import('../containers/CreateItemPageContainer.vue'),
+            },
+            {
+                path: '*',
+                component: EmptyJournalPage,
+            },
         ],
     },
 ]

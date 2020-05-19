@@ -1,8 +1,8 @@
-import { ItemType, Uuid } from '@/models'
-import Item from '@/models/Item'
+import { Item } from '@/models/entities'
+import { ItemType, Uuid } from '@/models/types'
 import { Prop, Vue } from 'vue-property-decorator'
 
-export default class AbstractJournalItem<C = Item> extends Vue {
+export default class AbstractJournalItem<C = Item> extends Vue implements Item {
     @Prop(String) readonly id!: Uuid
     @Prop(Number) readonly item_type!: ItemType
     @Prop(String) readonly parent_id!: Uuid
