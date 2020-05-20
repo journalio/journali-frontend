@@ -1,22 +1,33 @@
 <template>
-    <div class="w-full h-full rounded p-4 relative">
+    <div
+        ref="container"
+        class="w-full h-full rounded p-4 relative"
+        @mousemove="handleDrag"
+    >
         <item-wrapper
             v-for="item of items"
             :key="item.id"
             :item="item"
             :type="componentName[item.item_type]"
+            :class="{ 'z-50': dragData && dragData.item.id === item.id }"
+            @drag-start="dragData = $event"
+            @drag-stop="dragData = null"
         ></item-wrapper>
     </div>
 </template>
 
 <script lang="ts">
 import ItemWrapper from '@/components/ItemWrapper.vue'
-import { Item, Page } from '@/models/entities'
-import { Renderable } from '@/models/traits'
+import { Item, Page, Renderable } from '@/models/entities'
 import { ItemType } from '@/models/types'
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Prop, Ref, Vue } from 'vue-property-decorator'
 
 type RenderableItemType = ItemType.TODO & ItemType.TEXT_FIELD
+type DragData = {
+    item: Item
+    offsetX: number
+    offsetY: number
+}
 
 @Component({
     components: { ItemWrapper },
@@ -24,6 +35,21 @@ type RenderableItemType = ItemType.TODO & ItemType.TEXT_FIELD
 export default class JournalPage extends Vue {
     @Prop(Array) readonly items!: Item[]
     @Prop(Object) readonly page!: Page
+    @Ref('container') readonly container!: HTMLDivElement
+
+    dragData: DragData | null = null
+
+    handleDrag({ clientX, clientY }: MouseEvent) {
+        if (!this.dragData) {
+            return
+        }
+        const offset = this.container.getBoundingClientRect()
+        this.$store.commit('updateItemPosition', {
+            itemId: this.dragData.item.id,
+            x: clientX - offset.x - this.dragData.offsetX,
+            y: clientY - offset.y - this.dragData.offsetY,
+        })
+    }
 
     readonly componentName: Record<RenderableItemType, Renderable> = {
         [ItemType.TODO]: 'Todo',
