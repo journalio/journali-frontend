@@ -9,28 +9,22 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
-import ItemsClient from '@/lib/http/ItemsClient'
+import { Component, Vue, Emit } from 'vue-property-decorator'
 import { Page } from '@/models/entities'
 import { ItemType } from '@/models/types'
-
-const client = new ItemsClient()
 
 @Component
 export default class PageAdder extends Vue {
     addMode = false
     pageName = ''
 
-    addPage() {
+    @Emit('add:page')
+    async addPage() {
         const page: Page = {
             item_type: ItemType.PAGE,
             title: this.pageName,
         }
-        client.createPage(page).then((res) => {
-            if (res?.id) {
-                this.$emit('pageAdded', res.id)
-            }
-        })
+        return (await this.$store.dispatch('createPage', page)).id
     }
 }
 </script>

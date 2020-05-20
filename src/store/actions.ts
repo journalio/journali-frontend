@@ -22,7 +22,7 @@ export default {
     async createPage({ commit }: ActionHandler, data: Page) {
         commit('loadPages')
         const newPage = await itemsClient.createPage(data)
-        commit('pagesLoaded', newPage)
+        commit('pagesAdded', newPage)
         return newPage
     },
     async createItem<T>({ commit }: ActionHandler, item: NewItem<T>) {
