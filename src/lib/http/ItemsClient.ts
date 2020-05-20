@@ -38,4 +38,8 @@ export default class ItemsClient extends AbstractHttpClient {
     createItem<T>(item: NewItem<T>) {
         return this.post<T>(`/api/${endPoints[item.item_type]}`, item)
     }
+
+    async createPage(data: Page): Promise<Page> {
+        return this.post<Page>('/api/pages', data)
+    }
 }
