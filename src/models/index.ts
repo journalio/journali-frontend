@@ -5,7 +5,7 @@ import {
     Todo as ETodo,
     TodoItem as ETodoItem,
 } from '@/models/entities'
-import { ItemType, Uuid } from '@/models/types'
+import { ItemType } from '@/models/types'
 
 export type Page = Item & EPage
 export type TextField = Item & ETextField
@@ -13,7 +13,6 @@ export type Todo = Item & ETodo
 export type TodoItem = Item & ETodoItem
 export type NewItem<T = ETextField | ETodo> = T & {
     item_type: ItemType
-    page_id: Uuid
 }
 
 export const itemTypeFromString = (type: string): ItemType => {

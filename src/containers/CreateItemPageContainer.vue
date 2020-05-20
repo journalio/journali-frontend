@@ -52,6 +52,8 @@ export default class CreateItemPageContainer extends Vue {
         }
         this.$store.dispatch('createItem', {
             page_id: this.$route.params.pageId,
+            coord_x: 0,
+            coord_y: 0,
             ...this.item,
         })
     }

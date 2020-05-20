@@ -21,6 +21,10 @@ import { Component, Vue, Watch } from 'vue-property-decorator'
 export default class JournaliContent extends Vue {
     currentPageId: string | null = null
 
+    mounted() {
+        this.updatePageId()
+    }
+
     @Watch('$route')
     updatePageId() {
         this.currentPageId = this.$route.params.pageId

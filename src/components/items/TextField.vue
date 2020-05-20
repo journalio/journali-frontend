@@ -1,5 +1,7 @@
 <template>
-    <div class="p-2">{{ text }}</div>
+    <div>
+        {{ text }}
+    </div>
 </template>
 
 <script lang="ts">
