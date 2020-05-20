@@ -29,6 +29,10 @@ export default abstract class AbstractHttpClient {
         return this.request<T>('GET', route, null, extraOptions)
     }
 
+    protected async delete<T>(route: string, extraOptions: object = {}) {
+        return this.request<T>('DELETE', route, null, extraOptions)
+    }
+
     private prepareBody = (body: RequestBody): string | Blob => {
         if (body instanceof Blob) {
             return body

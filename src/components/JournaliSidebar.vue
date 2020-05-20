@@ -3,7 +3,7 @@
         <div class="text-sm mb-1 text-gray-700">Pages</div>
         <page-adder @add:page="openPage($event)" />
         <hr />
-        <pages-list :pages="pages"></pages-list>
+        <pages-list :pages="pages" @delete="deletePage($event)"></pages-list>
         <hr />
     </div>
 </template>
@@ -13,6 +13,7 @@ import PagesList from '@/components/PagesList.vue'
 import PageAdder from '@/components/PageAdder.vue'
 import { Component, Vue } from 'vue-property-decorator'
 import { Uuid } from '@/models/types'
+import { Page } from '@/models'
 
 @Component({
     components: { PagesList, PageAdder },
@@ -28,6 +29,10 @@ export default class JournaliSidebar extends Vue {
 
     openPage(pageId: Uuid) {
         this.$router.push(`/page/${pageId}`)
+    }
+
+    deletePage(page: Page) {
+        this.$store.dispatch('deletePage', page)
     }
 }
 </script>

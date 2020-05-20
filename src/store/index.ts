@@ -49,6 +49,16 @@ const store = new Vuex.Store<AppState>({
             }
             state.pages.push(pages)
         },
+        deletePage(state, pageToDelete) {
+            const pageIndex = state.pages
+                .map((page) => {
+                    return page.id
+                })
+                .indexOf(pageToDelete.id)
+
+            // Remove page
+            state.pages.splice(pageIndex, 1)
+        },
         login(state, user) {
             localStorage.setItem(JOURNALI_TOKEN, user)
             state.user = user

@@ -1,14 +1,20 @@
 <template>
     <nav class="flex flex-col">
-        <router-link
+        <div
             v-for="page of pages"
             :key="page.id"
-            :to="`/page/${page.id}`"
-            class="w-full py-3 text-gray-900"
-            active-class="font-bold text-black"
+            class="flex flex-row py-3 text-gray-900"
         >
-            {{ page.title }}
-        </router-link>
+            <router-link
+                :to="`/page/${page.id}`"
+                active-class="font-bold text-black"
+            >
+                {{ page.title }}
+            </router-link>
+            <button @click="$emit('delete', page)">
+                delete
+            </button>
+        </div>
     </nav>
 </template>
 
