@@ -40,11 +40,6 @@ export default class ItemsClient extends AbstractHttpClient {
     }
 
     async createPage(data: Page): Promise<Page> {
-        try {
-            const newPage = await this.post<Page>('/api/pages', data)
-            return newPage
-        } catch {
-            throw 'Creating page failed'
-        }
+        return this.post<Page>('/api/pages', data)
     }
 }

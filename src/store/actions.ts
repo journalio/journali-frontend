@@ -21,15 +21,9 @@ export default {
     },
     async createPage({ commit }: ActionHandler, data: Page) {
         commit('loadPages')
-        itemsClient
-            .createPage(data)
-            .then((newPage) => {
-                commit('pagesLoaded', newPage)
-                return newPage.id
-            })
-            .catch((error) => {
-                console.error(error)
-            })
+        const newPage = await itemsClient.createPage(data)
+        commit('pagesLoaded', newPage)
+        return newPage
     },
     async createItem<T>({ commit }: ActionHandler, item: NewItem<T>) {
         const createdItem = await itemsClient.createItem(item)

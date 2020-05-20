@@ -23,13 +23,12 @@ export default class PageAdder extends Vue {
 
     addPage() {
         const page: Page = {
-            id: 'kek',
             item_type: ItemType.PAGE,
             title: this.pageName,
         }
         client.createPage(page).then((res) => {
-            if (res) {
-                this.$emit('pageAdded', res)
+            if (res?.id) {
+                this.$emit('pageAdded', res.id)
             }
         })
     }

@@ -5,7 +5,7 @@ import { ItemType, Uuid } from '@/models/types'
 
 // Used by all items
 interface Common<T = ItemType> {
-    id: Uuid
+    id?: Uuid
     item_type: T
 }
 
