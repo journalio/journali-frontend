@@ -31,6 +31,7 @@ export default {
         const items = await itemsClient.fetchItemsByParent(parentId)
         commit('itemsLoaded', items)
     },
+
     async createItem<T>({ commit }: ActionHandler, item: NewItem<T>) {
         const createdItem = await itemsClient.createItem(item)
         commit('addItem', createdItem)

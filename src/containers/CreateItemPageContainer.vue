@@ -50,7 +50,7 @@ export default class CreateItemPageContainer extends Vue {
         if (this.itemType === null) {
             throw 'ItemType should not be null at this point'
         }
-        this.$store.commit('createItem', {
+        this.$store.dispatch('createItem', {
             page_id: this.$route.params.pageId,
             coord_x: 0,
             coord_y: 0,
