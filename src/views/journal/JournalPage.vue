@@ -1,30 +1,55 @@
 <template>
-    <div class="bg-white w-full h-full rounded p-4 relative">
-        <component
-            :is="componentName[item.item_type]"
+    <div
+        ref="container"
+        class="w-full h-full rounded p-4 relative"
+        @mousemove="handleDrag"
+    >
+        <item-wrapper
             v-for="item of items"
             :key="item.id"
-            v-bind="item"
-        ></component>
+            :item="item"
+            :type="componentName[item.item_type]"
+            :class="{ 'z-50': dragData && dragData.item.id === item.id }"
+            @drag-start="dragData = $event"
+            @drag-stop="dragData = null"
+        ></item-wrapper>
     </div>
 </template>
 
 <script lang="ts">
-import TextField from '@/components/items/TextField.vue'
-import Todo from '@/components/items/Todo.vue'
-import { Item, Page } from '@/models/entities'
-import { Renderable } from '@/models/traits'
+import ItemWrapper from '@/components/ItemWrapper.vue'
+import { Item, Page, Renderable } from '@/models/entities'
 import { ItemType } from '@/models/types'
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Prop, Ref, Vue } from 'vue-property-decorator'
 
 type RenderableItemType = ItemType.TODO & ItemType.TEXT_FIELD
+type DragData = {
+    item: Item
+    offsetX: number
+    offsetY: number
+}
 
 @Component({
-    components: { Todo, TextField },
+    components: { ItemWrapper },
 })
 export default class JournalPage extends Vue {
     @Prop(Array) readonly items!: Item[]
     @Prop(Object) readonly page!: Page
+    @Ref('container') readonly container!: HTMLDivElement
+
+    dragData: DragData | null = null
+
+    handleDrag({ clientX, clientY }: MouseEvent) {
+        if (!this.dragData) {
+            return
+        }
+        const offset = this.container.getBoundingClientRect()
+        this.$store.dispatch('updateItem', {
+            ...this.dragData.item,
+            coord_x: clientX - offset.x - this.dragData.offsetX,
+            coord_y: clientY - offset.y - this.dragData.offsetY,
+        })
+    }
 
     readonly componentName: Record<RenderableItemType, Renderable> = {
         [ItemType.TODO]: 'Todo',

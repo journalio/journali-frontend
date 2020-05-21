@@ -9,7 +9,12 @@ interface Common<T = ItemType> {
     item_type: T
 }
 
-export interface Item<P = ItemType> extends Common {
+export interface Renderable {
+    coord_x: number
+    coord_y: number
+}
+
+export interface Item<P = ItemType> extends Common, Record<string, any> {
     parent_id: Uuid | null
     parent_type: P | null
     created_at: Date
@@ -24,12 +29,12 @@ export interface Todo extends Common<ItemType.TODO> {
     title: string
 }
 
-export interface TodoItem extends Common<ItemType.TODO_ITEM> {
+export interface TodoItem extends Common<ItemType.TODO_ITEM>, Renderable {
     title: string
     is_checked: boolean
 }
 
-export interface TextField extends Common<ItemType.TEXT_FIELD> {
+export interface TextField extends Common<ItemType.TEXT_FIELD>, Renderable {
     text: string
 }
 

@@ -2,6 +2,8 @@ import ItemsClient from '@/lib/http/ItemsClient'
 import UsersClient from '@/lib/http/UsersClient'
 import { NewItem, Page } from '@/models'
 import { User } from '@/models/entities'
+import { debounce } from '@/lib/utils'
+import { Item, Renderable } from '@/models/entities'
 import { Uuid } from '@/models/types'
 import { AppState } from '@/store/index'
 import { ActionContext } from 'vuex'
@@ -10,6 +12,10 @@ const itemsClient = new ItemsClient()
 const usersClient = new UsersClient()
 
 type ActionHandler = ActionContext<AppState, AppState>
+
+const updateItemDebounced = debounce<Item, Promise<Item>>((item) =>
+    itemsClient.updateItem(item),
+)
 
 export default {
     async loadPages({ commit }: ActionHandler) {
@@ -28,11 +34,21 @@ export default {
         const items = await itemsClient.fetchItemsByParent(parentId)
         commit('itemsLoaded', items)
     },
+
     async createItem<T>({ commit }: ActionHandler, item: NewItem<T>) {
         const createdItem = await itemsClient.createItem(item)
         commit('addItem', createdItem)
         return createdItem
     },
+
+    async updateItem<T extends Item & Renderable>(
+        { commit }: ActionHandler,
+        item: T,
+    ): Promise<Item> {
+        commit('updateItem', item)
+        return updateItemDebounced(item)
+    },
+
     async deletePage({ commit }: ActionHandler, page: Page) {
         await itemsClient.deleteItem(page)
         // TODO: add error handling, cuz we shouldn't remove an item from the store when deleting it failed

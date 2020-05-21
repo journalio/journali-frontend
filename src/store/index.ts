@@ -1,4 +1,4 @@
-import { Item, Page, User } from '@/models/entities'
+import { Item, Page, Renderable, User } from '@/models/entities'
 import { Uuid } from '@/models/types'
 import actions from '@/store/actions'
 import { JOURNALI_TOKEN } from '@/store/constants'
@@ -13,7 +13,7 @@ export interface AppState {
     token: string | null
     pages: Page[]
     pagesLoading: boolean
-    items: Item[]
+    items: (Item & Renderable)[]
     itemsLoading: boolean
 }
 
@@ -76,6 +76,10 @@ const store = new Vuex.Store<AppState>({
         userUpdated(state, user) {
             state.user = user
             state.userLoading = false
+        },
+        updateItem(state, item) {
+            const itemIndex = state.items.findIndex((i) => i.id === item.id)!
+            Vue.set(state.items, itemIndex, item)
         },
     },
     getters: {
