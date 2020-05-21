@@ -39,6 +39,21 @@ const store = new Vuex.Store<AppState>({
             state.pages = pages
             state.pagesLoading = false
         },
+        // Used when adding pages rather than refreshing
+        pagesAdded(state, pages: Array<Page> | Page) {
+            state.pagesLoading = false
+
+            if (pages instanceof Array) {
+                Array.prototype.push.apply(state.pages, pages)
+                return
+            }
+            state.pages.push(pages)
+        },
+        deletePage(state, pageToDelete: Page) {
+            state.pages = state.pages.filter(
+                (page) => page.id !== pageToDelete.id,
+            )
+        },
         login(state, user) {
             localStorage.setItem(JOURNALI_TOKEN, user)
             state.user = user

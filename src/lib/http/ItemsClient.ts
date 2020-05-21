@@ -28,6 +28,10 @@ export default class ItemsClient extends AbstractHttpClient {
         // return this.get<Page[]>('/api/pages')
     }
 
+    async createPage(data: Page): Promise<Page> {
+        return this.post<Page>('/api/pages', data)
+    }
+
     async fetchItemsByParent(parentId: Uuid): Promise<Item[]> {
         const items = await this.get<Item[]>(`/api/items?parent_id=${parentId}`)
         // Uncomment when endpoint is implemented
@@ -44,5 +48,13 @@ export default class ItemsClient extends AbstractHttpClient {
             `/api/${endPoints[item.item_type]}/${item.id}`,
             item,
         )
+    }
+
+    deleteItem<T>(item: Item) {
+        if (!item.id) {
+            // TODO: handle this in a more robust way
+            throw 'This item has no Id, probably doesn\'t exist in the API yet'
+        }
+        return this.delete<T>(`/api/${endPoints[item.item_type]}/${item.id}`)
     }
 }
