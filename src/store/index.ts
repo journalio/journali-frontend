@@ -1,4 +1,4 @@
-import { Item, Page } from '@/models/entities'
+import { Item, Page, User } from '@/models/entities'
 import { Uuid } from '@/models/types'
 import actions from '@/store/actions'
 import { JOURNALI_TOKEN } from '@/store/constants'
@@ -8,7 +8,9 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 export interface AppState {
-    user: string | null
+    user: User
+    userLoading: boolean
+    token: string | null
     pages: Page[]
     pagesLoading: boolean
     items: Item[]
@@ -18,7 +20,9 @@ export interface AppState {
 const store = new Vuex.Store<AppState>({
     strict: process.env.NODE_ENV !== 'production',
     state: {
-        user: localStorage.getItem(JOURNALI_TOKEN),
+        user: { username: '' },
+        userLoading: false,
+        token: localStorage.getItem(JOURNALI_TOKEN),
         pages: [],
         pagesLoading: false,
         items: [],
@@ -54,16 +58,24 @@ const store = new Vuex.Store<AppState>({
                 (page) => page.id !== pageToDelete.id,
             )
         },
-        login(state, user) {
-            localStorage.setItem(JOURNALI_TOKEN, user)
-            state.user = user
+        login(state, token) {
+            localStorage.setItem(JOURNALI_TOKEN, token)
+            state.token = token
         },
         logout(state) {
             localStorage.setItem(JOURNALI_TOKEN, '')
-            state.user = null
+            state.token = null
         },
         addItem(state, item) {
             state.items.push(item)
+        },
+        updateUser(state) {
+            // TODO: needs to be refactored
+            state.userLoading = true
+        },
+        userUpdated(state, user) {
+            state.user = user
+            state.userLoading = false
         },
     },
     getters: {
@@ -71,6 +83,7 @@ const store = new Vuex.Store<AppState>({
             state.pages.find((page) => page.id === id),
         getItemsByParent: (state) => (id: Uuid) =>
             state.items.filter((item) => item.parent_id === id),
+        getUser: (state) => () => state.user,
     },
     actions,
     modules: {},

@@ -33,6 +33,12 @@ const routes: Array<RouteConfig> = [
                     import('../containers/CreateItemPageContainer.vue'),
             },
             {
+                // TODO: putting the user settings page in the same place as containers may not be the right thing to do?
+                path: 'user-settings',
+                name: 'UserSettings',
+                component: () => import('../views/UserSettings.vue'),
+            },
+            {
                 path: '*',
                 component: EmptyJournalPage,
             },

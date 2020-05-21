@@ -32,3 +32,8 @@ export interface TodoItem extends Common<ItemType.TODO_ITEM> {
 export interface TextField extends Common<ItemType.TEXT_FIELD> {
     text: string
 }
+
+export interface User {
+    // does a user have a Uuid? 🤔🤔🤔
+    username: string
+}
