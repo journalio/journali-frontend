@@ -65,10 +65,9 @@ const store = new Vuex.Store<AppState>({
         addItem(state, item) {
             state.items.push(item)
         },
-        updateItemPosition(state, payload) {
-            const item = state.items.find((i) => i.id === payload.item.id)!
-            item.coord_x = payload.x
-            item.coord_y = payload.y
+        updateItem(state, item) {
+            const itemIndex = state.items.findIndex((i) => i.id === item.id)!
+            Vue.set(state.items, itemIndex, item)
         },
     },
     getters: {

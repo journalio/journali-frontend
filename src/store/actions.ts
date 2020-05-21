@@ -38,12 +38,11 @@ export default {
         return createdItem
     },
 
-    async updateItemPosition<T extends Renderable & Item>(
+    async updateItem<T extends Item & Renderable>(
         { commit }: ActionHandler,
-        payload: { item: T },
+        item: T,
     ): Promise<Item> {
-        const { item } = payload
-        commit('updateItemPosition', payload)
+        commit('updateItem', item)
         return updateItemDebounced(item)
     },
 
