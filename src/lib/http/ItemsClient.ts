@@ -39,11 +39,18 @@ export default class ItemsClient extends AbstractHttpClient {
         return items.map((e) => Object.values(e)[0])
     }
 
-    createItem<T>(item: NewItem<T>) {
+    createItem<T>(item: NewItem<T>): Promise<T> {
         return this.post<T>(`/api/${endPoints[item.item_type]}`, item)
     }
 
-    async deleteItem<T>(item: Item) {
+    updateItem<T extends Item>(item: T): Promise<T> {
+        return this.patch<T>(
+            `/api/${endPoints[item.item_type]}/${item.id}`,
+            item,
+        )
+    }
+
+    deleteItem<T>(item: Item) {
         if (!item.id) {
             // TODO: handle this in a more robust way
             throw 'This item has no Id, probably doesn\'t exist in the API yet'

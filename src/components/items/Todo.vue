@@ -1,6 +1,6 @@
 <template>
-    <div class="p-2">
-        <span>{{ title }}</span>
+    <div>
+        <span class="font-bold">{{ title }}</span>
         <ul>
             <li v-for="item of childItems" :key="item.id">
                 {{ item.id }}

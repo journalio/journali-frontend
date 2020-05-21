@@ -25,6 +25,10 @@ export default abstract class AbstractHttpClient {
         return this.request<T>('POST', route, data)
     }
 
+    protected async patch<T>(route: string, data: RequestBody) {
+        return this.request<T>('PATCH', route, data)
+    }
+
     protected async get<T>(route: string, extraOptions: object = {}) {
         return this.request<T>('GET', route, null, extraOptions)
     }
