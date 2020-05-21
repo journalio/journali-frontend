@@ -15,22 +15,15 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator'
+import { Component, Vue } from 'vue-property-decorator'
 import IconAdd from '../assets/icon-add.svg'
 
 @Component({
     components: { IconAdd },
 })
 export default class JournaliContent extends Vue {
-    currentPageId: string | null = null
-
-    mounted() {
-        this.updatePageId()
-    }
-
-    @Watch('$route')
-    updatePageId() {
-        this.currentPageId = this.$route.params.pageId
+    get currentPageId() {
+        return this.$route.params.pageId
     }
 }
 </script>
