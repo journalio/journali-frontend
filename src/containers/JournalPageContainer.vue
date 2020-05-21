@@ -1,10 +1,8 @@
 <template>
-    <div class="w-full h-full p-4">
-        <div v-if="loading">
-            Loading...
-        </div>
-        <journal-page v-else :items="items" :page="page" />
+    <div v-if="loading">
+        Loading...
     </div>
+    <journal-page v-else :items="items" :page="page" />
 </template>
 
 <script lang="ts">
