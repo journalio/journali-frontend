@@ -51,14 +51,13 @@ export default {
 
     async deletePage({ commit }: ActionHandler, page: Page) {
         await itemsClient.deleteItem(page)
-        // TODO: add error handling, cuz we shouldn't remove an item from the store when deleting it failed
         commit('deletePage', page)
     },
-    async updateUser({ commit }: ActionHandler, user: User) {
-        commit('updateUser')
+    // TODO: consider expanding this into a general updateUser method that also checks if user.id === state.me.id
+    async updateMe({ commit }: ActionHandler, user: User): Promise<User> {
+        commit('updateMe')
         const updatedUser = await usersClient.updateUser(user)
-        // TODO: add error handling, cuz we shouldn't remove an item from the store when deleting it failed
-        commit('userUpdated', updatedUser)
+        commit('meUpdated', updatedUser)
         return updatedUser
     },
 }

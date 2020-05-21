@@ -4,13 +4,13 @@
         @submit.prevent="save()"
     >
         <text-input
-            v-model="user.username"
+            v-model="me.username"
             label="Username"
             type="username"
             name="username"
         />
         <text-input
-            v-model="user.password"
+            v-model="me.password"
             label="Password"
             type="password"
             name="password"
@@ -20,6 +20,7 @@
             class="my-4 rounded px-4 py-1 bg-white text-gray-800 border-gray-800 border font-bold uppercase w-24"
             type="submit"
             value="Save"
+            :disabled="!saveable"
         />
     </form>
 </template>
@@ -32,21 +33,32 @@ import { User } from '@/models/entities'
     components: { TextInput },
 })
 export default class UserSettings extends Vue {
-    user: User = { username: '' }
+    // will contain user object
+    me = {}
 
-    get storeUser() {
-        return this.$store.getters.getUser()
+    protected created() {
+        this.me = Object.assign({}, this.$store.getters.getMe())
+    }
+
+    get storeMe(): User {
+        return this.$store.getters.getMe()
+    }
+
+    get saveable(): boolean {
+        // return this.user?.id
+        return true
     }
 
     @Watch('storeUser', { deep: true })
     protected updateUser() {
-        console.log('getting user from store!!!')
-        const storeUser = this.$store.getters.getUser()
+        console.log('getting Me from store!!!')
         // copy the user object and add a password field so the user can edit it
-        this.user = Object.assign({ password: '' }, storeUser)
+        this.me = Object.assign({ password: '' }, this.me)
     }
     save() {
-        this.$store.dispatch('updateUser', this.user)
+        if (this.saveable) {
+            this.$store.dispatch('updateMe', this.me)
+        }
     }
 }
 </script>

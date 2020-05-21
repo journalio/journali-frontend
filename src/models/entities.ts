@@ -39,6 +39,6 @@ export interface TextField extends Common<ItemType.TEXT_FIELD>, Renderable {
 }
 
 export interface User {
-    // does a user have a Uuid? 🤔🤔🤔
+    id: Uuid
     username: string
 }
