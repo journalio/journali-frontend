@@ -46,8 +46,8 @@ export default class Registration extends Vue {
     }
 
     async register() {
-        const res = await client.register(this.credentials)
-        if (res) this.$router.push('login')
+        await client.register(this.credentials)
+        this.$router.push('login')
     }
 }
 </script>
