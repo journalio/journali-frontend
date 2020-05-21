@@ -1,7 +1,7 @@
 <template>
     <div
         :style="{ left: `${item.coord_x}px`, top: `${item.coord_y}px` }"
-        class="p-4 rounded bg-white absolute shadow"
+        class="p-4 rounded bg-white absolute shadow select-none"
         @mouseup="stopDragging"
         @mousedown="startDragging"
     >
