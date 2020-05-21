@@ -51,7 +51,7 @@ const store = new Vuex.Store<AppState>({
             state.items.push(item)
         },
         updateItemPosition(state, payload) {
-            const item = state.items.find((i) => i.id === payload.itemId)!
+            const item = state.items.find((i) => i.id === payload.item.id)!
             item.coord_x = payload.x
             item.coord_y = payload.y
         },

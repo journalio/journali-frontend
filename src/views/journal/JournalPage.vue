@@ -44,8 +44,8 @@ export default class JournalPage extends Vue {
             return
         }
         const offset = this.container.getBoundingClientRect()
-        this.$store.commit('updateItemPosition', {
-            itemId: this.dragData.item.id,
+        this.$store.dispatch('updateItemPosition', {
+            item: this.dragData.item,
             x: clientX - offset.x - this.dragData.offsetX,
             y: clientY - offset.y - this.dragData.offsetY,
         })

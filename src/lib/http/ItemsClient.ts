@@ -35,7 +35,14 @@ export default class ItemsClient extends AbstractHttpClient {
         return items.map((e) => Object.values(e)[0])
     }
 
-    createItem<T>(item: NewItem<T>) {
+    createItem<T>(item: NewItem<T>): Promise<T> {
         return this.post<T>(`/api/${endPoints[item.item_type]}`, item)
+    }
+
+    updateItem<T extends Item>(item: T): Promise<T> {
+        return this.patch<T>(
+            `/api/${endPoints[item.item_type]}/${item.id}`,
+            item,
+        )
     }
 }
