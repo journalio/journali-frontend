@@ -3,13 +3,13 @@
         <h1 class="text-3xl">Create an account</h1>
         <form class="flex flex-col items-center" @submit.prevent="register()">
             <text-input
-                v-model="username"
+                v-model="credentials.username"
                 label="Username"
                 type="username"
                 name="username"
             />
             <text-input
-                v-model="password"
+                v-model="credentials.password"
                 label="Password"
                 type="password"
                 name="password"
@@ -19,6 +19,7 @@
                 class="my-4 rounded px-4 py-1 bg-white text-gray-800 border-gray-800 border font-bold uppercase w-24"
                 type="submit"
                 value="submit"
+                :disabled="!submittable"
             />
         </form>
     </div>
@@ -35,19 +36,18 @@ const client = new AuthenticationClient()
     components: { TextInput },
 })
 export default class Registration extends Vue {
-    username = ''
-    password = ''
+    credentials = {
+        username: '',
+        password: '',
+    }
+
+    get submittable(): boolean {
+        return !!this.credentials.username && !!this.credentials.password
+    }
 
     async register() {
-        const credentials = {
-            username: this.username,
-            password: this.password,
-        }
-
-        const registered = client.register(credentials)
-        if (registered) {
-            await this.$router.push('Login')
-        }
+        const res = await client.register(this.credentials)
+        if (res) this.$router.push('login')
     }
 }
 </script>
