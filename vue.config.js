@@ -13,7 +13,7 @@ module.exports = {
     },
     configureWebpack: {
         watchOptions: {
-            poll: true,
+            poll: DOCKER,
         },
     },
 }
