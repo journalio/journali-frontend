@@ -37,24 +37,24 @@ export default class UserSettings extends Vue {
     me = {}
 
     protected created() {
-        this.me = Object.assign({}, this.$store.getters.getMe())
-    }
-
-    get storeMe(): User {
-        return this.$store.getters.getMe()
+        this.me = this.storeMe
     }
 
     get saveable(): boolean {
-        // return this.user?.id
-        return true
+        // must have an id and must change username and/or password
+        return this.me.id && !!(this.me.username || this.me.password)
     }
 
-    @Watch('storeUser', { deep: true })
-    protected updateUser() {
-        console.log('getting Me from store!!!')
-        // copy the user object and add a password field so the user can edit it
-        this.me = Object.assign({ password: '' }, this.me)
+    get storeMe(): User {
+        // Copy object for use, because you can't edit objects from store)
+        return Object.assign({}, this.$store.getters.getMe())
     }
+    @Watch('storeMe', { deep: true })
+    protected updateUser() {
+        // copy the user object and add a password field so the user can edit it
+        this.me = Object.assign({ password: '' }, this.storeMe)
+    }
+
     save() {
         if (this.saveable) {
             this.$store.dispatch('updateMe', this.me)
