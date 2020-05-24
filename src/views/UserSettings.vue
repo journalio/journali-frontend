@@ -34,7 +34,7 @@ import { User } from '@/models/entities'
 })
 export default class UserSettings extends Vue {
     // will contain user object
-    me = {}
+    me = null
 
     protected created() {
         this.me = this.storeMe
@@ -42,7 +42,7 @@ export default class UserSettings extends Vue {
 
     get saveable(): boolean {
         // must have an id and must change username and/or password
-        return this.me.id && !!(this.me.username || this.me.password)
+        return this.me?.id && !!(this.me?.username || this.me?.password)
     }
 
     get storeMe(): User {
@@ -52,7 +52,10 @@ export default class UserSettings extends Vue {
     @Watch('storeMe', { deep: true })
     protected updateUser() {
         // copy the user object and add a password field so the user can edit it
-        this.me = Object.assign({ password: '' }, this.storeMe)
+        this.me = {
+            password: '',
+            ...this.storeMe,
+        }
     }
 
     save() {

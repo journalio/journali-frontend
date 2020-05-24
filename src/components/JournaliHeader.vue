@@ -7,7 +7,7 @@
             <span class="font-bold">&gt;</span> {{ currentPageName }}
         </span>
         <div class="flex-1"></div>
-        <button @click="toUserSettings">User Settings</button>
+        <button @click="$router.push('/user-settings')">User Settings</button>
         <button @click="logout">Logout</button>
     </header>
 </template>
@@ -29,10 +29,6 @@ export default class JournaliHeader extends Vue {
     setCurrentPageName() {
         const { pageId } = this.$router.currentRoute.params
         this.currentPageName = this.$store.getters.getPageById(pageId)?.title
-    }
-
-    toUserSettings() {
-        this.$router.push('/user-settings')
     }
 }
 </script>
