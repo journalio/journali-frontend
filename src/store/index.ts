@@ -1,4 +1,4 @@
-import { Item, Page, Renderable } from '@/models/entities'
+import { Item, Page, Renderable, User } from '@/models/entities'
 import { Uuid } from '@/models/types'
 import actions from '@/store/actions'
 import { JOURNALI_TOKEN } from '@/store/constants'
@@ -8,7 +8,9 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 export interface AppState {
-    user: string | null
+    user: User | null
+    userLoading: boolean
+    token: string | null
     pages: Page[]
     pagesLoading: boolean
     items: (Item & Renderable)[]
@@ -18,7 +20,9 @@ export interface AppState {
 const store = new Vuex.Store<AppState>({
     strict: process.env.NODE_ENV !== 'production',
     state: {
-        user: localStorage.getItem(JOURNALI_TOKEN),
+        user: null,
+        userLoading: false,
+        token: localStorage.getItem(JOURNALI_TOKEN) || null,
         pages: [],
         pagesLoading: false,
         items: [],
@@ -54,18 +58,25 @@ const store = new Vuex.Store<AppState>({
                 (page) => page.id !== pageToDelete.id,
             )
         },
-        login(state, user) {
-            localStorage.setItem(JOURNALI_TOKEN, user)
-            state.user = user
+        login(state, token) {
+            localStorage.setItem(JOURNALI_TOKEN, token)
+            state.token = token
         },
         logout(state) {
-            localStorage.setItem(JOURNALI_TOKEN, '')
-            state.user = null
+            localStorage.clear()
+            state.token = null
         },
         addItem(state, item) {
             state.items.push(item)
         },
-        updateItem(state, item) {
+        isLoadingUser(state, loading: boolean) {
+            state.userLoading = loading
+        },
+        userLoaded(state, user: User) {
+            state.user = user
+            state.userLoading = false
+        },
+        updateItem(state, item: Item) {
             const itemIndex = state.items.findIndex((i) => i.id === item.id)!
             Vue.set(state.items, itemIndex, item)
         },

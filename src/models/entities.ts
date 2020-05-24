@@ -37,3 +37,9 @@ export interface TodoItem extends Common<ItemType.TODO_ITEM>, Renderable {
 export interface TextField extends Common<ItemType.TEXT_FIELD>, Renderable {
     text: string
 }
+
+export interface User {
+    id: Uuid
+    username: string
+    password?: string
+}

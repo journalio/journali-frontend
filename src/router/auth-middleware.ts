@@ -5,8 +5,9 @@ const allowedRoutes = ['Login', 'Registration']
 
 const register = (router: VueRouter) =>
     router.beforeEach((to, from, next) => {
-        const { user } = store.state
-        if (to.name && !allowedRoutes.includes(to.name) && user === null) {
+        const { token } = store.state
+
+        if (token === null && (!to.name || !allowedRoutes.includes(to.name))) {
             next({ name: 'Login' })
         } else {
             next()

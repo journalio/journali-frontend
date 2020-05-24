@@ -1,12 +1,14 @@
 import ItemsClient from '@/lib/http/ItemsClient'
+import UsersClient from '@/lib/http/UsersClient'
 import { debounce } from '@/lib/utils'
 import { NewItem, Page } from '@/models'
-import { Item, Renderable } from '@/models/entities'
+import { Item, Renderable, User } from '@/models/entities'
 import { Uuid } from '@/models/types'
 import { AppState } from '@/store/index'
 import { ActionContext } from 'vuex'
 
 const itemsClient = new ItemsClient()
+const usersClient = new UsersClient()
 
 type ActionHandler = ActionContext<AppState, AppState>
 
@@ -48,7 +50,21 @@ export default {
 
     async deletePage({ commit }: ActionHandler, page: Page) {
         await itemsClient.deleteItem(page)
-        // TODO: add error handling, cuz we shouldn't remove an item from the store when deleting it failed
         commit('deletePage', page)
+    },
+
+    // TODO: consider expanding this into a general updateUser method that also checks if user.id === state.me.id
+    async updateUser({ commit }: ActionHandler, user: User): Promise<User> {
+        commit('isLoadingUser', true)
+        const updatedUser = await usersClient.updateUser(user)
+        commit('userLoaded', updatedUser)
+        return updatedUser
+    },
+
+    async loadAuthenticatedUser({ commit }: ActionHandler): Promise<User> {
+        commit('isLoadingUser', true)
+        const user = await usersClient.fetchAuthenticatedUser()
+        commit('userLoaded', user)
+        return user
     },
 }
