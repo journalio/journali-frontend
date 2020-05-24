@@ -4,18 +4,20 @@
         @submit.prevent="save()"
     >
         <text-input
-            v-model="me.username"
-            label="Username"
-            type="username"
-            name="username"
-        />
-        <text-input
-            v-model="me.password"
+            v-model="password"
+            autocomplete="new-password"
             label="Password"
             type="password"
             name="password"
         />
 
+        <text-input
+            v-model="passwordConfirm"
+            autocomplete="new-password"
+            label="Confirm password"
+            name="password-confirm"
+            type="password"
+        />
         <input
             class="my-4 rounded px-4 py-1 bg-white text-gray-800 border-gray-800 border font-bold uppercase w-24"
             type="submit"
@@ -26,42 +28,30 @@
 </template>
 <script lang="ts">
 import TextInput from '@/components/TextInput.vue'
-import { Component, Vue, Watch } from 'vue-property-decorator'
-import { User } from '@/models/entities'
+import { Component, Vue } from 'vue-property-decorator'
 
 @Component({
     components: { TextInput },
 })
 export default class UserSettings extends Vue {
-    // will contain user object
-    me = null
-
-    protected created() {
-        this.me = this.storeMe
-    }
+    protected password = ''
+    protected passwordConfirm = ''
 
     get saveable(): boolean {
-        // must have an id and must change username and/or password
-        return this.me?.id && !!(this.me?.username || this.me?.password)
-    }
-
-    get storeMe(): User {
-        // Copy object for use, because you can't edit objects from store)
-        return Object.assign({}, this.$store.getters.getMe())
-    }
-    @Watch('storeMe', { deep: true })
-    protected updateUser() {
-        // copy the user object and add a password field so the user can edit it
-        this.me = {
-            password: '',
-            ...this.storeMe,
-        }
+        // Password requirements are at least six characters and should be confirmed
+        return (
+            this.password.length > 6 && this.passwordConfirm === this.password
+        )
     }
 
     save() {
-        if (this.saveable) {
-            this.$store.dispatch('updateMe', this.me)
+        if (!this.saveable) {
+            return
         }
+        this.$store.dispatch('updateUser', {
+            password: this.password,
+            passwordConfirm: this.passwordConfirm,
+        })
     }
 }
 </script>

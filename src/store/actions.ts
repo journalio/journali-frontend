@@ -1,9 +1,8 @@
 import ItemsClient from '@/lib/http/ItemsClient'
 import UsersClient from '@/lib/http/UsersClient'
-import { NewItem, Page } from '@/models'
-import { User } from '@/models/entities'
 import { debounce } from '@/lib/utils'
-import { Item, Renderable } from '@/models/entities'
+import { NewItem, Page } from '@/models'
+import { Item, Renderable, User } from '@/models/entities'
 import { Uuid } from '@/models/types'
 import { AppState } from '@/store/index'
 import { ActionContext } from 'vuex'
@@ -53,11 +52,19 @@ export default {
         await itemsClient.deleteItem(page)
         commit('deletePage', page)
     },
+
     // TODO: consider expanding this into a general updateUser method that also checks if user.id === state.me.id
-    async updateMe({ commit }: ActionHandler, user: User): Promise<User> {
-        commit('updateMe')
+    async updateUser({ commit }: ActionHandler, user: User): Promise<User> {
+        commit('isLoadingUser', true)
         const updatedUser = await usersClient.updateUser(user)
-        commit('meUpdated', updatedUser)
+        commit('userLoaded', updatedUser)
         return updatedUser
+    },
+
+    async loadAuthenticatedUser({ commit }: ActionHandler): Promise<User> {
+        commit('isLoadingUser', true)
+        const user = await usersClient.fetchAuthenticatedUser()
+        commit('userLoaded', user)
+        return user
     },
 }

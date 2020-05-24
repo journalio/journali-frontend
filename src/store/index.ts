@@ -8,8 +8,8 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 export interface AppState {
-    me: User
-    meLoading: boolean
+    user: User | null
+    userLoading: boolean
     token: string | null
     pages: Page[]
     pagesLoading: boolean
@@ -20,9 +20,9 @@ export interface AppState {
 const store = new Vuex.Store<AppState>({
     strict: process.env.NODE_ENV !== 'production',
     state: {
-        me: { id: '', username: '' },
-        meLoading: false,
-        token: localStorage.getItem(JOURNALI_TOKEN),
+        user: null,
+        userLoading: false,
+        token: localStorage.getItem(JOURNALI_TOKEN) || null,
         pages: [],
         pagesLoading: false,
         items: [],
@@ -63,21 +63,20 @@ const store = new Vuex.Store<AppState>({
             state.token = token
         },
         logout(state) {
-            localStorage.setItem(JOURNALI_TOKEN, '')
+            localStorage.clear()
             state.token = null
         },
         addItem(state, item) {
             state.items.push(item)
         },
-        updateMe(state) {
-            // TODO: needs to be refactored
-            state.meLoading = true
+        isLoadingUser(state, loading: boolean) {
+            state.userLoading = loading
         },
-        meUpdated(state, user) {
-            state.me = user
-            state.meLoading = false
+        userLoaded(state, user: User) {
+            state.user = user
+            state.userLoading = false
         },
-        updateItem(state, item) {
+        updateItem(state, item: Item) {
             const itemIndex = state.items.findIndex((i) => i.id === item.id)!
             Vue.set(state.items, itemIndex, item)
         },
@@ -87,7 +86,6 @@ const store = new Vuex.Store<AppState>({
             state.pages.find((page) => page.id === id),
         getItemsByParent: (state) => (id: Uuid) =>
             state.items.filter((item) => item.parent_id === id),
-        getMe: (state) => () => state.me,
     },
     actions,
     modules: {},
