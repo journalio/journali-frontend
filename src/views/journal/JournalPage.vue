@@ -3,6 +3,7 @@
         ref="container"
         class="w-full h-full rounded p-4 relative"
         @mousemove="handleDrag"
+        @mouseleave="dragData = null"
     >
         <item-wrapper
             v-for="item of items"
