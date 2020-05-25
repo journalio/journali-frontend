@@ -27,10 +27,7 @@
 
 <script lang="ts">
 import TextInput from '@/components/TextInput.vue'
-import AuthenticationClient from '@/lib/http/AuthenticationClient'
 import { Component, Vue } from 'vue-property-decorator'
-
-const client = new AuthenticationClient()
 
 @Component({
     components: { TextInput },
@@ -46,7 +43,7 @@ export default class Registration extends Vue {
     }
 
     async register() {
-        await client.register(this.credentials)
+        await this.$store.dispatch('register', this.credentials)
         this.$router.push('login')
     }
 }

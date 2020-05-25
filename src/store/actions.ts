@@ -61,6 +61,15 @@ export default {
         return updatedUser
     },
 
+    async register({ commit }: ActionHandler, user: User): Promise<User> {
+        commit('isLoadingUser', true) //TODO: remove after deadline
+        const registeredUser = await usersClient.register(user)
+
+        // only for making stuff work for the deadline. loadAuthenticatedUser should do this eventually
+        commit('userLoaded', registeredUser) //TODO: remove after deadline
+        return registeredUser
+    },
+
     async loadAuthenticatedUser({ commit }: ActionHandler): Promise<User> {
         commit('isLoadingUser', true)
         const user = await usersClient.fetchAuthenticatedUser()

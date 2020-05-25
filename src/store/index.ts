@@ -64,6 +64,7 @@ const store = new Vuex.Store<AppState>({
         },
         logout(state) {
             localStorage.clear()
+            state.user = null
             state.token = null
         },
         addItem(state, item) {
