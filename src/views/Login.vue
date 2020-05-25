@@ -3,13 +3,13 @@
         class="w-screen h-screen flex items-center justify-center bg-gray-200 login-background"
     >
         <form
-            class="flex flex-col bg-white rounded shadow p-8"
+            class="flex flex-col bg-white rounded shadow py-8 px-16"
             @submit.prevent="login()"
         >
             <icon-book-open class="-mt-32"></icon-book-open>
             <h1 class="text-2xl mb-2 font-display">Welcome back</h1>
 
-            <p class="text-sm text-gray-600 w-56 mt-2 mb-1">
+            <p class="text-sm text-gray-600 w-64 mt-2 mb-1">
                 Enter your username and password to sign in.
             </p>
 
