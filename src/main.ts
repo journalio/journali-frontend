@@ -1,6 +1,7 @@
 import '@/lib/class-component-hooks'
 import Vue from 'vue'
 import App from './App.vue'
+import './assets/fonts.css'
 
 import './assets/tailwind.css'
 import router from './router'

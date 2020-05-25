@@ -1,7 +1,7 @@
 <template>
     <div
         ref="container"
-        class="w-full h-full rounded p-4 relative"
+        class="w-full h-full rounded p-4 relative journal-background"
         @mousemove="handleDrag"
         @mouseleave="dragData = null"
     >

@@ -16,7 +16,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import IconAdd from '../assets/icon-add.svg'
+import IconAdd from '../assets/icons/icon-add.svg'
 
 @Component({
     components: { IconAdd },

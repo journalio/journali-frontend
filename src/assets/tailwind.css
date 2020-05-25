@@ -2,4 +2,18 @@
 
 @tailwind components;
 
+body {
+    @apply font-body;
+}
+
 @tailwind utilities;
+
+.login-background {
+    background-image: url('./login-background.svg');
+    background-size: 40px 40px;
+}
+
+.journal-background {
+    background-image: url('./journal-background.svg');
+    background-size: 40px 40px;
+}

@@ -1,11 +1,8 @@
 <template>
     <header
-        class="w-full h-20 px-4 py-6 flex bg-white shadow-md z-20 leading-8"
+        class="w-full h-20 px-4 py-6 flex items-baseline bg-white shadow-md z-20"
     >
-        <h1 class="text-bold text-xl">Journali</h1>
-        <span v-if="currentPageName" class="text-gray-900 ml-6">
-            <span class="font-bold">&gt;</span> {{ currentPageName }}
-        </span>
+        <h1 class="text-bold text-2xl font-display text-primary">Journali</h1>
         <div class="flex-1"></div>
         <nav>
             <router-link class="nav-item" to="/user-settings">
@@ -22,8 +19,8 @@
 
 <script>
 import { Component, Vue, Watch } from 'vue-property-decorator'
-import IconUser from '../assets/icon-user.svg'
-import IconDoorExit from '../assets/icon-door-exit.svg'
+import IconUser from '../assets/icons/icon-user.svg'
+import IconDoorExit from '../assets/icons/icon-door-exit.svg'
 import store from '@/store'
 
 @Component({

@@ -4,10 +4,10 @@
             v-for="page of pages"
             :key="page.id"
             :to="`/page/${page.id}`"
-            active-class="font-bold text-black bg-gray-100"
+            active-class="text-black font-bold bg-gray-100"
             class="page-item px-4"
         >
-            <span class="mr-2">{{ page.title }}</span>
+            <div class="mr-2 w-56 truncate">{{ page.title }}</div>
             <button class="trash-icon" @click.stop="$emit('delete', page)">
                 <icon-trash class="fill-current"></icon-trash>
             </button>
@@ -18,7 +18,7 @@
 <script lang="ts">
 import { Page } from '@/models'
 import { Component, Prop, Vue } from 'vue-property-decorator'
-import IconTrash from '../assets/icon-trash.svg'
+import IconTrash from '../assets/icons/icon-trash.svg'
 
 @Component({
     components: { IconTrash },

@@ -1,11 +1,13 @@
 <template>
-    <div class="">
-        <label :for="name">{{ label }}</label>
+    <div class="flex justify-between flex-col items-start">
+        <label :for="name" class="mr-2 text-gray-700 text-xs">
+            {{ label }}
+        </label>
         <input
             :id="name"
             :name="name"
             :value="value"
-            class="text-black bg-gray-200 px-2 py-1 border-2 rounded"
+            class="text-black focus:bg-gray-100 px-2 py-1 border-b-2 rounded-t outline-none w-full"
             v-bind="$attrs"
             @input="$emit('input', $event.target.value)"
         />

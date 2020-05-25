@@ -3,7 +3,6 @@
         <div class="text-sm mb-1 text-gray-700 px-4">Pages</div>
         <pages-list :pages="pages" @delete="deletePage($event)"></pages-list>
         <page-adder class="px-4 mt-4" @add:page="openPage($event)" />
-        <hr class="my-6" />
     </div>
 </template>
 
