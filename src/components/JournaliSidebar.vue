@@ -1,19 +1,18 @@
 <template>
-    <div class="w-64 bg-white shadow px-4 py-8 z-10">
-        <div class="text-sm mb-1 text-gray-700">Pages</div>
-        <page-adder @add:page="openPage($event)" />
-        <hr />
+    <div class="w-auto bg-white shadow py-8 z-10">
+        <div class="text-sm mb-1 text-gray-700 px-4">Pages</div>
         <pages-list :pages="pages" @delete="deletePage($event)"></pages-list>
-        <hr />
+        <page-adder class="px-4 mt-4" @add:page="openPage($event)" />
+        <hr class="my-6" />
     </div>
 </template>
 
 <script lang="ts">
-import PagesList from '@/components/PagesList.vue'
 import PageAdder from '@/components/PageAdder.vue'
-import { Component, Vue } from 'vue-property-decorator'
-import { Uuid } from '@/models/types'
+import PagesList from '@/components/PagesList.vue'
 import { Page } from '@/models'
+import { Uuid } from '@/models/types'
+import { Component, Vue } from 'vue-property-decorator'
 
 @Component({
     components: { PagesList, PageAdder },

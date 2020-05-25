@@ -1,3 +1,4 @@
+import store from '@/store'
 import EmptyJournalPage from '@/views/journal/EmptyJournalPage.vue'
 import { RouteConfig } from 'vue-router'
 
@@ -14,6 +15,13 @@ const routes: Array<RouteConfig> = [
             import(
                 /* webpackChunkName: "registration" */ '../views/Registration.vue'
             ),
+    },
+    {
+        path: '/logout',
+        redirect: () => {
+            store.commit('logout')
+            return '/login'
+        },
     },
     {
         path: '/',
