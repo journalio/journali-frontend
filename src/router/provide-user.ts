@@ -6,6 +6,7 @@ const register = (router: VueRouter) =>
         const { user } = store.state
 
         if (!user) {
+            // TODO: This also happens when the user is logged out. gotta change this
             await store.dispatch('loadAuthenticatedUser')
         }
 

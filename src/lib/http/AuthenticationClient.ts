@@ -24,14 +24,4 @@ export default class AuthenticationClient extends AbstractHttpClient {
             return false
         }
     }
-
-    async register(data: AuthenticationRequest): Promise<boolean> {
-        try {
-            await this.post<object>('/api/register', data)
-
-            return true
-        } catch {
-            return false
-        }
-    }
 }
