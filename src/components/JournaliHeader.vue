@@ -7,7 +7,7 @@
             <span class="font-bold">&gt;</span> {{ currentPageName }}
         </span>
         <div class="flex-1"></div>
-        <button @click="$router.push('/user-settings')">User Settings</button>
+        <router-link to="/user-settings">User Settings</router-link>
         <button @click="logout">Logout</button>
     </header>
 </template>

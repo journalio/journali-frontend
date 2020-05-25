@@ -41,4 +41,5 @@ export interface TextField extends Common<ItemType.TEXT_FIELD>, Renderable {
 export interface User {
     id: Uuid
     username: string
+    password?: string
 }
