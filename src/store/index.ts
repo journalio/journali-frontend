@@ -63,6 +63,7 @@ const store = new Vuex.Store<AppState>({
             state.token = token
         },
         logout(state) {
+            console.log('log out')
             localStorage.clear()
             state.user = null
             state.token = null

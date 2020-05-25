@@ -3,6 +3,6 @@
 describe('Basic test', () => {
     it('Visits the app root url and displays the login page', () => {
         cy.visit('/')
-        cy.contains('button', 'Create an account')
+        cy.contains('h1', 'Welcome back')
     })
 })

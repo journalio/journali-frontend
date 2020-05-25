@@ -12,11 +12,15 @@ module.exports = {
         },
     },
     chainWebpack(config) {
-        const svgRule = config.module.rule('svg')
+        const iconRegExp = /icon-[\w-]+\.svg$/
+        config.module
+            .rule('svg-icons')
+            .test(iconRegExp)
+            .use('vue-svg-loader')
+            .loader('vue-svg-loader')
+            .end()
 
-        svgRule.uses.clear()
-
-        svgRule.use('vue-svg-loader').loader('vue-svg-loader')
+        config.module.rule('svg').exclude.add(iconRegExp)
 
         config.watchOptions.poll = DOCKER
     },
