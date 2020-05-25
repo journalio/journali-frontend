@@ -5,7 +5,11 @@
         @mouseup="stopDragging"
         @mousedown="startDragging"
     >
-        <component :is="type" v-bind="item"></component>
+        <component
+            :is="type"
+            v-bind="item"
+            @change="updateItem($event)"
+        ></component>
     </div>
 </template>
 
@@ -34,6 +38,14 @@ export default class ItemWrapper extends Vue {
             offsetX,
             offsetY,
         }
+    }
+
+    protected updateItem(changes: object) {
+        const changedItem = {
+            ...this.item,
+            ...changes,
+        }
+        this.$store.dispatch('updateItem', changedItem)
     }
 }
 </script>
