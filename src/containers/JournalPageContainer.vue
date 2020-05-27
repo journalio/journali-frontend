@@ -31,7 +31,7 @@ export default class JournalPageContainer extends Vue {
 
     @Watch('$route')
     protected loadItems() {
-        this.$store.dispatch('loadItems', this.pageId)
+        this.$store.dispatch('loadItems', { parent_id: this.pageId })
     }
 
     protected created() {

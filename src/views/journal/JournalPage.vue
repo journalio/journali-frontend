@@ -6,7 +6,7 @@
         @mouseleave="dragData = null"
     >
         <item-wrapper
-            v-for="item of items"
+            v-for="item of renderableItems"
             :key="item.id"
             :item="item"
             :type="componentName[item.item_type]"
@@ -39,6 +39,12 @@ export default class JournalPage extends Vue {
     @Ref('container') readonly container!: HTMLDivElement
 
     dragData: DragData | null = null
+
+    get renderableItems() {
+        return this.items.filter(
+            (item) => item.item_type === 200 || item.item_type === 300,
+        )
+    }
 
     handleDrag({ clientX, clientY }: MouseEvent) {
         if (!this.dragData) {

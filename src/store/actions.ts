@@ -28,9 +28,13 @@ export default {
         commit('pagesAdded', newPage)
         return newPage
     },
-    async loadItems({ commit }: ActionHandler, parentId: Uuid) {
-        commit('loadItems')
-        const items = await itemsClient.fetchItemsByParent(parentId)
+    async loadItems(
+        { commit }: ActionHandler,
+        { parent_id, append = false }: { parent_id: Uuid; append: boolean },
+    ) {
+        // commit('loadItems')
+        const items = await itemsClient.fetchItemsByParent(parent_id)
+
         commit('itemsLoaded', items)
     },
 

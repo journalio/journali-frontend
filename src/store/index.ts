@@ -36,7 +36,12 @@ const store = new Vuex.Store<AppState>({
             state.pagesLoading = true
         },
         itemsLoaded(state, items) {
-            state.items = items
+            if (items.length > 0) {
+                // Remove all items that have the same parent
+                state.items = state.items
+                    .filter((e: Item) => e.parent_id === items[0].parent_id)
+                    .concat(items)
+            }
             state.itemsLoading = false
         },
         pagesLoaded(state, pages) {
