@@ -1,8 +1,8 @@
 <template>
-    <div>
+    <div class="flex flex-col">
         Todo title:
         <input :value="value.title" @input="onTitleChange" />
-        <button @click="create()">Create todo</button>
+        <button @click="submit()">Save</button>
     </div>
 </template>
 
@@ -22,8 +22,8 @@ export default class TodoEditor extends Vue {
         }
     }
 
-    @Emit('create')
-    create() {
+    @Emit()
+    submit() {
         //
     }
 }

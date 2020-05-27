@@ -2,7 +2,7 @@
     <div class="flex flex-col">
         TextField text:
         <input :value="value.text" @input="onTextChange" />
-        <button @click="create()">Create textfield</button>
+        <button @click="submit()">Save</button>
     </div>
 </template>
 
@@ -22,8 +22,8 @@ export default class TextFieldEditor extends Vue {
         }
     }
 
-    @Emit('create')
-    create() {
+    @Emit()
+    submit() {
         //
     }
 }
