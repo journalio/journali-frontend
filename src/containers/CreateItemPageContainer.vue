@@ -16,7 +16,7 @@
             :is="`${itemType}Editor`"
             v-if="itemType"
             v-model="item"
-            @create="createItem()"
+            @submit="createItem()"
         />
     </main>
 </template>

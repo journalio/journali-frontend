@@ -1,8 +1,8 @@
 <template>
-    <div>
+    <div class="flex flex-col">
         TextField text:
-        <input :value="value.text" @input="onTextChange" />
-        <button @click="create()">Create textfield</button>
+        <input v-model="text" @input="onTextChange" />
+        <button @click="submit()">Save</button>
     </div>
 </template>
 
@@ -14,17 +14,24 @@ import { Component, Emit, Prop, Vue } from 'vue-property-decorator'
 export default class TextFieldEditor extends Vue {
     @Prop(Object) readonly value!: TextField
 
-    @Emit('input')
-    onTextChange($event: { target: HTMLInputElement }) {
+    // can't change prop, so use this instead
+    text = this.value.text
+
+    get newItem() {
         return {
             ...this.value,
-            text: $event.target.value,
+            text: this.text,
         }
     }
 
-    @Emit('create')
-    create() {
-        //
+    @Emit('input')
+    onTextChange() {
+        return this.newItem
+    }
+
+    @Emit()
+    submit() {
+        return this.newItem
     }
 }
 </script>
