@@ -15,8 +15,8 @@ module.exports = {
                 },
             },
             fontFamily: {
-                display: 'Khula',
-                body: '"Open Sans"',
+                display: 'Khula, sans-serif',
+                body: '"Open Sans", sans-serif',
             },
         },
     },
