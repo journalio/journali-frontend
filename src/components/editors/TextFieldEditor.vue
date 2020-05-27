@@ -1,40 +1,30 @@
 <template>
     <div class="flex flex-col">
         TextField text:
-        <input v-model="text" />
+        <input :value="value.text" @input="onTextChange" />
         <button @click="create()">Create textfield</button>
     </div>
 </template>
 
 <script lang="ts">
 import { TextField } from '@/models/entities'
-import { Component, Emit, Prop, Vue, Watch } from 'vue-property-decorator'
+import { Component, Emit, Prop, Vue } from 'vue-property-decorator'
 
 @Component
 export default class TextFieldEditor extends Vue {
     @Prop(Object) readonly value!: TextField
 
-    text = ''
-
-    created() {
-        this.text = this.value.text
-    }
-
-    @Watch('text')
     @Emit('input')
-    onTextChange() {
+    onTextChange($event: { target: HTMLInputElement }) {
         return {
             ...this.value,
-            text: this.text,
+            text: $event.target.value,
         }
     }
 
     @Emit('create')
     create() {
-        return {
-            ...this.value,
-            text: this.text,
-        }
+        //
     }
 }
 </script>

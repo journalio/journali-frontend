@@ -15,7 +15,7 @@
         <component
             :is="`${itemType}Editor`"
             v-if="itemType"
-            :value="item"
+            v-model="item"
             @create="createItem()"
         />
     </main>
