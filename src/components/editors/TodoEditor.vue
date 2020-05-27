@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col">
         Todo title:
-        <input :value="value.title" @input="onTitleChange" />
+        <input v-model="title" @input="onTitleChange" />
         <button @click="submit()">Save</button>
     </div>
 </template>
@@ -14,17 +14,24 @@ import { Component, Emit, Prop, Vue } from 'vue-property-decorator'
 export default class TodoEditor extends Vue {
     @Prop(Object) readonly value!: Todo
 
-    @Emit('input')
-    onTitleChange($event: { target: HTMLInputElement }) {
+    // can't change prop, so use this instead
+    title = this.value.title
+
+    get newItem() {
         return {
             ...this.value,
-            title: $event.target.value,
+            title: this.title,
         }
+    }
+
+    @Emit('input')
+    onTitleChange() {
+        return this.newItem
     }
 
     @Emit()
     submit() {
-        //
+        return this.newItem
     }
 }
 </script>

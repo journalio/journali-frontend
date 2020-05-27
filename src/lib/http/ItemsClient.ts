@@ -44,7 +44,6 @@ export default class ItemsClient extends AbstractHttpClient {
     }
 
     updateItem<T extends Item>(item: T): Promise<T> {
-        console.log(item)
         return this.patch<T>(
             `/api/${endPoints[item.item_type]}/${item.id}`,
             item,

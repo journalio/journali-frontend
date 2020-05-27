@@ -36,7 +36,9 @@ export default class ItemWrapper extends Vue {
     @Prop(String) readonly type!: string
     @Prop(Object) readonly item!: Renderable
 
-    // made this because Vue doesn't allow changing properties
+    editMode = false
+
+    // copy item object because Vue doesn't allow changing properties
     editableItem = Object.assign({}, this.item)
 
     // keep editableItem up to date
@@ -44,8 +46,6 @@ export default class ItemWrapper extends Vue {
     onItemChanged() {
         this.editableItem = Object.assign({}, this.item)
     }
-
-    editMode = false
 
     @Emit('drag-stop')
     stopDragging() {
