@@ -45,7 +45,7 @@ export default class PageAdder extends Vue {
             item_type: ItemType.PAGE,
             title: this.pageName,
         }
-        const pageId = (await this.$store.dispatch('createPage', page)).id
+        const pageId = (await this.$store.dispatch('createItem', page)).id
         this.pageName = ''
         return pageId
     }

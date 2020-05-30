@@ -8,7 +8,10 @@
             class="page-item px-4"
         >
             <div class="mr-2 w-56 truncate">{{ page.title }}</div>
-            <button class="trash-icon" @click.stop="$emit('delete', page)">
+            <button
+                class="trash-icon"
+                @click.stop.prevent="$emit('delete', page)"
+            >
                 <icon-trash class="fill-current"></icon-trash>
             </button>
         </router-link>

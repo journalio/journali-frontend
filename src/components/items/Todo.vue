@@ -23,8 +23,8 @@
             ></text-input>
         </div>
         <button
-            class="text-gray-500 uppercase text-sm flex items-center"
-            @click="showNewTodo = true"
+            class="text-gray-500 uppercase text-sm flex items-center mt-2"
+            @click.stop="showNewTodo = !showNewTodo"
         >
             Add todo
             <icon-add class="w-5 h-5 fill-current"></icon-add>
@@ -49,10 +49,6 @@ export default class Todo extends AbstractJournalItem<TodoItem> {
     @Prop(String) readonly id!: Uuid
     protected showNewTodo = false
     protected newTodoTitle = ''
-
-    protected mounted() {
-        this.$store.dispatch('loadItems', { parent_id: this.id })
-    }
 
     protected async saveNewTodo() {
         console.log(this.newTodoTitle)

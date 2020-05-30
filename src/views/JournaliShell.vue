@@ -7,7 +7,11 @@ import { Component, Vue } from 'vue-property-decorator'
 @Component({
     components: { JournaliHeader, JournaliSidebar, JournaliContent },
 })
-export default class JournaliShell extends Vue {}
+export default class JournaliShell extends Vue {
+    protected created() {
+        this.$store.dispatch('loadAllItems')
+    }
+}
 </script>
 
 <template>

@@ -10,7 +10,7 @@
 import PageAdder from '@/components/PageAdder.vue'
 import PagesList from '@/components/PagesList.vue'
 import { Page } from '@/models'
-import { Uuid } from '@/models/types'
+import { ItemType, Uuid } from '@/models/types'
 import { Component, Vue } from 'vue-property-decorator'
 
 @Component({
@@ -18,11 +18,7 @@ import { Component, Vue } from 'vue-property-decorator'
 })
 export default class JournaliSidebar extends Vue {
     get pages() {
-        return this.$store.state.pages
-    }
-
-    protected mounted() {
-        this.$store.dispatch('loadPages')
+        return this.$store.getters.getItemsByType(ItemType.PAGE)
     }
 
     openPage(pageId: Uuid) {
@@ -30,7 +26,10 @@ export default class JournaliSidebar extends Vue {
     }
 
     deletePage(page: Page) {
-        this.$store.dispatch('deletePage', page)
+        this.$store.dispatch('deleteItem', page)
+        if (this.$route.params.pageId === page.id) {
+            this.$router.replace('/page')
+        }
     }
 }
 </script>

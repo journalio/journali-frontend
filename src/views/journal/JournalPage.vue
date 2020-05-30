@@ -19,7 +19,7 @@
 
 <script lang="ts">
 import ItemWrapper from '@/components/ItemWrapper.vue'
-import { Item, Page, Renderable } from '@/models/entities'
+import { Item, Renderable } from '@/models/entities'
 import { ItemType } from '@/models/types'
 import { Component, Prop, Ref, Vue } from 'vue-property-decorator'
 
@@ -35,7 +35,6 @@ type DragData = {
 })
 export default class JournalPage extends Vue {
     @Prop(Array) readonly items!: Item[]
-    @Prop(Object) readonly page!: Page
     @Ref('container') readonly container!: HTMLDivElement
 
     dragData: DragData | null = null
