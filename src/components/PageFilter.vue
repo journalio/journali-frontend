@@ -19,10 +19,10 @@ import TextInput from '@/components/TextInput.vue'
 // checks every string property in any given object to check if it contains a substring
 // doesn't check objects inside arrays, like child items
 const matchByAnyProperty = (obj: object, keyWord: string) => {
-    const matchingProps = Object.keys(obj).filter((prop) => {
+    const matchingProps = Object.values(obj).filter((value) => {
         return (
-            typeof obj[prop] === 'string' &&
-            obj[prop].toLowerCase().includes(keyWord.toLowerCase())
+            typeof value === 'string' &&
+            value.toLowerCase().includes(keyWord.toLowerCase())
         )
     })
     return matchingProps.length > 0
