@@ -18,14 +18,14 @@ import TextInput from '@/components/TextInput.vue'
 
 // checks every string property in any given object to check if it contains a substring
 // doesn't check objects inside arrays, like child items
-const matchByAnyProperty = (obj: object, keyWord: string) => {
-    const matchingProps = Object.values(obj).filter((value) => {
+const checkIfContainsKeyword = (obj: object, keyWord: string) => {
+    const matchingProp = Object.values(obj).find((value) => {
         return (
             typeof value === 'string' &&
             value.toLowerCase().includes(keyWord.toLowerCase())
         )
     })
-    return matchingProps.length > 0
+    return !!matchingProp
 }
 
 @Component({
@@ -43,7 +43,7 @@ export default class PageFilter extends Vue {
         }
 
         return this.pages.filter((page: object) =>
-            matchByAnyProperty(page, this.keyWord),
+            checkIfContainsKeyword(page, this.keyWord),
         )
     }
 }
