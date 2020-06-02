@@ -5,7 +5,12 @@
             label="Todo title:"
             @input="onTitleChange"
         />
-        <button @click="submit()">Save</button>
+        <button
+            class="mt-4 text-sm rounded px-4 py-2 bg-primary text-white font-bold uppercase"
+            @click="submit()"
+        >
+            Save
+        </button>
     </div>
 </template>
 
