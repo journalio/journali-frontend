@@ -59,10 +59,9 @@ export default {
         return registeredUser
     },
 
-    async loadAuthenticatedUser({ commit }: ActionHandler): Promise<User> {
+    async loadAuthenticatedUser({ commit }: ActionHandler): Promise<void> {
         commit('isLoadingUser', true)
         const user = await usersClient.fetchAuthenticatedUser()
         commit('userLoaded', user)
-        return user
     },
 }

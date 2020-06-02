@@ -2,8 +2,8 @@
     <div
         :style="{ left: `${item.coord_x}px`, top: `${item.coord_y}px` }"
         class="rounded bg-white absolute shadow select-none"
-        @mouseup="stopDragging"
-        @mousedown="startDragging"
+        @mousedown.stop.prevent="startDragging"
+        @mouseup.stop.prevent="stopDragging"
     >
         <div class="p-1 flex flex-row">
             <button class="text-xs" @click="editMode = !editMode">Edit</button>
@@ -62,9 +62,6 @@ export default class ItemWrapper extends Vue {
     }
 
     protected updateItem() {
-        if (this.type === null) {
-            throw 'ItemType should not be null at this point'
-        }
         this.$store.dispatch('updateItem', this.editableItem)
     }
 }
