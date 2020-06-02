@@ -12,7 +12,7 @@ module.exports = {
         },
     },
     chainWebpack(config) {
-        const iconRegExp = /icon-[\w-]+\.svg$/
+        const iconRegExp = /icons\/[\w-]+\.svg$/
         config.module
             .rule('svg-icons')
             .test(iconRegExp)
