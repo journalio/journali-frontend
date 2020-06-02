@@ -10,6 +10,10 @@ const routes: Array<RouteConfig> = [
             import(
                 /* webpackChunkName: "authentication" */ '../views/Login.vue'
             ),
+        beforeEnter(to, from, next) {
+            store.commit('users/logout')
+            next()
+        },
     },
     {
         path: '/register',
@@ -21,10 +25,7 @@ const routes: Array<RouteConfig> = [
     },
     {
         path: '/logout',
-        redirect: () => {
-            store.commit('logout')
-            return '/login'
-        },
+        redirect: '/login',
     },
     {
         path: '/',

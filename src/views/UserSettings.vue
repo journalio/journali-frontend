@@ -48,7 +48,7 @@ export default class UserSettings extends Vue {
 
     // represents existing userdata
     get storeUser() {
-        return this.$store.state.user
+        return this.$store.state.users.user
     }
 
     get saveable(): boolean {
@@ -64,7 +64,7 @@ export default class UserSettings extends Vue {
         if (!this.saveable) {
             return
         }
-        this.$store.dispatch('updateUser', {
+        this.$store.dispatch('users/updateUser', {
             id: this.storeUser.id,
             username: this.username,
             password: this.password,
