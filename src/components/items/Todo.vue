@@ -18,7 +18,6 @@
         <div v-show="showNewTodo">
             <text-input
                 v-model="newTodoTitle"
-                name="List item"
                 @submit="saveNewTodo"
             ></text-input>
         </div>

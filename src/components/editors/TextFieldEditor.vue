@@ -1,8 +1,18 @@
 <template>
     <div class="flex flex-col">
-        TextField text:
-        <input v-model="text" @input="onTextChange" />
-        <button @click="submit()">Save</button>
+        <label class="text-gray-700 text-sm" for="input">Textfield text:</label>
+        <textarea
+            id="input"
+            v-model="text"
+            class="border border-b-2 px-2 py-1 rounded-t resize-y outline-none w-full"
+            @input="onTextChange"
+        />
+        <button
+            class="mt-4 text-sm rounded px-4 py-2 bg-primary text-white font-bold uppercase"
+            @click="submit()"
+        >
+            Save
+        </button>
     </div>
 </template>
 

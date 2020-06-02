@@ -1,17 +1,12 @@
 <template>
-    <main class="flex flex-col p-8 bg-white rounded">
+    <main class="flex flex-col p-8 bg-white rounded w-64">
         <h3 class="text-lg font-bold">Create item</h3>
-        <label>
-            Select an item type.
-            <select v-model="itemType" @change="updateItem">
-                <option v-if="!itemType" disabled selected>
-                    Select an option
-                </option>
-                <option v-for="item of itemTypes" :key="item">
-                    {{ item }}
-                </option>
-            </select>
-        </label>
+        <select-box
+            v-model="itemType"
+            :items="itemTypes"
+            label="Item type:"
+            @input="updateItem"
+        ></select-box>
         <component
             :is="`${itemType}Editor`"
             v-if="itemType"
@@ -24,12 +19,13 @@
 <script lang="ts">
 import TextFieldEditor from '@/components/editors/TextFieldEditor.vue'
 import TodoEditor from '@/components/editors/TodoEditor.vue'
+import SelectBox from '@/components/SelectBox.vue'
 import { createItemByName } from '@/models'
 import { Renderable, renderableTypes } from '@/models/traits'
 import { Component, Vue } from 'vue-property-decorator'
 
 @Component({
-    components: { TodoEditor, TextFieldEditor },
+    components: { SelectBox, TodoEditor, TextFieldEditor },
 })
 export default class CreateItemPageContainer extends Vue {
     itemType: Renderable | null = null
@@ -56,6 +52,7 @@ export default class CreateItemPageContainer extends Vue {
             coord_y: 0,
             ...this.item,
         })
+        this.$router.back()
     }
 }
 </script>
