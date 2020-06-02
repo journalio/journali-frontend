@@ -6,7 +6,7 @@
         @mouseleave="dragData = null"
     >
         <item-wrapper
-            v-for="item of items"
+            v-for="item of renderableItems"
             :key="item.id"
             :item="item"
             :type="componentName[item.item_type]"
@@ -19,7 +19,7 @@
 
 <script lang="ts">
 import ItemWrapper from '@/components/ItemWrapper.vue'
-import { Item, Page, Renderable } from '@/models/entities'
+import { Item, Renderable } from '@/models/entities'
 import { ItemType } from '@/models/types'
 import { Component, Prop, Ref, Vue } from 'vue-property-decorator'
 
@@ -35,10 +35,15 @@ type DragData = {
 })
 export default class JournalPage extends Vue {
     @Prop(Array) readonly items!: Item[]
-    @Prop(Object) readonly page!: Page
     @Ref('container') readonly container!: HTMLDivElement
 
     dragData: DragData | null = null
+
+    get renderableItems() {
+        return this.items.filter(
+            (item) => item.item_type === 200 || item.item_type === 300,
+        )
+    }
 
     handleDrag({ clientX, clientY }: MouseEvent) {
         if (!this.dragData) {

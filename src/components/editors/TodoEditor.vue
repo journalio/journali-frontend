@@ -1,16 +1,22 @@
 <template>
     <div class="flex flex-col">
-        Todo title:
-        <input v-model="title" @input="onTitleChange" />
+        <text-input
+            v-model="title"
+            label="Todo title:"
+            @input="onTitleChange"
+        />
         <button @click="submit()">Save</button>
     </div>
 </template>
 
 <script lang="ts">
+import TextInput from '@/components/TextInput.vue'
 import { Todo } from '@/models/entities'
 import { Component, Emit, Prop, Vue } from 'vue-property-decorator'
 
-@Component
+@Component({
+    components: { TextInput },
+})
 export default class TodoEditor extends Vue {
     @Prop(Object) readonly value!: Todo
 

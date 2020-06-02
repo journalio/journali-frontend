@@ -1,9 +1,8 @@
 import ItemsClient from '@/lib/http/ItemsClient'
 import UsersClient from '@/lib/http/UsersClient'
 import { debounce } from '@/lib/utils'
-import { NewItem, Page } from '@/models'
+import { NewItem } from '@/models'
 import { Item, Renderable, User } from '@/models/entities'
-import { Uuid } from '@/models/types'
 import { AppState } from '@/store/index'
 import { ActionContext } from 'vuex'
 
@@ -17,25 +16,15 @@ const updateItemDebounced = debounce<Item, Promise<Item>>((item) =>
 )
 
 export default {
-    async loadPages({ commit }: ActionHandler) {
-        commit('loadPages')
-        const pages = await itemsClient.fetchPages()
-        commit('pagesLoaded', pages)
-    },
-    async createPage({ commit }: ActionHandler, data: Page) {
-        commit('loadPages')
-        const newPage = await itemsClient.createPage(data)
-        commit('pagesAdded', newPage)
-        return newPage
-    },
-    async loadItems({ commit }: ActionHandler, parentId: Uuid) {
+    async loadAllItems({ commit }: ActionHandler) {
         commit('loadItems')
-        const items = await itemsClient.fetchItemsByParent(parentId)
+
+        const items = await itemsClient.fetchAllItems()
         commit('itemsLoaded', items)
     },
 
-    async createItem<T>({ commit }: ActionHandler, item: NewItem<T>) {
-        const createdItem = await itemsClient.createItem(item)
+    async createItem<T>({ commit }: ActionHandler, item: NewItem) {
+        const createdItem = await itemsClient.createItem<T>(item)
         commit('addItem', createdItem)
         return createdItem
     },
@@ -48,9 +37,9 @@ export default {
         return updateItemDebounced(item)
     },
 
-    async deletePage({ commit }: ActionHandler, page: Page) {
-        await itemsClient.deleteItem(page)
-        commit('deletePage', page)
+    async deleteItem({ commit }: ActionHandler, item: Item) {
+        await itemsClient.deleteItem(item)
+        commit('deleteItem', item)
     },
 
     // TODO: consider expanding this into a general updateUser method that also checks if user.id === state.me.id
@@ -70,10 +59,9 @@ export default {
         return registeredUser
     },
 
-    async loadAuthenticatedUser({ commit }: ActionHandler): Promise<User> {
+    async loadAuthenticatedUser({ commit }: ActionHandler): Promise<void> {
         commit('isLoadingUser', true)
         const user = await usersClient.fetchAuthenticatedUser()
         commit('userLoaded', user)
-        return user
     },
 }

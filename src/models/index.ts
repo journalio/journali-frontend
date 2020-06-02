@@ -7,11 +7,11 @@ import {
 } from '@/models/entities'
 import { ItemType } from '@/models/types'
 
-export type Page = Item & EPage
-export type TextField = Item & ETextField
-export type Todo = Item & ETodo
-export type TodoItem = Item & ETodoItem
-export type NewItem<T = ETextField | ETodo> = T & {
+export type Page = Item<never> & EPage
+export type TextField = Item<ItemType.PAGE> & ETextField
+export type Todo = Item<ItemType.PAGE> & ETodo
+export type TodoItem = Item<ItemType.TODO> & ETodoItem
+export type NewItem = {
     item_type: ItemType
 }
 

@@ -1,10 +1,10 @@
 import store from '@/store'
-import { VueRouter } from 'vue-router/types/router'
+import { NavigationGuardNext, Route, VueRouter } from 'vue-router/types/router'
 
 const allowedRoutes = ['Login', 'Registration']
 
 const register = (router: VueRouter) =>
-    router.beforeEach((to, from, next) => {
+    router.beforeEach((to: Route, from: Route, next: NavigationGuardNext) => {
         const { token } = store.state
 
         if (token === null && (!to.name || !allowedRoutes.includes(to.name))) {

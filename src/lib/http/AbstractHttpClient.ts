@@ -16,9 +16,13 @@ export default abstract class AbstractHttpClient {
         const body =
             method === 'GET' ? undefined : this.prepareBody(requestBody)
 
-        return fetch(route, { method, headers, body }).then((response) =>
-            response.json(),
-        )
+        return fetch(route, { method, headers, body }).then((response) => {
+            if (response.ok) {
+                return response.json()
+            } else {
+                throw response.json()
+            }
+        })
     }
 
     protected async post<T>(route: string, data: RequestBody) {

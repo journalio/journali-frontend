@@ -15,11 +15,11 @@
 </template>
 
 <script lang="ts">
-import TextInput from '@/components/TextInput.vue'
 import PageAdder from '@/components/PageAdder.vue'
 import PagesList from '@/components/PagesList.vue'
+import TextInput from '@/components/TextInput.vue'
 import { Page } from '@/models'
-import { Uuid } from '@/models/types'
+import { ItemType, Uuid } from '@/models/types'
 import { Component, Vue } from 'vue-property-decorator'
 
 @Component({
@@ -29,17 +29,13 @@ export default class JournaliSidebar extends Vue {
     searchWord = ''
 
     get pages() {
-        return this.$store.state.pages.filter((page: Page) =>
-            page.title.toLowerCase().includes(this.searchWord.toLowerCase()),
-        )
-    }
-
-    // get pagesToDisplay() {
-    //     return this.foundPages.length > 0 ? this.foundPages : this.pages
-    // }
-
-    protected mounted() {
-        this.$store.dispatch('loadPages')
+        return this.$store.getters
+            .getItemsByType(ItemType.PAGE)
+            .filter((page: Page) =>
+                page.title
+                    .toLowerCase()
+                    .includes(this.searchWord.toLowerCase()),
+            )
     }
 
     openPage(pageId: Uuid) {
@@ -47,7 +43,10 @@ export default class JournaliSidebar extends Vue {
     }
 
     deletePage(page: Page) {
-        this.$store.dispatch('deletePage', page)
+        this.$store.dispatch('deleteItem', page)
+        if (this.$route.params.pageId === page.id) {
+            this.$router.replace('/page')
+        }
     }
 }
 </script>

@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { Component, Vue, Watch } from 'vue-property-decorator'
+import { Component, Vue } from 'vue-property-decorator'
 import IconUser from '../assets/icons/icon-user.svg'
 import IconDoorExit from '../assets/icons/icon-door-exit.svg'
 import store from '@/store'
@@ -27,16 +27,8 @@ import store from '@/store'
     components: { IconUser, IconDoorExit },
 })
 export default class JournaliHeader extends Vue {
-    currentPageName = null
-
     logout() {
         store.commit('logout')
-    }
-
-    @Watch('$route')
-    setCurrentPageName() {
-        const { pageId } = this.$router.currentRoute.params
-        this.currentPageName = this.$store.getters.getPageById(pageId)?.title
     }
 }
 </script>
