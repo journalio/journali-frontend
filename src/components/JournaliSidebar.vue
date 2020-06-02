@@ -8,8 +8,19 @@
             placeholder="Key words"
             type="search"
         />
-        <div class="text-sm my-2 text-gray-700 px-4">Pages</div>
-        <pages-list :pages="pages" @delete="deletePage($event)"></pages-list>
+        <div class="text-sm my-2 text-gray-700 px-4">
+            Pages ({{ filteredPages.length }}/{{ pages.length }})
+        </div>
+        <pages-list
+            :pages="filteredPages"
+            @delete="deletePage($event)"
+        ></pages-list>
+        <div
+            v-if="pages.length > 0 && filteredPages.length === 0"
+            class="mx-4 text-sm text-gray-900 w-64"
+        >
+            No pages found.
+        </div>
         <page-adder class="px-4 mt-4" @add:page="openPage($event)" />
     </div>
 </template>
@@ -29,13 +40,13 @@ export default class JournaliSidebar extends Vue {
     searchWord = ''
 
     get pages() {
-        return this.$store.getters
-            .getItemsByType(ItemType.PAGE)
-            .filter((page: Page) =>
-                page.title
-                    .toLowerCase()
-                    .includes(this.searchWord.toLowerCase()),
-            )
+        return this.$store.getters.getItemsByType(ItemType.PAGE)
+    }
+
+    get filteredPages() {
+        return this.pages.filter((page: Page) =>
+            page.title.toLowerCase().includes(this.searchWord.toLowerCase()),
+        )
     }
 
     openPage(pageId: Uuid) {

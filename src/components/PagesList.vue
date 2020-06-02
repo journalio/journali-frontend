@@ -5,7 +5,7 @@
             :key="page.id"
             :to="`/page/${page.id}`"
             active-class="text-black font-bold bg-gray-100"
-            class="page-item px-4"
+            class="page-item"
         >
             <div class="mr-2 w-56 truncate">{{ page.title }}</div>
             <button
@@ -33,7 +33,7 @@ export default class PagesList extends Vue {
 
 <style scoped>
 .page-item {
-    @apply flex flex-row items-center py-3 text-gray-900;
+    @apply flex flex-row items-center py-3 text-gray-900 px-4;
 }
 
 .trash-icon {
