@@ -38,6 +38,11 @@ export default class JournaliSidebar extends Vue {
             )
     }
 
+    protected created() {
+        this.$store.dispatch('loadAllTags')
+        console.log(this.$store.state.tags)
+    }
+
     openPage(pageId: Uuid) {
         this.$router.push(`/page/${pageId}`)
     }

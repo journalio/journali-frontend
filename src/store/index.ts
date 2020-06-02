@@ -1,4 +1,4 @@
-import { User } from '@/models/entities'
+import { User, Tag } from '@/models/entities'
 import { AnyDomainItem, ItemType, Uuid } from '@/models/types'
 import actions from '@/store/actions'
 import { JOURNALI_TOKEN } from '@/store/constants'
@@ -13,6 +13,8 @@ export interface AppState {
     token: string | null
     items: AnyDomainItem[]
     itemsLoading: boolean
+    tags: Tag[]
+    tagsLoading: boolean
 }
 
 const store = new Vuex.Store<AppState>({
@@ -23,6 +25,8 @@ const store = new Vuex.Store<AppState>({
         token: localStorage.getItem(JOURNALI_TOKEN) || null,
         items: [],
         itemsLoading: false,
+        tags: [],
+        tagsLoading: false,
     },
     mutations: {
         loadItems(state) {
@@ -61,6 +65,13 @@ const store = new Vuex.Store<AppState>({
         deleteItem(state, item: AnyDomainItem) {
             const itemIndex = state.items.findIndex((i) => i.id === item.id)!
             state.items.splice(itemIndex, 1)
+        },
+        loadTags(state) {
+            state.tagsLoading = true
+        },
+        tagsLoaded(state, tags: Tag[]) {
+            state.tags = tags
+            state.tagsLoading = false
         },
     },
     getters: {

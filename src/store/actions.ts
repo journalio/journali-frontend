@@ -1,13 +1,15 @@
 import ItemsClient from '@/lib/http/ItemsClient'
 import UsersClient from '@/lib/http/UsersClient'
+import TagsClient from '@/lib/http/TagsClient'
 import { debounce } from '@/lib/utils'
 import { NewItem } from '@/models'
-import { Item, Renderable, User } from '@/models/entities'
+import { Item, Renderable, Tag, User } from '@/models/entities'
 import { AppState } from '@/store/index'
 import { ActionContext } from 'vuex'
 
 const itemsClient = new ItemsClient()
 const usersClient = new UsersClient()
+const tagsClient = new TagsClient()
 
 type ActionHandler = ActionContext<AppState, AppState>
 
@@ -42,7 +44,6 @@ export default {
         commit('deleteItem', item)
     },
 
-    // TODO: consider expanding this into a general updateUser method that also checks if user.id === state.me.id
     async updateUser({ commit }: ActionHandler, user: User): Promise<User> {
         commit('isLoadingUser', true)
         const updatedUser = await usersClient.updateUser(user)
@@ -63,5 +64,12 @@ export default {
         commit('isLoadingUser', true)
         const user = await usersClient.fetchAuthenticatedUser()
         commit('userLoaded', user)
+    },
+
+    async loadAllTags({ commit }: ActionHandler): Promise<Tag[]> {
+        commit('loadTags')
+        const tags = await tagsClient.fetchAllTags()
+        commit('tagsLoaded', tags)
+        return tags
     },
 }
