@@ -1,30 +1,41 @@
 <template>
     <div
         :style="{ left: `${item.coord_x}px`, top: `${item.coord_y}px` }"
-        class="rounded bg-white absolute shadow select-none"
+        class="item-wrapper relative"
         @mousedown.stop.prevent="startDragging"
         @mouseup.stop.prevent="stopDragging"
     >
-        <div class="p-1 flex flex-row justify-between">
-            <button class="text-xs" @click="editMode = !editMode">Edit</button>
-            <button class="trash-icon" @click.stop.prevent="deleteItem()">
+        <div class="edit-bar">
+            <button
+                class="edit-icon"
+                title="Toggle edit"
+                @click.stop.prevent="editMode = !editMode"
+            >
+                <icon-edit class="fill-current"></icon-edit>
+            </button>
+            <button
+                class="trash-icon"
+                title="Delete item"
+                @click.stop.prevent="deleteItem()"
+            >
                 <icon-trash class="fill-current"></icon-trash>
             </button>
         </div>
-        <div v-if="type && editMode" class="px-4 pt-1 pb-4">
+        <div v-if="type && editMode" class="p-4">
             <component
                 :is="`${type}Editor`"
                 v-model="editableItem"
                 @submit="updateItem($event)"
             />
         </div>
-        <div v-else class="px-4 pt-1 pb-4">
+        <div v-else class="p-4">
             <component :is="type" v-bind="editableItem"></component>
         </div>
     </div>
 </template>
 
 <script lang="ts">
+import IconEdit from '@/assets/icons/icon-edit.svg'
 import IconTrash from '@/assets/icons/icon-trash.svg'
 import TextFieldEditor from '@/components/editors/TextFieldEditor.vue'
 import TodoEditor from '@/components/editors/TodoEditor.vue'
@@ -33,8 +44,21 @@ import Todo from '@/components/items/Todo.vue'
 import { Renderable } from '@/models/entities'
 import { Component, Emit, Prop, Vue, Watch } from 'vue-property-decorator'
 
+// Cancel event when target is an interactive element
+const shouldCancel = (target?: HTMLElement) =>
+    ['input', 'select', 'textarea', 'button'].includes(
+        target?.tagName.toLowerCase() || '',
+    )
+
 @Component({
-    components: { Todo, TextField, TodoEditor, TextFieldEditor, IconTrash },
+    components: {
+        Todo,
+        TextField,
+        TodoEditor,
+        TextFieldEditor,
+        IconTrash,
+        IconEdit,
+    },
 })
 export default class ItemWrapper extends Vue {
     @Prop(String) readonly type!: string
@@ -57,7 +81,12 @@ export default class ItemWrapper extends Vue {
     }
 
     @Emit('drag-start')
-    startDragging({ offsetX, offsetY }: MouseEvent) {
+    startDragging(event: MouseEvent & { target?: HTMLElement }) {
+        const { offsetX, offsetY } = event
+        if (shouldCancel(event.target)) {
+            event.target.focus()
+            return null
+        }
         return {
             item: this.editableItem,
             offsetX,
@@ -67,6 +96,7 @@ export default class ItemWrapper extends Vue {
 
     protected updateItem() {
         this.$store.dispatch('updateItem', this.editableItem)
+        this.editMode = false
     }
 
     protected deleteItem() {
@@ -76,8 +106,25 @@ export default class ItemWrapper extends Vue {
 </script>
 
 <style scoped>
+.item-wrapper {
+    @apply rounded bg-white absolute shadow select-none;
+}
+
+.edit-bar {
+    @apply p-1 flex flex-row justify-between absolute inset-x-0 top-0 bg-white bg-opacity-75 opacity-0 transition-opacity duration-100 ease-out rounded-t cursor-move;
+}
+
+.item-wrapper:hover > .edit-bar {
+    @apply opacity-100;
+}
+
+.edit-icon,
 .trash-icon {
-    @apply ml-auto w-6 h-6 p-1 transition-colors duration-100 ease-out text-red-600;
+    @apply w-6 h-6 p-1 cursor-pointer;
+}
+
+.trash-icon {
+    @apply text-red-600;
 }
 
 .trash-icon:hover {
