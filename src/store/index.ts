@@ -1,7 +1,7 @@
 import { Tag } from '@/models/entities'
 import { AnyDomainItem, ItemType, Uuid } from '@/models/types'
 import actions from '@/store/actions'
-import users from '@/store/users/index'
+import users, { UserState } from '@/store/users/index'
 import Vue from 'vue'
 import Vuex from 'vuex'
 
@@ -12,6 +12,7 @@ export interface AppState {
     itemsLoading: boolean
     tags: Tag[]
     tagsLoading: boolean
+    users?: UserState
 }
 
 const store = new Vuex.Store<AppState>({

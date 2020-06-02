@@ -1,9 +1,8 @@
 import ItemsClient from '@/lib/http/ItemsClient'
-import UsersClient from '@/lib/http/UsersClient'
 import TagsClient from '@/lib/http/TagsClient'
 import { debounce } from '@/lib/utils'
 import { NewItem } from '@/models'
-import { Item, Renderable, Tag, User } from '@/models/entities'
+import { Item, Renderable, Tag } from '@/models/entities'
 import { AppState } from '@/store/index'
 import { ActionContext } from 'vuex'
 

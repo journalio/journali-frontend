@@ -58,7 +58,7 @@ export default abstract class AbstractHttpClient {
             ...extraOptions,
         })
 
-        if (store.state.users.token) {
+        if (store.state.users?.token) {
             headers.append('Authorization', `Bearer ${store.state.users.token}`)
         }
         return headers
