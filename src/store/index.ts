@@ -73,6 +73,20 @@ const store = new Vuex.Store<AppState>({
             state.tags = tags
             state.tagsLoading = false
         },
+        addTag(state, tag: Tag) {
+            state.tags.push(tag)
+        },
+        updateTag(state, tag: Tag) {
+            const tagIndex = state.tags.findIndex((t) => t.id === tag.id)!
+            Vue.set(state.tags, tagIndex, {
+                ...state.tags[tagIndex],
+                ...tag,
+            })
+        },
+        deleteTag(state, tag: Tag) {
+            const tagIndex = state.tags.findIndex((t) => t.id === tag.id)!
+            state.tags.splice(tagIndex, 1)
+        },
     },
     getters: {
         getItemsByParent: (state) => (

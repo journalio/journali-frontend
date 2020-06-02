@@ -38,8 +38,8 @@ export default class JournaliSidebar extends Vue {
             )
     }
 
-    protected created() {
-        this.$store.dispatch('loadAllTags')
+    protected async created() {
+        await this.$store.dispatch('loadAllTags')
         console.log(this.$store.state.tags)
     }
 
