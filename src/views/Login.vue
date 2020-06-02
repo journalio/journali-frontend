@@ -48,11 +48,8 @@
 
 <script lang="ts">
 import TextInput from '@/components/TextInput.vue'
-import AuthenticationClient from '@/lib/http/AuthenticationClient'
 import { Component, Vue } from 'vue-property-decorator'
 import IconBookOpen from '../assets/icons/icon-book-open.svg'
-
-const client = new AuthenticationClient()
 
 @Component({
     components: { TextInput, IconBookOpen },
@@ -67,7 +64,8 @@ export default class Home extends Vue {
             password: this.password,
         }
 
-        const success = await client.login(credentials)
+        const success = await this.$store.dispatch('users/login', credentials)
+
         if (success) {
             await this.$router.push('/')
         }

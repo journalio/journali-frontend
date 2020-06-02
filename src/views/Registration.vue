@@ -64,7 +64,7 @@ export default class Registration extends Vue {
     }
 
     async register() {
-        await this.$store.dispatch('register', {
+        await this.$store.dispatch('users/register', {
             username: this.username,
             password: this.password,
         })
