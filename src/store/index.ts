@@ -64,8 +64,14 @@ const store = new Vuex.Store<AppState>({
         },
     },
     getters: {
-        getItemsByParent: (state) => (id: Uuid): AnyDomainItem[] =>
-            state.items.filter((item) => item.parent_id === id),
+        getItemsByParent: (state) => (
+            id: Uuid,
+            item_type: ItemType,
+        ): AnyDomainItem[] =>
+            state.items.filter(
+                (item) =>
+                    item.parent_id === id && item.parent_type === item_type,
+            ),
         getItemsByType: (state) => (item_type: ItemType): AnyDomainItem[] =>
             state.items.filter((item) => item.item_type === item_type),
     },

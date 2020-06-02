@@ -6,6 +6,7 @@
 </template>
 
 <script lang="ts">
+import { ItemType } from '@/models/types'
 import JournalPage from '@/views/journal/JournalPage.vue'
 import { Component, Vue } from 'vue-property-decorator'
 
@@ -22,7 +23,7 @@ export default class JournalPageContainer extends Vue {
     }
 
     get items() {
-        return this.$store.getters.getItemsByParent(this.pageId)
+        return this.$store.getters.getItemsByParent(this.pageId, ItemType.PAGE)
     }
 }
 </script>

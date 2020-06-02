@@ -36,7 +36,7 @@
 import AbstractJournalItem from '@/components/items/AbstractJournalItem'
 import TextInput from '@/components/TextInput.vue'
 import { TodoItem } from '@/models'
-import { ItemType, Uuid } from '@/models/types'
+import { ItemType } from '@/models/types'
 import { Component, Prop } from 'vue-property-decorator'
 import IconAdd from '../../assets/icons/icon-add.svg'
 import IconCheck from '../../assets/icons/icon-check.svg'
@@ -46,7 +46,6 @@ import IconCheck from '../../assets/icons/icon-check.svg'
 })
 export default class Todo extends AbstractJournalItem<TodoItem> {
     @Prop(String) readonly title!: string
-    @Prop(String) readonly id!: Uuid
     protected showNewTodo = false
     protected newTodoTitle = ''
 
