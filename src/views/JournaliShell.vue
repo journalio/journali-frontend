@@ -10,6 +10,7 @@ import { Component, Vue } from 'vue-property-decorator'
 export default class JournaliShell extends Vue {
     protected created() {
         this.$store.dispatch('loadAllItems')
+        this.$store.dispatch('loadAllTags')
     }
 }
 </script>

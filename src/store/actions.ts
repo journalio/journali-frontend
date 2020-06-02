@@ -1,14 +1,12 @@
 import ItemsClient from '@/lib/http/ItemsClient'
-import UsersClient from '@/lib/http/UsersClient'
 import TagsClient from '@/lib/http/TagsClient'
 import { debounce } from '@/lib/utils'
 import { NewItem } from '@/models'
-import { Item, Renderable, Tag, User } from '@/models/entities'
+import { Item, Renderable, Tag } from '@/models/entities'
 import { AppState } from '@/store/index'
 import { ActionContext } from 'vuex'
 
 const itemsClient = new ItemsClient()
-const usersClient = new UsersClient()
 const tagsClient = new TagsClient()
 
 type ActionHandler = ActionContext<AppState, AppState>
@@ -42,28 +40,6 @@ export default {
     async deleteItem({ commit }: ActionHandler, item: Item) {
         await itemsClient.deleteItem(item)
         commit('deleteItem', item)
-    },
-
-    async updateUser({ commit }: ActionHandler, user: User): Promise<User> {
-        commit('isLoadingUser', true)
-        const updatedUser = await usersClient.updateUser(user)
-        commit('userLoaded', updatedUser)
-        return updatedUser
-    },
-
-    async register({ commit }: ActionHandler, user: User): Promise<User> {
-        commit('isLoadingUser', true) //TODO: remove after deadline
-        const registeredUser = await usersClient.register(user)
-
-        // only for making stuff work for the deadline. loadAuthenticatedUser should do this eventually
-        commit('userLoaded', registeredUser) //TODO: remove after deadline
-        return registeredUser
-    },
-
-    async loadAuthenticatedUser({ commit }: ActionHandler): Promise<void> {
-        commit('isLoadingUser', true)
-        const user = await usersClient.fetchAuthenticatedUser()
-        commit('userLoaded', user)
     },
 
     async loadAllTags({ commit }: ActionHandler): Promise<Tag[]> {
