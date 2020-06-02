@@ -5,8 +5,11 @@
         @mousedown.stop.prevent="startDragging"
         @mouseup.stop.prevent="stopDragging"
     >
-        <div class="p-1 flex flex-row">
+        <div class="p-1 flex flex-row justify-between">
             <button class="text-xs" @click="editMode = !editMode">Edit</button>
+            <button class="trash-icon" @click.stop.prevent="deleteItem()">
+                <icon-trash class="fill-current"></icon-trash>
+            </button>
         </div>
         <div v-if="type && editMode" class="px-4 pt-1 pb-4">
             <component
@@ -22,6 +25,7 @@
 </template>
 
 <script lang="ts">
+import IconTrash from '@/assets/icons/icon-trash.svg'
 import TextFieldEditor from '@/components/editors/TextFieldEditor.vue'
 import TodoEditor from '@/components/editors/TodoEditor.vue'
 import TextField from '@/components/items/TextField.vue'
@@ -30,7 +34,7 @@ import { Renderable } from '@/models/entities'
 import { Component, Emit, Prop, Vue, Watch } from 'vue-property-decorator'
 
 @Component({
-    components: { Todo, TextField, TodoEditor, TextFieldEditor },
+    components: { Todo, TextField, TodoEditor, TextFieldEditor, IconTrash },
 })
 export default class ItemWrapper extends Vue {
     @Prop(String) readonly type!: string
@@ -64,5 +68,19 @@ export default class ItemWrapper extends Vue {
     protected updateItem() {
         this.$store.dispatch('updateItem', this.editableItem)
     }
+
+    protected deleteItem() {
+        this.$store.dispatch('deleteItem', this.item)
+    }
 }
 </script>
+
+<style scoped>
+.trash-icon {
+    @apply ml-auto w-6 h-6 p-1 transition-colors duration-100 ease-out text-red-600;
+}
+
+.trash-icon:hover {
+    @apply text-red-700;
+}
+</style>
