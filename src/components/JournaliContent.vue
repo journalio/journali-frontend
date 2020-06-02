@@ -7,9 +7,9 @@
             v-if="currentPageId"
             :to="{ name: 'createItem', params: { pageId: currentPageId } }"
             active-class="hidden"
-            class="absolute bottom-0 right-0 m-6 w-20 h-20 rounded-full shadow bg-gray-300 hover:bg-gray-500"
+            class="absolute bottom-0 right-0 m-6 w-20 h-20 rounded-full shadow-lg bg-primary hover:bg-primary-dark text-white"
         >
-            <icon-add></icon-add>
+            <icon-add class="fill-current"></icon-add>
         </router-link>
     </div>
 </template>

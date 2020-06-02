@@ -44,6 +44,12 @@ import Todo from '@/components/items/Todo.vue'
 import { Renderable } from '@/models/entities'
 import { Component, Emit, Prop, Vue, Watch } from 'vue-property-decorator'
 
+// Cancel event when target is an interactive element
+const shouldCancel = (target?: HTMLElement) =>
+    ['input', 'select', 'textarea', 'button'].includes(
+        target?.tagName.toLowerCase() || '',
+    )
+
 @Component({
     components: {
         Todo,
@@ -75,7 +81,12 @@ export default class ItemWrapper extends Vue {
     }
 
     @Emit('drag-start')
-    startDragging({ offsetX, offsetY }: MouseEvent) {
+    startDragging(event: MouseEvent & { target?: HTMLElement }) {
+        const { offsetX, offsetY } = event
+        if (shouldCancel(event.target)) {
+            event.target.focus()
+            return null
+        }
         return {
             item: this.editableItem,
             offsetX,
@@ -85,6 +96,7 @@ export default class ItemWrapper extends Vue {
 
     protected updateItem() {
         this.$store.dispatch('updateItem', this.editableItem)
+        this.editMode = false
     }
 
     protected deleteItem() {
