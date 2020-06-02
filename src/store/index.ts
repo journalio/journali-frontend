@@ -1,4 +1,4 @@
-import { User } from '@/models/entities'
+import { User, Tag } from '@/models/entities'
 import { AnyDomainItem, ItemType, Uuid } from '@/models/types'
 import actions from '@/store/actions'
 import { JOURNALI_TOKEN } from '@/store/constants'
@@ -13,6 +13,8 @@ export interface AppState {
     token: string | null
     items: AnyDomainItem[]
     itemsLoading: boolean
+    tags: Tag[]
+    tagsLoading: boolean
 }
 
 const store = new Vuex.Store<AppState>({
@@ -23,6 +25,8 @@ const store = new Vuex.Store<AppState>({
         token: localStorage.getItem(JOURNALI_TOKEN) || null,
         items: [],
         itemsLoading: false,
+        tags: [],
+        tagsLoading: false,
     },
     mutations: {
         loadItems(state) {
@@ -52,15 +56,56 @@ const store = new Vuex.Store<AppState>({
             state.userLoading = false
         },
         updateItem(state, item: AnyDomainItem) {
-            const itemIndex = state.items.findIndex((i) => i.id === item.id)!
+            const itemIndex = state.items.findIndex((i) => i.id === item.id)
+
+            if (itemIndex === undefined) {
+                throw `Tried to update non-existant item: ${item}`
+            }
+
             Vue.set(state.items, itemIndex, {
                 ...state.items[itemIndex],
                 ...item,
             })
         },
         deleteItem(state, item: AnyDomainItem) {
-            const itemIndex = state.items.findIndex((i) => i.id === item.id)!
+            const itemIndex = state.items.findIndex((i) => i.id === item.id)
+
+            if (itemIndex === undefined) {
+                throw `Tried to delete non-existant item: ${item}`
+            }
+
             state.items.splice(itemIndex, 1)
+        },
+        loadTags(state) {
+            state.tagsLoading = true
+        },
+        tagsLoaded(state, tags: Tag[]) {
+            state.tags = tags
+            state.tagsLoading = false
+        },
+        addTag(state, tag: Tag) {
+            state.tags.push(tag)
+        },
+        updateTag(state, tag: Tag) {
+            const tagIndex = state.tags.findIndex((t) => t.id === tag.id)
+
+            if (tagIndex === undefined) {
+                throw `Tried to update non-existant tag: ${tag}`
+            }
+
+            Vue.set(state.tags, tagIndex, {
+                ...state.tags[tagIndex],
+                ...tag,
+            })
+        },
+        deleteTag(state, tag: Tag) {
+            const tagIndex = state.tags.findIndex((t) => t.id === tag.id)
+
+            if (tagIndex === undefined) {
+                throw `Tried to delete non-existant tag: ${tag}`
+            }
+
+            state.tags.splice(tagIndex, 1)
         },
     },
     getters: {
