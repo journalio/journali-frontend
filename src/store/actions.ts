@@ -5,6 +5,7 @@ import { NewItem } from '@/models'
 import { Item, Renderable, Tag } from '@/models/entities'
 import { AppState } from '@/store/index'
 import { ActionContext } from 'vuex'
+import { AnyDomainItem } from '@/models/types'
 
 const itemsClient = new ItemsClient()
 const tagsClient = new TagsClient()
@@ -23,7 +24,10 @@ export default {
         commit('itemsLoaded', items)
     },
 
-    async createItem<T>({ commit }: ActionHandler, item: NewItem) {
+    async createItem<T = AnyDomainItem>(
+        { commit }: ActionHandler,
+        item: NewItem,
+    ) {
         const createdItem = await itemsClient.createItem<T>(item)
         commit('addItem', createdItem)
         return createdItem
