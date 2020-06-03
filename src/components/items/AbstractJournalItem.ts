@@ -12,6 +12,7 @@ export default class AbstractJournalItem<C = Item> extends Vue implements Item {
     @Prop(Date) readonly updated_at!: Date
     @Prop(Number) readonly coord_x!: number
     @Prop(Number) readonly coord_y!: number
+    @Prop(Number) readonly due_date!: Date | null
 
     protected get childItems(): C[] {
         return this.$store.getters.getItemsByParent(this.id, this.item_type)

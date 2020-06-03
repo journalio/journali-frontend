@@ -21,6 +21,7 @@ const mapToDomain = <T = AnyDomainItem>({
     ...item,
     created_at: new Date(item.created_at),
     updated_at: new Date(item.updated_at),
+    due_date: item.due_date ? new Date(item.due_date) : null,
     ...Object.values(subtype)[0],
 })
 
@@ -50,12 +51,12 @@ export default class ItemsClient extends AbstractHttpClient {
         )
     }
 
-    deleteItem<T>(item: Item) {
+    deleteItem(item: Item) {
         if (!item.id) {
             // TODO: handle this in a more robust way
             throw 'This item has no Id, probably doesn\'t exist in the API yet'
         }
-        return this.delete<T>(`/api/${endPoints[item.item_type]}/${item.id}`)
+        return this.delete(`/api/${endPoints[item.item_type]}/${item.id}`)
     }
 
     async fetchAllItems(): Promise<AnyDomainItem[]> {

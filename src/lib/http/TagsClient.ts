@@ -25,7 +25,7 @@ export default class TagsClient extends AbstractHttpClient {
         return this.patch<Tag>(`/api/tags/${tag.id}`, tag)
     }
 
-    deleteTag(tag: Tag): Promise<Tag> {
-        return this.delete<Tag>(`/api/tags/${tag.id}`)
+    deleteTag(tag: Tag): Promise<null> {
+        return this.delete(`/api/tags/${tag.id}`)
     }
 }

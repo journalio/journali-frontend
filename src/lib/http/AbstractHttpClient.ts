@@ -6,7 +6,7 @@ type RequestBody = string | Blob | Record<string, any> | null
 
 export default abstract class AbstractHttpClient {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    protected async request<T extends Record<string, any>>(
+    protected async request<T extends Record<string, any> | null>(
         method: HttpMethod,
         route: string,
         requestBody: RequestBody,
@@ -37,8 +37,8 @@ export default abstract class AbstractHttpClient {
         return this.request<T>('GET', route, null, extraOptions)
     }
 
-    protected async delete<T>(route: string, extraOptions: object = {}) {
-        return this.request<T>('DELETE', route, null, extraOptions)
+    protected async delete(route: string, extraOptions: object = {}) {
+        return this.request<null>('DELETE', route, null, extraOptions)
     }
 
     private prepareBody = (body: RequestBody): string | Blob => {

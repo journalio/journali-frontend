@@ -19,6 +19,7 @@ export interface Item<P = ItemType> extends Common, Record<string, any> {
     parent_type: P | null
     created_at: Date
     updated_at: Date
+    due_date: Date | null
 }
 
 export interface Page extends Common<ItemType.PAGE> {
