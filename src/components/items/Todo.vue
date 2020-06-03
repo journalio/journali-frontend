@@ -54,6 +54,7 @@ export default class Todo extends AbstractJournalItem<TodoItem> {
             item_type: ItemType.TODO_ITEM,
             todo_id: this.id,
             title: this.newTodoTitle,
+            is_checked: false,
         })
 
         this.newTodoTitle = ''

@@ -7,14 +7,17 @@ const endPoints: Record<ItemType, string> = {
     [ItemType.PAGE]: 'pages',
     [ItemType.TEXT_FIELD]: 'text_fields',
     [ItemType.TODO]: 'todos',
-    [ItemType.TODO_ITEM]: 'todo-items',
+    [ItemType.TODO_ITEM]: 'todo_items',
 }
 
 type ItemResponse = {
     item: Item
     subtype: AnyEntityItem
 }
-const mapToDomain = ({ item, subtype }: ItemResponse): AnyDomainItem => ({
+const mapToDomain = <T = AnyDomainItem>({
+    item,
+    subtype,
+}: ItemResponse): T => ({
     ...item,
     created_at: new Date(item.created_at),
     updated_at: new Date(item.updated_at),
@@ -31,8 +34,13 @@ export default class ItemsClient extends AbstractHttpClient {
         return items.map(mapToDomain)
     }
 
-    createItem<T>(item: NewItem): Promise<T> {
-        return this.post<T>(`/api/${endPoints[item.item_type]}`, item)
+    async createItem<T>(item: NewItem): Promise<T> {
+        const response = await this.post<ItemResponse>(
+            `/api/${endPoints[item.item_type]}`,
+            item,
+        )
+
+        return mapToDomain(response)
     }
 
     updateItem<T extends Item>(item: T): Promise<T> {
