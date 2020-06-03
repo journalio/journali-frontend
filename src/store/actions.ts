@@ -12,8 +12,11 @@ const tagsClient = new TagsClient()
 
 type ActionHandler = ActionContext<AppState, AppState>
 
-const updateItemDebounced = debounce<Item, Promise<Item>>((item) =>
-    itemsClient.updateItem(item),
+const updateItemDebounced = debounce<Item, Promise<[Item, Item]>>((item) =>
+    Promise.all([
+        itemsClient.updateItem(item),
+        itemsClient.updateItemMeta(item),
+    ]),
 )
 
 export default {
@@ -38,7 +41,12 @@ export default {
         item: T,
     ): Promise<Item> {
         commit('updateItem', item)
-        return updateItemDebounced(item)
+        const [updated, meta] = await updateItemDebounced(item)
+        console.log(updated, meta)
+        return {
+            ...meta,
+            ...updated,
+        }
     },
 
     async deleteItem({ commit }: ActionHandler, item: Item) {

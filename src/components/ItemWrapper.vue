@@ -21,11 +21,17 @@
                 <icon-trash class="fill-current"></icon-trash>
             </button>
         </div>
-        <div v-if="type && editMode" class="p-4">
+        <div v-if="editMode" class="p-4">
             <component
                 :is="`${type}Editor`"
                 v-model="editableItem"
                 @submit="updateItem($event)"
+            />
+
+            <text-input
+                v-model="editableItemDueDate"
+                type="datetime-local"
+                label="Due date"
             />
         </div>
         <div v-else class="p-4">
@@ -41,7 +47,9 @@ import TextFieldEditor from '@/components/editors/TextFieldEditor.vue'
 import TodoEditor from '@/components/editors/TodoEditor.vue'
 import TextField from '@/components/items/TextField.vue'
 import Todo from '@/components/items/Todo.vue'
-import { Renderable } from '@/models/entities'
+import TextInput from '@/components/TextInput.vue'
+import { AnyDomainItem } from '@/models/types'
+import format from 'date-fns/format'
 import { Component, Emit, Prop, Vue, Watch } from 'vue-property-decorator'
 
 // Cancel event when target is an interactive element
@@ -52,6 +60,7 @@ const shouldCancel = (target?: HTMLElement) =>
 
 @Component({
     components: {
+        TextInput,
         Todo,
         TextField,
         TodoEditor,
@@ -62,17 +71,17 @@ const shouldCancel = (target?: HTMLElement) =>
 })
 export default class ItemWrapper extends Vue {
     @Prop(String) readonly type!: string
-    @Prop(Object) readonly item!: Renderable
+    @Prop(Object) readonly item!: AnyDomainItem
 
     editMode = false
 
     // copy item object because Vue doesn't allow changing properties
-    editableItem = Object.assign({}, this.item)
+    editableItem: AnyDomainItem = { ...this.item }
 
     // keep editableItem up to date
     @Watch('item', { deep: true })
     onItemChanged() {
-        this.editableItem = Object.assign({}, this.item)
+        this.editableItem = { ...this.item } as AnyDomainItem
     }
 
     @Emit('drag-stop')
@@ -101,6 +110,17 @@ export default class ItemWrapper extends Vue {
 
     protected deleteItem() {
         this.$store.dispatch('deleteItem', this.item)
+    }
+
+    protected get editableItemDueDate(): string | undefined {
+        console.log('called getter')
+        const date = this.editableItem.due_date || new Date()
+        return format(date, "yyyy-MM-dd'T'HH:mm")
+    }
+
+    protected set editableItemDueDate(event: string | undefined) {
+        console.log(event)
+        this.editableItem.due_date = event ? new Date(event) : null
     }
 }
 </script>

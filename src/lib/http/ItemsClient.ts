@@ -51,6 +51,10 @@ export default class ItemsClient extends AbstractHttpClient {
         )
     }
 
+    updateItemMeta(item: Item): Promise<Item> {
+        return this.patch<Item>(`/api/items/${item.id}`, item)
+    }
+
     deleteItem(item: Item) {
         if (!item.id) {
             // TODO: handle this in a more robust way
