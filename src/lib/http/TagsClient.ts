@@ -20,6 +20,54 @@ export default class TagsClient extends AbstractHttpClient {
                 id: 'a9182029-f30f-43fb-bb2d-981df3150b94',
                 name: 'Oh kijk eens wat een belachelijk lange tag naam zeg!',
             },
+            {
+                id: '9ab51ba2-7faa-4c7a-b36f-ea051a441534',
+                name: 'Boodschappen',
+            },
+            {
+                id: 'a6182029-f30f-43fb-bb2d-981df3150e94',
+                name: 'School',
+            },
+            {
+                id: 'a9182029-f30f-43fb-bb2d-981df3150b94',
+                name: 'memes',
+            },
+            {
+                id: 'a9182029-f30f-43fb-bb2d-981df3150b94',
+                name: 'Oh kijk eens wat een belachelijk lange tag naam zeg!',
+            },
+            {
+                id: '9ab51ba2-7faa-4c7a-b36f-ea051a441534',
+                name: 'Boodschappen',
+            },
+            {
+                id: 'a6182029-f30f-43fb-bb2d-981df3150e94',
+                name: 'School',
+            },
+            {
+                id: 'a9182029-f30f-43fb-bb2d-981df3150b94',
+                name: 'memes',
+            },
+            {
+                id: 'a9182029-f30f-43fb-bb2d-981df3150b94',
+                name: 'Oh kijk eens wat een belachelijk lange tag naam zeg!',
+            },
+            {
+                id: '9ab51ba2-7faa-4c7a-b36f-ea051a441534',
+                name: 'Boodschappen',
+            },
+            {
+                id: 'a6182029-f30f-43fb-bb2d-981df3150e94',
+                name: 'School',
+            },
+            {
+                id: 'a9182029-f30f-43fb-bb2d-981df3150b94',
+                name: 'memes',
+            },
+            {
+                id: 'a9182029-f30f-43fb-bb2d-981df3150b94',
+                name: 'Oh kijk eens wat een belachelijk lange tag naam zeg!',
+            },
         ])
         // Uncomment this when /api/tags is implemented
         // return this.get<Tag[]>('/api/tags')
