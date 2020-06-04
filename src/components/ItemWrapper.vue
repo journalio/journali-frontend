@@ -13,6 +13,7 @@
             >
                 <icon-edit class="fill-current"></icon-edit>
             </button>
+            <tag-list :tags="tags" />
             <button
                 class="trash-icon"
                 title="Delete item"
@@ -37,6 +38,7 @@
 <script lang="ts">
 import IconEdit from '@/assets/icons/icon-edit.svg'
 import IconTrash from '@/assets/icons/icon-trash.svg'
+import TagList from '@/components/TagList.vue'
 import TextFieldEditor from '@/components/editors/TextFieldEditor.vue'
 import TodoEditor from '@/components/editors/TodoEditor.vue'
 import TextField from '@/components/items/TextField.vue'
@@ -52,6 +54,7 @@ const shouldCancel = (target?: HTMLElement) =>
 
 @Component({
     components: {
+        TagList,
         Todo,
         TextField,
         TodoEditor,
@@ -68,6 +71,11 @@ export default class ItemWrapper extends Vue {
 
     // copy item object because Vue doesn't allow changing properties
     editableItem = Object.assign({}, this.item)
+
+    get tags() {
+        // TODO: get item specific tags.
+        return this.$store.state.tags
+    }
 
     // keep editableItem up to date
     @Watch('item', { deep: true })

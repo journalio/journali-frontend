@@ -1,6 +1,5 @@
 <template>
     <div class="w-auto bg-white shadow py-8 z-10">
-        <tag-list :tags="tags" />
         <text-input
             v-model="searchWord"
             autocomplete="off"
@@ -30,20 +29,15 @@
 import PageAdder from '@/components/PageAdder.vue'
 import PagesList from '@/components/PagesList.vue'
 import TextInput from '@/components/TextInput.vue'
-import TagList from '@/components/TagList.vue' // TODO: remove b4 testing
 import { Page } from '@/models'
 import { ItemType, Uuid } from '@/models/types'
 import { Component, Vue } from 'vue-property-decorator'
 
 @Component({
-    components: { PagesList, PageAdder, TextInput, TagList },
+    components: { PagesList, PageAdder, TextInput },
 })
 export default class JournaliSidebar extends Vue {
     searchWord = ''
-
-    get tags() {
-        return this.$store.state.tags
-    }
 
     get pages() {
         return this.$store.getters.getItemsByType(ItemType.PAGE)
