@@ -6,7 +6,7 @@
         @mouseleave="dragData = null"
     >
         <div class="flex flex-row-reverse">
-            <tag-list :tags="tags" class="tag-list bg-white" />
+            <tag-list :tags="tags" class="tag-list" />
         </div>
         <item-wrapper
             v-for="item of renderableItems"
@@ -75,6 +75,8 @@ export default class JournalPage extends Vue {
 
 <style scoped>
 .tag-list {
-    max-width: 15rem; /* TODO: replace by variable, no magic numbers plz */
+    @apply bg-white rounded shadow-md;
+    /* TODO: replace by variable, no magic numbers plz */
+    max-width: 15rem;
 }
 </style>
