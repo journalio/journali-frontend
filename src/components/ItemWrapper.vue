@@ -4,8 +4,10 @@
         class="item-wrapper relative"
         @mousedown.stop.prevent="startDragging"
         @mouseup.stop.prevent="stopDragging"
+        @mouseover="hovering = true"
+        @mouseleave="hovering = false"
     >
-        <div class="edit-bar">
+        <div :class="{ visible: hovering || tagsShowing }" class="edit-bar">
             <button
                 class="edit-icon"
                 title="Toggle edit"
@@ -13,7 +15,7 @@
             >
                 <icon-edit class="fill-current"></icon-edit>
             </button>
-            <tag-list :tags="tags" />
+            <tag-list :tags="tags" @tagsShowing="tagsShowing = $event" />
             <button
                 class="trash-icon"
                 title="Delete item"
@@ -22,14 +24,14 @@
                 <icon-trash class="fill-current"></icon-trash>
             </button>
         </div>
-        <div v-if="type && editMode" class="p-4">
+        <div v-if="type && editMode" class="px-4 pb-4">
             <component
                 :is="`${type}Editor`"
                 v-model="editableItem"
                 @submit="updateItem($event)"
             />
         </div>
-        <div v-else class="p-4">
+        <div v-else class="px-4 pb-4">
             <component :is="type" v-bind="editableItem"></component>
         </div>
     </div>
@@ -67,7 +69,9 @@ export default class ItemWrapper extends Vue {
     @Prop(String) readonly type!: string
     @Prop(Object) readonly item!: Renderable
 
-    editMode = false
+    private editMode = false
+    private hovering = false
+    private tagsShowing = false
 
     // copy item object because Vue doesn't allow changing properties
     editableItem = Object.assign({}, this.item)
@@ -119,10 +123,10 @@ export default class ItemWrapper extends Vue {
 }
 
 .edit-bar {
-    @apply p-1 flex flex-row justify-between absolute inset-x-0 top-0 bg-white bg-opacity-75 opacity-0 transition-opacity duration-100 ease-out rounded-t cursor-move;
+    @apply flex flex-row justify-between bg-white bg-opacity-75 transition-opacity duration-100 ease-out rounded-t cursor-move opacity-0;
 }
 
-.item-wrapper:hover > .edit-bar {
+.visible {
     @apply opacity-100;
 }
 

@@ -1,5 +1,5 @@
 <template>
-    <div class="inline-block">
+    <div>
         <button
             class="edit-icon"
             title="Toggle edit"
@@ -25,7 +25,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Emit, Prop, Vue, Watch } from 'vue-property-decorator'
 import { Tag } from '@/models/entities'
 import IconClose from '@/assets/icons/icon-close.svg'
 import IconTag from '@/assets/icons/icon-tag.svg'
@@ -37,6 +37,12 @@ export default class TagList extends Vue {
     @Prop(Array) readonly tags!: Tag[]
 
     private showTags = false
+
+    @Emit('tagsShowing')
+    @Watch('showTags')
+    protected emitShowTags() {
+        return this.showTags
+    }
 }
 </script>
 

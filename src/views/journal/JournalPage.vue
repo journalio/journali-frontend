@@ -5,6 +5,7 @@
         @mousemove="handleDrag"
         @mouseleave="dragData = null"
     >
+        <tag-list :tags="tags" />
         <item-wrapper
             v-for="item of renderableItems"
             :key="item.id"
@@ -18,6 +19,7 @@
 </template>
 
 <script lang="ts">
+import TagList from '@/components/TagList.vue'
 import ItemWrapper from '@/components/ItemWrapper.vue'
 import { Item, Renderable } from '@/models/entities'
 import { ItemType } from '@/models/types'
@@ -31,13 +33,18 @@ type DragData = {
 }
 
 @Component({
-    components: { ItemWrapper },
+    components: { TagList, ItemWrapper },
 })
 export default class JournalPage extends Vue {
     @Prop(Array) readonly items!: Item[]
     @Ref('container') readonly container!: HTMLDivElement
 
     dragData: DragData | null = null
+
+    get tags() {
+        // TODO: get item specific tags.
+        return this.$store.state.tags
+    }
 
     get renderableItems() {
         return this.items.filter(
