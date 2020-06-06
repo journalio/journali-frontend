@@ -21,8 +21,9 @@
 </template>
 
 <script lang="ts">
-import TagList from '@/components/TagList.vue'
 import ItemWrapper from '@/components/ItemWrapper.vue'
+import TagList from '@/components/TagList.vue'
+import { clamp } from '@/lib/utils'
 import { Item, Renderable } from '@/models/entities'
 import { ItemType } from '@/models/types'
 import { Component, Prop, Ref, Vue } from 'vue-property-decorator'
@@ -59,10 +60,20 @@ export default class JournalPage extends Vue {
             return
         }
         const offset = this.container.getBoundingClientRect()
+        const coord_x = clamp(
+            0,
+            offset.width,
+            clientX - offset.x - this.dragData.offsetX,
+        )
+        const coord_y = clamp(
+            0,
+            offset.height,
+            clientY - offset.y - this.dragData.offsetY,
+        )
         this.$store.dispatch('updateItem', {
             ...this.dragData.item,
-            coord_x: clientX - offset.x - this.dragData.offsetX,
-            coord_y: clientY - offset.y - this.dragData.offsetY,
+            coord_x,
+            coord_y,
         })
     }
 
@@ -75,7 +86,7 @@ export default class JournalPage extends Vue {
 
 <style scoped>
 .tag-list {
-    @apply bg-white rounded shadow-md;
+    @apply bg-white shadow-md;
     /* TODO: replace by variable, no magic numbers plz */
     max-width: 15rem;
 }

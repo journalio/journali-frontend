@@ -3,9 +3,9 @@ import TagsClient from '@/lib/http/TagsClient'
 import { debounce } from '@/lib/utils'
 import { NewItem } from '@/models'
 import { Item, Renderable, Tag } from '@/models/entities'
+import { AnyDomainItem } from '@/models/types'
 import { AppState } from '@/store/index'
 import { ActionContext } from 'vuex'
-import { AnyDomainItem } from '@/models/types'
 
 const itemsClient = new ItemsClient()
 const tagsClient = new TagsClient()
@@ -42,7 +42,6 @@ export default {
     ): Promise<Item> {
         commit('updateItem', item)
         const [updated, meta] = await updateItemDebounced(item)
-        console.log(updated, meta)
         return {
             ...meta,
             ...updated,

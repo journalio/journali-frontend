@@ -1,30 +1,20 @@
 <template>
     <div
         :style="{ left: `${item.coord_x}px`, top: `${item.coord_y}px` }"
-        class="item-wrapper relative"
+        class="item-wrapper p-4 relative"
+        @mouseenter="hovering = true"
         @mousedown.stop.prevent="startDragging"
         @mouseup.stop.prevent="stopDragging"
-        @mouseover="hovering = true"
         @mouseleave="hovering = false"
     >
-        <div :class="{ visible: hovering || tagsShowing }" class="edit-bar">
-            <button
-                class="edit-icon"
-                title="Toggle edit"
-                @click.stop.prevent="editMode = !editMode"
-            >
-                <icon-edit class="fill-current"></icon-edit>
-            </button>
-            <tag-list :tags="tags" @tagsShowing="tagsShowing = $event" />
-            <button
-                class="trash-icon"
-                title="Delete item"
-                @click.stop.prevent="deleteItem()"
-            >
-                <icon-trash class="fill-current"></icon-trash>
-            </button>
-        </div>
-        <div v-if="editMode" class="px-4 pb-4">
+        <item-header
+            :tags="tags"
+            :visible="hovering || tagsShowing"
+            @delete="deleteItem"
+            @show:tags="tagsShowing = $event"
+            @toggle:edit-mode="editMode = !editMode"
+        />
+        <div v-if="editMode">
             <component
                 :is="`${type}Editor`"
                 v-model="editableItem"
@@ -37,46 +27,46 @@
                 label="Due date"
             />
         </div>
-        <div v-else class="px-4 pb-4">
-            <component :is="type" v-bind="editableItem"></component>
+        <div v-else>
+            <component :is="type" v-bind="editableItem" />
         </div>
+        <item-footer :item="editableItem" class="mt-2" />
     </div>
 </template>
 
 <script lang="ts">
-import IconEdit from '@/assets/icons/icon-edit.svg'
-import IconTrash from '@/assets/icons/icon-trash.svg'
-import TagList from '@/components/TagList.vue'
 import TextFieldEditor from '@/components/editors/TextFieldEditor.vue'
 import TodoEditor from '@/components/editors/TodoEditor.vue'
+import ItemFooter from '@/components/ItemFooter.vue'
+import ItemHeader from '@/components/ItemHeader.vue'
 import TextField from '@/components/items/TextField.vue'
 import Todo from '@/components/items/Todo.vue'
+import TagList from '@/components/TagList.vue'
 import TextInput from '@/components/TextInput.vue'
+import { isElementContainedByElementType } from '@/lib/utils'
+import { Renderable } from '@/models/entities'
 import { AnyDomainItem } from '@/models/types'
 import format from 'date-fns/format'
 import { Component, Emit, Prop, Vue, Watch } from 'vue-property-decorator'
 
 // Cancel event when target is an interactive element
-const shouldCancel = (target?: HTMLElement) =>
-    ['input', 'select', 'textarea', 'button'].includes(
-        target?.tagName.toLowerCase() || '',
-    )
+const INTERACTIVE_ELEMENTS = ['input', 'select', 'textarea', 'button']
 
 @Component({
     components: {
+        ItemHeader,
+        ItemFooter,
         TextInput,
         TagList,
         Todo,
         TextField,
         TodoEditor,
         TextFieldEditor,
-        IconTrash,
-        IconEdit,
     },
 })
 export default class ItemWrapper extends Vue {
     @Prop(String) readonly type!: string
-    @Prop(Object) readonly item!: AnyDomainItem
+    @Prop(Object) readonly item!: AnyDomainItem & Renderable
 
     private editMode = false
     private hovering = false
@@ -104,7 +94,9 @@ export default class ItemWrapper extends Vue {
     @Emit('drag-start')
     startDragging(event: MouseEvent & { target?: HTMLElement }) {
         const { offsetX, offsetY } = event
-        if (shouldCancel(event.target)) {
+        if (
+            isElementContainedByElementType(INTERACTIVE_ELEMENTS, event.target)
+        ) {
             event.target.focus()
             return null
         }
@@ -125,13 +117,11 @@ export default class ItemWrapper extends Vue {
     }
 
     protected get editableItemDueDate(): string | undefined {
-        console.log('called getter')
-        const date = this.editableItem.due_date || new Date()
-        return format(date, "yyyy-MM-dd'T'HH:mm")
+        const date = this.editableItem.due_date
+        return date ? format(date, "yyyy-MM-dd'T'HH:mm") : undefined
     }
 
     protected set editableItemDueDate(event: string | undefined) {
-        console.log(event)
         this.editableItem.due_date = event ? new Date(event) : null
     }
 }
@@ -140,26 +130,10 @@ export default class ItemWrapper extends Vue {
 <style scoped>
 .item-wrapper {
     @apply rounded bg-white absolute shadow select-none;
-}
-
-.edit-bar {
-    @apply flex flex-row justify-between bg-white bg-opacity-75 transition-opacity duration-100 ease-out rounded-t cursor-move opacity-0;
+    min-width: 16rem;
 }
 
 .visible {
     @apply opacity-100;
-}
-
-.edit-icon,
-.trash-icon {
-    @apply w-6 h-6 p-1 cursor-pointer;
-}
-
-.trash-icon {
-    @apply text-red-600;
-}
-
-.trash-icon:hover {
-    @apply text-red-700;
 }
 </style>
