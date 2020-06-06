@@ -4,8 +4,10 @@
         class="item-wrapper relative"
         @mousedown.stop.prevent="startDragging"
         @mouseup.stop.prevent="stopDragging"
+        @mouseover="hovering = true"
+        @mouseleave="hovering = false"
     >
-        <div class="edit-bar">
+        <div :class="{ visible: hovering || tagsShowing }" class="edit-bar">
             <button
                 class="edit-icon"
                 title="Toggle edit"
@@ -13,6 +15,7 @@
             >
                 <icon-edit class="fill-current"></icon-edit>
             </button>
+            <tag-list :tags="tags" @tagsShowing="tagsShowing = $event" />
             <button
                 class="trash-icon"
                 title="Delete item"
@@ -21,7 +24,7 @@
                 <icon-trash class="fill-current"></icon-trash>
             </button>
         </div>
-        <div v-if="editMode" class="p-4">
+        <div v-if="editMode" class="px-4 pb-4">
             <component
                 :is="`${type}Editor`"
                 v-model="editableItem"
@@ -34,7 +37,7 @@
                 label="Due date"
             />
         </div>
-        <div v-else class="p-4">
+        <div v-else class="px-4 pb-4">
             <component :is="type" v-bind="editableItem"></component>
         </div>
     </div>
@@ -43,6 +46,7 @@
 <script lang="ts">
 import IconEdit from '@/assets/icons/icon-edit.svg'
 import IconTrash from '@/assets/icons/icon-trash.svg'
+import TagList from '@/components/TagList.vue'
 import TextFieldEditor from '@/components/editors/TextFieldEditor.vue'
 import TodoEditor from '@/components/editors/TodoEditor.vue'
 import TextField from '@/components/items/TextField.vue'
@@ -61,6 +65,7 @@ const shouldCancel = (target?: HTMLElement) =>
 @Component({
     components: {
         TextInput,
+        TagList,
         Todo,
         TextField,
         TodoEditor,
@@ -73,10 +78,17 @@ export default class ItemWrapper extends Vue {
     @Prop(String) readonly type!: string
     @Prop(Object) readonly item!: AnyDomainItem
 
-    editMode = false
+    private editMode = false
+    private hovering = false
+    private tagsShowing = false
 
     // copy item object because Vue doesn't allow changing properties
     editableItem: AnyDomainItem = { ...this.item }
+
+    get tags() {
+        // TODO: get item specific tags.
+        return this.$store.state.tags
+    }
 
     // keep editableItem up to date
     @Watch('item', { deep: true })
@@ -131,10 +143,10 @@ export default class ItemWrapper extends Vue {
 }
 
 .edit-bar {
-    @apply p-1 flex flex-row justify-between absolute inset-x-0 top-0 bg-white bg-opacity-75 opacity-0 transition-opacity duration-100 ease-out rounded-t cursor-move;
+    @apply flex flex-row justify-between bg-white bg-opacity-75 transition-opacity duration-100 ease-out rounded-t cursor-move opacity-0;
 }
 
-.item-wrapper:hover > .edit-bar {
+.visible {
     @apply opacity-100;
 }
 
