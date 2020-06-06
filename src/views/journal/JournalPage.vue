@@ -5,6 +5,9 @@
         @mousemove="handleDrag"
         @mouseleave="dragData = null"
     >
+        <div class="flex flex-row-reverse">
+            <tag-list :tags="tags" class="tag-list" />
+        </div>
         <item-wrapper
             v-for="item of renderableItems"
             :key="item.id"
@@ -18,6 +21,7 @@
 </template>
 
 <script lang="ts">
+import TagList from '@/components/TagList.vue'
 import ItemWrapper from '@/components/ItemWrapper.vue'
 import { Item, Renderable } from '@/models/entities'
 import { ItemType } from '@/models/types'
@@ -31,13 +35,18 @@ type DragData = {
 }
 
 @Component({
-    components: { ItemWrapper },
+    components: { TagList, ItemWrapper },
 })
 export default class JournalPage extends Vue {
     @Prop(Array) readonly items!: Item[]
     @Ref('container') readonly container!: HTMLDivElement
 
     dragData: DragData | null = null
+
+    get tags() {
+        // TODO: get item specific tags.
+        return this.$store.state.tags
+    }
 
     get renderableItems() {
         return this.items.filter(
@@ -63,3 +72,11 @@ export default class JournalPage extends Vue {
     }
 }
 </script>
+
+<style scoped>
+.tag-list {
+    @apply bg-white rounded shadow-md;
+    /* TODO: replace by variable, no magic numbers plz */
+    max-width: 15rem;
+}
+</style>
