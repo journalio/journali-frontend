@@ -1,7 +1,5 @@
 <template>
-    <div class="whitespace-pre">
-        {{ text }}
-    </div>
+    <div class="whitespace-pre" v-text="text" />
 </template>
 
 <script lang="ts">

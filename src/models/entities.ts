@@ -14,11 +14,12 @@ export interface Renderable {
     coord_y: number
 }
 
-export interface Item<P = ItemType> extends Common, Record<string, any> {
+export interface Item<P = ItemType> extends Common {
     parent_id: Uuid | null
     parent_type: P | null
     created_at: Date
     updated_at: Date
+    due_date: Date | null
 }
 
 export interface Page extends Common<ItemType.PAGE> {

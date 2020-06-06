@@ -49,7 +49,6 @@ export default class Todo extends AbstractJournalItem<TodoItem> {
     protected newTodoTitle = ''
 
     protected async saveNewTodo() {
-        console.log(this.newTodoTitle)
         await this.$store.dispatch('createItem', {
             item_type: ItemType.TODO_ITEM,
             todo_id: this.id,
