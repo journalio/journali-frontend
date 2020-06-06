@@ -60,7 +60,7 @@ export default class NotificationTray extends Vue {
     }
 
     private handlePageClick(event: MouseEvent) {
-        const target = event.target as Element
+        const target = event.target as HTMLElement
         if (!isElementContainedByOther(this.$refs.container as Node, target)) {
             this.showNotificationTray = false
         }
