@@ -54,6 +54,11 @@ const routes: Array<RouteConfig> = [
                 component: () => import('../views/UserSettings.vue'),
             },
             {
+                path: 'statistics',
+                name: 'Statistics',
+                component: () => import('../views/Statistics.vue'),
+            },
+            {
                 path: '*',
                 component: EmptyJournalPage,
             },
