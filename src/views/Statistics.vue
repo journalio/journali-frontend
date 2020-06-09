@@ -1,5 +1,5 @@
 <template>
-    <bar-chart :data="data" :options="data" />
+    <bar-chart :chart-data="data" :options="data" />
 </template>
 
 <script lang="ts">
@@ -47,6 +47,7 @@ export default class Statistics extends Vue {
             ],
         },
     }
+
     // get myStyles() {
     //     return {
     //         height: `${400}px`,

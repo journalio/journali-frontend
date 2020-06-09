@@ -1,14 +1,18 @@
 <script lang="ts">
 import { Prop } from 'vue-property-decorator'
 import { mixins } from 'vue-class-component'
-import { Bar } from 'vue-chartjs'
+import ChartJs from 'vue-chartjs'
 
-export default class BarChart extends mixins(Bar) {
-    @Prop(Object) readonly data: Record<string, unknown>
-    @Prop(Object) readonly options: Record<string, unknown>
+const { reactiveProp } = ChartJs.mixins
+const Bar = ChartJs.Bar
 
-    mounted() {
-        this.renderChart(this.data, this.options)
+export default class BarChart extends mixins(Bar, reactiveProp) {
+    @Prop(Object) readonly chartData!: Record<string, unknown>
+    @Prop(Object) readonly options!: Record<string, unknown>
+
+    protected mounted() {
+        console.log('kek')
+        this.renderChart(this.chartData, this.options)
     }
 }
 </script>
