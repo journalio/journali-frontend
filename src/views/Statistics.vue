@@ -1,7 +1,10 @@
 <template>
     <div class="bg-white w-full h-full">
-        <div class="flex justify-center">
-            <chart-wrapper class="w-1/2 m-4 overflow-auto">
+        <section>
+            <h1 class="text-xl">General</h1>
+        </section>
+        <section class="flex justify-center">
+            <chart-wrapper class="w-1/2 m-4 overflow-hidden">
                 <h1 class="text-xl">Most used tags</h1>
                 <bar-chart
                     v-if="tags.length > 0"
@@ -9,16 +12,16 @@
                     :options="barOptions"
                 />
             </chart-wrapper>
-        </div>
-        <div class="flex justify-center">
-            <chart-wrapper class="w-1/2 m-4 overflow-auto">
+        </section>
+        <section class="flex justify-center">
+            <chart-wrapper class="w-1/2 m-4 overflow-hidden">
                 <h1 class="text-xl">Items by type</h1>
                 <doughnut-chart
                     v-if="itemCategories.length > 0"
                     :chart-data="doughnutData"
                 />
             </chart-wrapper>
-        </div>
+        </section>
     </div>
 </template>
 
