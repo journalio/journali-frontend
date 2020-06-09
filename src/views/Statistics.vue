@@ -1,7 +1,8 @@
 <template>
     <div class="bg-white w-full h-full">
-        <section>
+        <section class="p-4">
             <h1 class="text-xl">General</h1>
+            <p>Total made items: {{ items.length }}</p>
         </section>
         <section class="flex justify-center">
             <chart-wrapper class="w-1/2 m-4 overflow-hidden">
@@ -65,6 +66,7 @@ export default class Statistics extends Vue {
     }
 
     sortDescending(tags: Array<Tag>) {
+        // copy, otherwise you'll end up modifying vuex state stuff
         const tagsCopy = [...tags]
         return tagsCopy.sort((a: Tag, b: Tag) => {
             if (a.items.length < b.items.length) {
@@ -91,6 +93,10 @@ export default class Statistics extends Vue {
         }
     }
 
+    get items() {
+        return this.$store.state.items
+    }
+
     get itemCategories() {
         const itemTypeUses = {
             [ItemType.PAGE]: 0,
@@ -98,7 +104,7 @@ export default class Statistics extends Vue {
             [ItemType.TODO_ITEM]: 0,
             [ItemType.TEXT_FIELD]: 0,
         }
-        this.$store.state.items.forEach((item: Item) => {
+        this.items.forEach((item: Item) => {
             itemTypeUses[item.item_type]++
         })
 
