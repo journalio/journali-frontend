@@ -1,17 +1,29 @@
 <script lang="ts">
+import { Bar, mixins } from 'vue-chartjs'
+import Component from 'vue-class-component'
 import { Prop } from 'vue-property-decorator'
-import { mixins } from 'vue-class-component'
-import ChartJs from 'vue-chartjs'
+import Vue from 'vue'
+const { reactiveProp } = mixins
 
-const { reactiveProp } = ChartJs.mixins
-const Bar = ChartJs.Bar
+@Component({
+    extends: Bar,
+    mixins: [reactiveProp],
+})
+export default class BarChart extends Vue {
+    @Prop(Object)
+    chartData!: Record<string, unknown>
 
-export default class BarChart extends mixins(Bar, reactiveProp) {
-    @Prop(Object) readonly chartData!: Record<string, unknown>
-    @Prop(Object) readonly options!: Record<string, unknown>
+    @Prop(Object)
+    options!: Record<string, unknown>
 
-    protected mounted() {
-        console.log('kek')
+    // Keeps tools from whining when they can't find renderChart()
+    renderChart!: (
+        chartData: Record<string, unknown>,
+        options: Record<string, unknown>,
+    ) => void
+
+    mounted() {
+        console.log('using options', this.options)
         this.renderChart(this.chartData, this.options)
     }
 }
