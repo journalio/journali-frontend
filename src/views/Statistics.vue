@@ -26,36 +26,6 @@ import { Tag } from '@/models/entities'
     components: { BarChart, ChartWrapper },
 })
 export default class Statistics extends Vue {
-    // protected created() {
-    //     const tags = []
-    //     tags.forEach((tag: Tag) => {
-    //         tagsClient.assignItems(tag, tag.items)
-    //     })
-    // }
-
-    get chartData() {
-        const tagNames = this.tags.map((tag: Tag) => tag.name)
-
-        return {
-            labels: tagNames,
-            datasets: [
-                {
-                    label: '# of Votes',
-                    data: this.arrayOfInts(tagNames.length),
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.5)',
-                        'rgba(54, 162, 235, 0.5)',
-                        'rgba(255, 206, 86, 0.5)',
-                        'rgba(75, 192, 192, 0.5)',
-                        'rgba(153, 102, 255, 0.5)',
-                        'rgba(255, 159, 64, 0.5)',
-                    ],
-                    barPercentage: 0.5,
-                    barThickness: 10,
-                },
-            ],
-        }
-    }
     options = {
         legend: {
             labels: {
@@ -78,17 +48,44 @@ export default class Statistics extends Vue {
         },
         responsive: true,
     }
+    // protected mounted() {
+    //     const tags = this.tags
+    //     tags.forEach((tag: Tag) => {
+    //         tagsClient.assignItems(tag, tag.items)
+    //     })
+    // }
 
+    // Prepare sortable objects
     get tags() {
-        return this.$store.state.tags
+        const tagsFromStore = this.$store.state.tags
+        return this.sortDescending(tagsFromStore)
     }
 
-    arrayOfInts(length: number) {
-        const ints = []
-        for (let step = length; step > 0; step--) {
-            ints.push(Math.floor(Math.random() * (50 - 5 + 1)) + 5)
+    sortDescending(tags: Array<Tag>) {
+        return tags.sort((a: Tag, b: Tag) => {
+            if (a.items.length < b.items.length) {
+                return 1
+            }
+            if (a.items.length > b.items.length) {
+                return -1
+            }
+            return 0
+        })
+    }
+
+    get chartData() {
+        return {
+            labels: this.tags.map((tag: Tag) => tag.name),
+            datasets: [
+                {
+                    label: '# of usages',
+                    data: this.tags.map((tag: Tag) => tag.items.length),
+                    backgroundColor: this.tags.map((tag: Tag) => tag.color),
+                    barPercentage: 0.5,
+                    barThickness: 10,
+                },
+            ],
         }
-        return ints
     }
 }
 </script>
