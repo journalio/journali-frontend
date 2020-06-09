@@ -4,7 +4,7 @@ import { ItemType, Uuid } from '@/models/types'
  */
 
 // Used by all items
-interface Common<T = ItemType> {
+export interface Common<T = ItemType> {
     id?: Uuid
     item_type: T
 }
@@ -48,4 +48,6 @@ export interface User {
 export interface Tag {
     id?: Uuid
     name: string
+    color: string
+    items: Array<Common>
 }
