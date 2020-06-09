@@ -1,13 +1,16 @@
 <template>
-    <bar-chart :chart-data="data" :options="data" />
+    <chart-wrapper class="w-full">
+        <bar-chart :chart-data="data" :options="data" />
+    </chart-wrapper>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import BarChart from '@/components/BarChart.vue'
+import ChartWrapper from '@/components/charts/ChartWrapper.vue'
+import BarChart from '@/components/charts/BarChart.vue'
 
 @Component({
-    components: { BarChart },
+    components: { BarChart, ChartWrapper },
 })
 export default class Statistics extends Vue {
     data = {
@@ -39,6 +42,7 @@ export default class Statistics extends Vue {
                 },
             ],
         },
+        responsive: true,
     }
 }
 </script>
