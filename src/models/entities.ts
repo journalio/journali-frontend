@@ -49,5 +49,5 @@ export interface Tag {
     id?: Uuid
     name: string
     color: string
-    items: Array<Common>
+    items: Common[]
 }

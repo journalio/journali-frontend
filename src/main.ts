@@ -1,16 +1,15 @@
 import '@/lib/class-component-hooks'
+import { getApplicationInformation } from '@/lib/utils'
+
 import Vue from 'vue'
 import App from './App.vue'
-
-import './assets/fonts.css'
+import './assets/global.css'
 import './assets/tailwind.css'
 
 import router from './router'
 import store from './store'
 
-console.log(
-    `Running version "${process.env.VUE_APP_VERSION}" in "${process.env.NODE_ENV}"`,
-)
+getApplicationInformation().then((info) => console.table(info))
 
 new Vue({
     router,

@@ -7,7 +7,12 @@
         >
             <icon-edit class="fill-current"></icon-edit>
         </button>
-        <tag-list :tags="tags" @tagsShowing="$emit('show:tags', $event)" />
+        <tag-list
+            :tags="tags"
+            @show:tags="$emit('show:tags', $event)"
+            @create:tag="$emit('create:tag', $event)"
+            @delete:tag="$emit('delete:tag', $event)"
+        />
         <button
             class="trash-icon"
             title="Delete item"
@@ -34,7 +39,7 @@ export default class ItemHeader extends Vue {
 
 <style scoped>
 .edit-bar {
-    @apply p-4 pb-2 flex flex-row justify-end absolute inset-x-0 top-0 opacity-0 transition duration-100 ease-out rounded-t cursor-move;
+    @apply p-4 pb-2 flex flex-row justify-end bg-white absolute right-0 top-0 opacity-0 transition duration-100 ease-out rounded-t cursor-move;
 }
 
 .edit-bar.visible {

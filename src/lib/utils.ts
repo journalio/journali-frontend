@@ -67,3 +67,14 @@ export const stringToColor = (string: string) => {
     }
     return color
 }
+
+export const getApiVersion = () =>
+    fetch('/api/version').then((resp) => resp.text())
+
+export const getApplicationInformation = async () => {
+    const appVersion = process.env.VUE_APP_VERSION
+    const appEnvironment = process.env.NODE_ENV
+    const apiVersion = await getApiVersion()
+
+    return { appEnvironment, appVersion, apiVersion }
+}

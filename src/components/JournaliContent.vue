@@ -9,7 +9,7 @@
             active-class="hidden"
             class="absolute bottom-0 right-0 m-6 w-20 h-20 rounded-full shadow-lg bg-primary hover:bg-primary-dark text-white"
         >
-            <icon-add class="fill-current"></icon-add>
+            <icon-add class="fill-inherit"></icon-add>
         </router-link>
     </div>
 </template>

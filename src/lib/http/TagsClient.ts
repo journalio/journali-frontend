@@ -1,13 +1,31 @@
 import AbstractHttpClient from '@/lib/http/AbstractHttpClient'
-import { Tag, Common } from '@/models/entities'
+import { Common, Tag } from '@/models/entities'
+import { ItemType, Uuid } from '@/models/types'
+
+type UnMappedTag = Tag & {
+    items: [Uuid, ItemType][]
+}
+
+type NewTag = {
+    name: string
+    color: string
+}
 
 export default class TagsClient extends AbstractHttpClient {
     async fetchAllTags(): Promise<Tag[]> {
         // Uncomment this when /api/tags is implemented
-        return this.get<Tag[]>('/api/tags')
+        return (await this.get<UnMappedTag[]>('/api/tags')).map(
+            (tag: UnMappedTag) => ({
+                ...tag,
+                items: tag.items.map(([id, item_type]: [Uuid, ItemType]) => ({
+                    id,
+                    item_type,
+                })),
+            }),
+        )
     }
 
-    createTag(tag: Tag): Promise<Tag> {
+    createTag(tag: NewTag): Promise<Tag> {
         return this.post<Tag>('/api/tags', tag)
     }
 
@@ -15,8 +33,12 @@ export default class TagsClient extends AbstractHttpClient {
         return this.patch<Tag>(`/api/tags/${tag.id}`, tag)
     }
 
-    assignItems(tag: Tag, items: Array<Common>): Promise<Tag> {
+    assignItems(tag: Tag, items: Common[]): Promise<Tag> {
         return this.patch<Tag>(`/api/tags/${tag.id}/items`, items)
+    }
+
+    unassignItems(tag: Tag, items: Common[]): Promise<null> {
+        return this.delete(`/api/tags/${tag.id}/items`, items)
     }
 
     deleteTag(tag: Tag): Promise<null> {

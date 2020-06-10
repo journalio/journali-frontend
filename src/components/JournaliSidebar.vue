@@ -8,7 +8,7 @@
             placeholder="Key words"
             type="search"
         />
-        <div class="text-sm my-2 text-gray-700 px-4">
+        <div class="text-sm mt-4 text-gray-700 px-4">
             Pages ({{ filteredPages.length }}/{{ pages.length }})
         </div>
         <pages-list

@@ -26,7 +26,7 @@
             @click.stop="showNewTodo = !showNewTodo"
         >
             Add todo
-            <icon-add class="w-5 h-5 fill-current"></icon-add>
+            <icon-add class="w-5 h-5 fill-inherit"></icon-add>
         </button>
     </div>
 </template>

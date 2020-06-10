@@ -20,7 +20,7 @@ export default abstract class AbstractHttpClient {
             if (response.ok) {
                 return response.json()
             } else {
-                throw response.json()
+                throw response.text()
             }
         })
     }
@@ -37,8 +37,12 @@ export default abstract class AbstractHttpClient {
         return this.request<T>('GET', route, null, extraOptions)
     }
 
-    protected async delete(route: string, extraOptions: object = {}) {
-        return this.request<null>('DELETE', route, null, extraOptions)
+    protected async delete(
+        route: string,
+        data: RequestBody = null,
+        extraOptions: object = {},
+    ) {
+        return this.request<null>('DELETE', route, data, extraOptions)
     }
 
     private prepareBody = (body: RequestBody): string | Blob => {
