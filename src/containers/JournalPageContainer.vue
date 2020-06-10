@@ -2,7 +2,13 @@
     <div v-if="loading">
         Loading...
     </div>
-    <journal-page v-else :items="items" :tags="tags" />
+    <journal-page
+        v-else
+        :items="items"
+        :tags="tags"
+        @create:tag="handleCreateTag"
+        @delete:tag="handleDeleteTag"
+    />
 </template>
 
 <script lang="ts">
@@ -31,18 +37,25 @@ export default class JournalPageContainer extends Vue {
         return this.$store.getters.getTagsByItem(this.pageId, ItemType.PAGE)
     }
 
+    get page() {
+        return {
+            id: this.pageId,
+            item_type: ItemType.PAGE,
+        }
+    }
+
     protected handleCreateTag(tagName: string) {
         this.$store.dispatch('createTag', {
             tag_name: tagName,
-            item_id: this.item.id,
-            item_type: this.item.item_type,
+            item_id: this.pageId,
+            item_type: ItemType.PAGE,
         })
     }
 
     protected handleDeleteTag(tag: Tag) {
         this.$store.dispatch('deleteTag', {
             tag,
-            item: this.item,
+            item: this.page,
         })
     }
 }

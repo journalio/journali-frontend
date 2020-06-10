@@ -123,7 +123,8 @@ export default {
                 (i) => i.id !== item.id && i.item_type !== item.item_type,
             ),
         })
-        if (tag.items && tag.items.length === 0) {
+
+        if (tag.items && tag.items.length === 1) {
             await tagsClient.deleteTag(tag)
             commit('deleteTag', tag)
         }
