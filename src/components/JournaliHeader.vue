@@ -14,14 +14,21 @@
                 class="nav-item text-gray-800 hover:text-black"
                 to="/user-settings"
             >
-                <icon-user class="nav-icon mr-2"></icon-user>
+                <icon-user class="nav-icon mr-2" />
                 User Settings
+            </router-link>
+            <router-link
+                class="nav-item text-gray-800 hover:text-black"
+                to="/statistics"
+            >
+                <icon-diary class="nav-icon mr-2" />
+                statistics
             </router-link>
             <router-link
                 class="nav-item text-red-600 hover:text-red-700"
                 to="/logout"
             >
-                <icon-door-exit class="nav-icon mr-2"></icon-door-exit>
+                <icon-door-exit class="nav-icon mr-2" />
                 Logout
             </router-link>
         </nav>

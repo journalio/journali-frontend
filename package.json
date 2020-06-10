@@ -13,10 +13,12 @@
         "prettier": "prettier \"./**/{,.}*.{yml,css,json}\" "
     },
     "dependencies": {
+        "chart.js": "^2.9.3",
         "core-js": "^3.6.4",
         "date-fns": "^2.14.0",
         "tailwindcss": "^1.4.6",
         "vue": "^2.6.11",
+        "vue-chartjs": "^3.5.0",
         "vue-class-component": "^7.2.3",
         "vue-property-decorator": "^8.4.2",
         "vue-router": "^3.3.2",
@@ -29,6 +31,7 @@
         "@storybook/addon-links": ">=5.3.19",
         "@storybook/addon-notes": ">=5.3.19",
         "@storybook/vue": ">=5.3.19",
+        "@types/chart.js": "^2.9.21",
         "@types/jest": "^25.2.3",
         "@typescript-eslint/eslint-plugin": "^2.34.0",
         "@typescript-eslint/parser": "^2.34.0",
