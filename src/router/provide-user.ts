@@ -7,7 +7,7 @@ const register = (router: VueRouter) =>
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             const { user, token } = store.state.users!
 
-            if (!user && token) {
+            if (!user && token && to.path !== '/logout') {
                 await store.dispatch('users/loadAuthenticatedUser')
             }
 

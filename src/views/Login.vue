@@ -6,7 +6,7 @@
             class="flex flex-col bg-white rounded shadow py-8 px-16"
             @submit.prevent="login()"
         >
-            <icon-book-open class="-mt-32"></icon-book-open>
+            <icon-book-open class="-mt-32 fill-inherit"></icon-book-open>
             <h1 class="text-2xl mb-2 font-display">Welcome back</h1>
 
             <p class="text-sm text-gray-600 w-64 mt-2 mb-1">
@@ -75,7 +75,7 @@ export default class Home extends Vue {
 
 <style scoped>
 .icon-book-open {
-    @apply fill-current text-accent;
+    @apply text-accent;
     filter: drop-shadow(0 0 0 white);
 }
 
