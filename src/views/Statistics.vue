@@ -24,6 +24,7 @@
                 <doughnut-chart
                     v-if="itemCategories.length > 0"
                     :chart-data="doughnutData"
+                    :options="doughnutOptions"
                 />
             </chart-wrapper>
         </section>
@@ -37,60 +38,52 @@ import BarChart from '@/components/charts/BarChart.vue'
 import DoughnutChart from '@/components/charts/DoughnutChart.vue'
 import { Item, Tag } from '@/models/entities'
 import { ItemType } from '@/models/types'
-// import TagsClient from '@/lib/http/TagsClient'
-
-// const tagsClient = new TagsClient()
 
 @Component({
     components: { BarChart, DoughnutChart, ChartWrapper },
 })
 export default class Statistics extends Vue {
     barOptions = {
+        legend: {
+            display: false,
+        },
+        maintainAspectRatio: false,
+        responsive: true,
         scales: {
             xAxes: [
                 {
                     fontSize: 5,
                 },
             ],
-            yAxes: [
-                {
-                    ticks: {
-                        beginAtZero: true,
-                    },
-                },
-            ],
         },
-        maintainAspectRatio: false,
-        responsive: true,
+        title: {
+            display: true,
+            text: 'Number of items a tag is assigned to',
+        },
     }
 
-    // mounted() {
-    //     console.log('mounted!')
-    //     this.tags.forEach(async (tag: Tag) => {
-    //         const tagToStore = this.assignRandomItems(tag)
-    //         tagsClient.assignItems(tagToStore, tagToStore.items)
-    //     })
-    // }
-
-    // assignRandomItems(tag: Tag) {
-    //     this.items.forEach((item: Item) => {
-    //         if (Math.random() > 0.5) {
-    //             return
-    //         }
-    //         const itemKey = { id: item.id, item_type: item.item_type }
-    //         tag.items.push(itemKey)
-    //     })
-    //     return tag
-    // }
+    doughnutOptions = {
+        legend: {
+            labels: {
+                fontSize: 12,
+            },
+            position: 'right',
+        },
+        responsive: true,
+        title: {
+            display: true,
+            text: 'Created items by item type',
+        },
+    }
 
     // Prepare sortable objects
     get tags() {
         const tagsFromStore = this.$store.state.tags
-        return this.sortDescending(tagsFromStore)
+        return this.sortTagsDescending(tagsFromStore)
     }
 
-    sortDescending(tags: Array<Tag>) {
-        // copy, otherwise you'll end up modifying vuex state stuff
+    private sortTagsDescending(tags: Array<Tag>) {
+        // copy, otherwise you'll end up modifying vuex state
         const tagsCopy = [...tags]
         return tagsCopy.sort((a: Tag, b: Tag) => {
             if (a.items.length < b.items.length) {
@@ -133,9 +126,30 @@ export default class Statistics extends Vue {
         })
 
         // TODO: map key to ItemType
-        return Object.entries(itemTypeUses).map((key, value) => {
-            return { name: key, color: '#6757f2', uses: value }
+        return Object.entries(itemTypeUses).map((entry) => {
+            const key = parseInt(entry[0], 10)
+            const itemName = ItemType[key].toLowerCase()
+            const value = entry[1]
+            return {
+                name: itemName,
+                color: this.stringToColor(itemName),
+                uses: value,
+            }
         })
+    }
+
+    // Uses string as seed to create color
+    private stringToColor(string: string) {
+        let hash = 0
+        for (let i = 0; i < string.length; i++) {
+            hash = string.charCodeAt(i) + ((hash << 5) - hash)
+        }
+        let colour = '#'
+        for (let i = 0; i < 3; i++) {
+            const value = (hash >> (i * 8)) & 0xff
+            colour += ('00' + value.toString(16)).substr(-2)
+        }
+        return colour
     }
 
     get doughnutData() {

@@ -1,6 +1,5 @@
 import AbstractHttpClient from '@/lib/http/AbstractHttpClient'
 import { Tag, Common } from '@/models/entities'
-import { ItemType } from '@/models/types'
 
 export default class TagsClient extends AbstractHttpClient {
     async fetchAllTags(): Promise<Tag[]> {
