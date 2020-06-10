@@ -16,7 +16,7 @@ export default class JournaliShell extends Vue {
 </script>
 
 <template>
-    <div class="w-screen h-screen bg-gray-200 flex flex-col">
+    <div class="h-screen bg-gray-200 flex flex-col">
         <journali-header></journali-header>
         <div class="flex flex-1">
             <journali-sidebar></journali-sidebar>

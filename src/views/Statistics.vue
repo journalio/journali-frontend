@@ -1,12 +1,14 @@
 <template>
     <div class="bg-white w-full h-full">
-        <section class="p-4">
+        <section class="px-8 py-4">
             <h1 class="text-xl">General</h1>
             <p>Total made items: {{ items.length }}</p>
         </section>
-        <section class="flex justify-center">
-            <chart-wrapper class="w-1/2 m-4 overflow-hidden">
-                <h1 class="text-xl">Most used tags</h1>
+        <section class="px-8 py-4">
+            <h1 class="text-xl">Most used tags</h1>
+            <chart-wrapper
+                class="chart-container sm:w-full lg:w-2/3 xl:w-1/2 overflow-hidden"
+            >
                 <bar-chart
                     v-if="tags.length > 0"
                     :chart-data="barData"
@@ -14,9 +16,11 @@
                 />
             </chart-wrapper>
         </section>
-        <section class="flex justify-center">
-            <chart-wrapper class="w-1/2 m-4 overflow-hidden">
-                <h1 class="text-xl">Items by type</h1>
+        <section class="px-8 py-4">
+            <h1 class="text-xl">Items by type</h1>
+            <chart-wrapper
+                class="chart-container sm:w-full lg:w-2/3 xl:w-1/2 overflow-hidden"
+            >
                 <doughnut-chart
                     v-if="itemCategories.length > 0"
                     :chart-data="doughnutData"
@@ -33,9 +37,9 @@ import BarChart from '@/components/charts/BarChart.vue'
 import DoughnutChart from '@/components/charts/DoughnutChart.vue'
 import { Item, Tag } from '@/models/entities'
 import { ItemType } from '@/models/types'
-import TagsClient from '@/lib/http/TagsClient'
+// import TagsClient from '@/lib/http/TagsClient'
 
-const tagsClient = new TagsClient()
+// const tagsClient = new TagsClient()
 
 @Component({
     components: { BarChart, DoughnutChart, ChartWrapper },
@@ -56,6 +60,7 @@ export default class Statistics extends Vue {
                 },
             ],
         },
+        maintainAspectRatio: false,
         responsive: true,
     }
 
@@ -150,3 +155,9 @@ export default class Statistics extends Vue {
     }
 }
 </script>
+
+<style scoped>
+.chart-container {
+    @apply relative m-auto;
+}
+</style>
