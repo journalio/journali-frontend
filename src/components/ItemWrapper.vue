@@ -13,6 +13,8 @@
             @delete="deleteItem"
             @show:tags="tagsShowing = $event"
             @toggle:edit-mode="editMode = !editMode"
+            @create:tag="handleCreateTag"
+            @delete:tag="handleDeleteTag"
         />
         <div v-if="editMode">
             <component
@@ -44,7 +46,7 @@ import Todo from '@/components/items/Todo.vue'
 import TagList from '@/components/TagList.vue'
 import TextInput from '@/components/TextInput.vue'
 import { isElementContainedByElementType } from '@/lib/utils'
-import { Renderable } from '@/models/entities'
+import { Renderable, Tag } from '@/models/entities'
 import { AnyDomainItem } from '@/models/types'
 import format from 'date-fns/format'
 import { Component, Emit, Prop, Vue, Watch } from 'vue-property-decorator'
@@ -76,8 +78,10 @@ export default class ItemWrapper extends Vue {
     editableItem: AnyDomainItem = { ...this.item }
 
     get tags() {
-        // TODO: get item specific tags.
-        return this.$store.state.tags
+        return this.$store.getters.getTagsByItem(
+            this.item.id,
+            this.item.item_type,
+        )
     }
 
     // keep editableItem up to date
@@ -123,6 +127,21 @@ export default class ItemWrapper extends Vue {
 
     protected set editableItemDueDate(event: string | undefined) {
         this.editableItem.due_date = event ? new Date(event) : null
+    }
+
+    protected handleCreateTag(tagName: string) {
+        this.$store.dispatch('createTag', {
+            tag_name: tagName,
+            item_id: this.item.id,
+            item_type: this.item.item_type,
+        })
+    }
+
+    protected handleDeleteTag(tag: Tag) {
+        this.$store.dispatch('deleteTag', {
+            tag,
+            item: this.item,
+        })
     }
 }
 </script>

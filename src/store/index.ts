@@ -98,6 +98,16 @@ const store = new Vuex.Store<AppState>({
             ),
         getItemsByType: (state) => (item_type: ItemType): AnyDomainItem[] =>
             state.items.filter((item) => item.item_type === item_type),
+
+        getTagByName: (state) => (id: string): Tag | undefined =>
+            state.tags.find((tag) => tag.name === id),
+        getTagsByItem: (state) => (id: Uuid, item_type: ItemType): Tag[] =>
+            state.tags.filter((tag) => {
+                const index = tag.items?.findIndex(
+                    (item) => item.id === id && item.item_type === item_type,
+                )
+                return index && index >= 0
+            }),
     },
     actions,
     modules: {

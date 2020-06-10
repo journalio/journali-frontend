@@ -8,7 +8,7 @@
             Journali
         </router-link>
         <div class="flex-1"></div>
-        <nav>
+        <nav class="flex items-center">
             <notification-tray :items="nearlyDueItems" />
             <router-link
                 class="nav-item text-gray-800 hover:text-black"
@@ -21,14 +21,14 @@
                 class="nav-item text-gray-800 hover:text-black"
                 to="/statistics"
             >
-                <icon-diary class="nav-icon mr-2" />
-                statistics
+                <icon-chart class="nav-icon mr-2" />
+                Statistics
             </router-link>
             <router-link
                 class="nav-item text-red-600 hover:text-red-700"
                 to="/logout"
             >
-                <icon-door-exit class="nav-icon mr-2" />
+                <icon-door-exit class="nav-icon mr-2 fill-inherit" />
                 Logout
             </router-link>
         </nav>
@@ -39,12 +39,19 @@
 import NotificationTray from '@/components/NotificationTray.vue'
 import { AnyDomainItem } from '@/models/types'
 import { Component, Vue } from 'vue-property-decorator'
+import IconChart from '../assets/icons/icon-chart.svg'
 import IconDiary from '../assets/icons/icon-diary.svg'
 import IconDoorExit from '../assets/icons/icon-door-exit.svg'
 import IconUser from '../assets/icons/icon-user.svg'
 
 @Component({
-    components: { NotificationTray, IconUser, IconDoorExit, IconDiary },
+    components: {
+        NotificationTray,
+        IconUser,
+        IconDoorExit,
+        IconChart,
+        IconDiary,
+    },
 })
 export default class JournaliHeader extends Vue {
     get nearlyDueItems() {

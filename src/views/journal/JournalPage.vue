@@ -6,7 +6,12 @@
         @mouseleave="dragData = null"
     >
         <div class="flex flex-row-reverse">
-            <tag-list :tags="tags" class="tag-list" />
+            <tag-list
+                :tags="tags"
+                class="tag-list"
+                @create:tag="$emit('create:tag', $event)"
+                @delete:tag="$emit('delete:tag', $event)"
+            />
         </div>
         <item-wrapper
             v-for="item of renderableItems"
@@ -40,14 +45,10 @@ type DragData = {
 })
 export default class JournalPage extends Vue {
     @Prop(Array) readonly items!: Item[]
+    @Prop(Array) readonly tags!: Tag[]
     @Ref('container') readonly container!: HTMLDivElement
 
     dragData: DragData | null = null
-
-    get tags() {
-        // TODO: get item specific tags.
-        return this.$store.state.tags
-    }
 
     get renderableItems() {
         return this.items.filter(

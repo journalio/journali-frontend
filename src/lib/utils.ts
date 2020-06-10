@@ -67,3 +67,6 @@ export const stringToColor = (string: string) => {
     }
     return color
 }
+
+export const getApiVersion = () =>
+    fetch('/api/version').then((resp) => resp.text())
