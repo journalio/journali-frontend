@@ -33,9 +33,9 @@ import BarChart from '@/components/charts/BarChart.vue'
 import DoughnutChart from '@/components/charts/DoughnutChart.vue'
 import { Item, Tag } from '@/models/entities'
 import { ItemType } from '@/models/types'
-// import TagsClient from '@/lib/http/TagsClient'
+import TagsClient from '@/lib/http/TagsClient'
 
-// const tagsClient = new TagsClient()
+const tagsClient = new TagsClient()
 
 @Component({
     components: { BarChart, DoughnutChart, ChartWrapper },
@@ -58,6 +58,25 @@ export default class Statistics extends Vue {
         },
         responsive: true,
     }
+
+    // mounted() {
+    //     console.log('mounted!')
+    //     this.tags.forEach(async (tag: Tag) => {
+    //         const tagToStore = this.assignRandomItems(tag)
+    //         tagsClient.assignItems(tagToStore, tagToStore.items)
+    //     })
+    // }
+
+    // assignRandomItems(tag: Tag) {
+    //     this.items.forEach((item: Item) => {
+    //         if (Math.random() > 0.5) {
+    //             return
+    //         }
+    //         const itemKey = { id: item.id, item_type: item.item_type }
+    //         tag.items.push(itemKey)
+    //     })
+    //     return tag
+    // }
 
     // Prepare sortable objects
     get tags() {
