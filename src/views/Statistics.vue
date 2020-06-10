@@ -38,6 +38,7 @@ import BarChart from '@/components/charts/BarChart.vue'
 import DoughnutChart from '@/components/charts/DoughnutChart.vue'
 import { Item, Tag } from '@/models/entities'
 import { ItemType } from '@/models/types'
+import { stringToColor } from '@/lib/utils'
 
 @Component({
     components: { BarChart, DoughnutChart, ChartWrapper },
@@ -85,24 +86,32 @@ export default class Statistics extends Vue {
     private sortTagsDescending(tags: Array<Tag>) {
         // copy, otherwise you'll end up modifying vuex state
         const tagsCopy = [...tags]
-        return tagsCopy.sort((a: Tag, b: Tag) => {
-            if (a.items.length < b.items.length) {
-                return 1
-            }
-            if (a.items.length > b.items.length) {
-                return -1
-            }
-            return 0
+        return tagsCopy.sort(
+            (a: Tag, b: Tag) => b.items.length - a.items.length,
+        )
+    }
+
+    get arraysOfTagData() {
+        const tagNames: string[] = []
+        const tagValues: number[] = []
+        const tagColors: string[] = []
+
+        this.tags.forEach((tag: Tag) => {
+            tagNames.push(tag.name)
+            tagValues.push(tag.items.length)
+            tagColors.push(tag.color)
         })
+
+        return { tagNames, tagValues, tagColors }
     }
 
     get barData() {
         return {
-            labels: this.tags.map((tag: Tag) => tag.name),
+            labels: this.arraysOfTagData.tagNames,
             datasets: [
                 {
-                    data: this.tags.map((tag: Tag) => tag.items.length),
-                    backgroundColor: this.tags.map((tag: Tag) => tag.color),
+                    data: this.arraysOfTagData.tagValues,
+                    backgroundColor: this.arraysOfTagData.tagColors,
                     barPercentage: 0.5,
                     barThickness: 10,
                 },
@@ -132,24 +141,10 @@ export default class Statistics extends Vue {
             const value = entry[1]
             return {
                 name: itemName,
-                color: this.stringToColor(itemName),
+                color: stringToColor(itemName),
                 uses: value,
             }
         })
-    }
-
-    // Uses string as seed to create color
-    private stringToColor(string: string) {
-        let hash = 0
-        for (let i = 0; i < string.length; i++) {
-            hash = string.charCodeAt(i) + ((hash << 5) - hash)
-        }
-        let colour = '#'
-        for (let i = 0; i < 3; i++) {
-            const value = (hash >> (i * 8)) & 0xff
-            colour += ('00' + value.toString(16)).substr(-2)
-        }
-        return colour
     }
 
     get doughnutData() {
