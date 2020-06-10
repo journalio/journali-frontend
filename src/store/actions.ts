@@ -34,6 +34,7 @@ export default {
 
         const items = await itemsClient.fetchAllItems()
         commit('itemsLoaded', items)
+        return items
     },
 
     async createItem<T = AnyDomainItem>(
