@@ -14,17 +14,15 @@ export default class DoughnutChart extends Vue {
     chartData!: Record<string, unknown>
 
     @Prop({
-        default: () => {
-            return {
-                legend: {
-                    labels: {
-                        fontSize: 12,
-                    },
-                    position: 'right',
+        default: () => ({
+            legend: {
+                labels: {
+                    fontSize: 12,
                 },
-                responsive: true,
-            }
-        },
+                position: 'right',
+            },
+            responsive: true,
+        }),
     })
     options!: Record<string, unknown>
 
