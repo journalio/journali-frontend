@@ -11,3 +11,7 @@
 .fill-inherit > .secondary {
     fill: currentColor;
 }
+
+.fill-inherit > .primary {
+    fill: currentColor;
+}
