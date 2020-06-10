@@ -6,6 +6,11 @@ type UnMappedTag = Tag & {
     items: [Uuid, ItemType][]
 }
 
+type NewTag = {
+    name: string
+    color: string
+}
+
 export default class TagsClient extends AbstractHttpClient {
     async fetchAllTags(): Promise<Tag[]> {
         // Uncomment this when /api/tags is implemented
@@ -20,7 +25,7 @@ export default class TagsClient extends AbstractHttpClient {
         )
     }
 
-    createTag(tag: Tag): Promise<Tag> {
+    createTag(tag: NewTag): Promise<Tag> {
         return this.post<Tag>('/api/tags', tag)
     }
 
