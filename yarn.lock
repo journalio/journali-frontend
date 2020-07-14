@@ -14033,10 +14033,10 @@ vue-class-component@^7.2.3:
   resolved "https://registry.yarnpkg.com/vue-class-component/-/vue-class-component-7.2.3.tgz#a5b1abd53513a72ad51098752e2dedd499807cca"
   integrity sha512-oEqYpXKaFN+TaXU+mRLEx8dX0ah85aAJEe61mpdoUrq0Bhe/6sWhyZX1JjMQLhVsHAkncyhedhmCdDVSasUtDw==
 
-vue-cli-plugin-storybook@~1.2.2:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/vue-cli-plugin-storybook/-/vue-cli-plugin-storybook-1.2.2.tgz#dad9d628fd58712981b44d370eaa4881deffdeec"
-  integrity sha512-dLwvDPrUhv/56YB/BmPxuCCW2VG0ZJ2EFrAcbaGIb0OZRz6s4rYqkZtSF6giMQEAaLr0L69+R3BtD7XGPfc0cQ==
+vue-cli-plugin-storybook@~1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/vue-cli-plugin-storybook/-/vue-cli-plugin-storybook-1.3.0.tgz#5a4e5f1d297605f319dc5d10528072dc637c7598"
+  integrity sha512-dVvfB3f6gc+cvwPq8kxHBJ5b6BXS6WY0tjFUPrF3yE4nkGOxIjBQHZ8mMP7I/qj0wl/N2uyfENPTnC1Pde8nyw==
   dependencies:
     chalk "^3.0.0"
     commander "^2.19.0"
