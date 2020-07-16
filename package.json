@@ -16,7 +16,7 @@
         "chart.js": "^2.9.3",
         "core-js": "^3.6.4",
         "date-fns": "^2.14.0",
-        "tailwindcss": "^1.4.6",
+        "tailwindcss": "^1.5.1",
         "vue": "^2.6.11",
         "vue-chartjs": "^3.5.0",
         "vue-class-component": "^7.2.3",
