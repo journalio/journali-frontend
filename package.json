@@ -29,7 +29,7 @@
         "@storybook/addon-docs": ">=5.3.19",
         "@storybook/addon-knobs": ">=5.3.19",
         "@storybook/addon-links": ">=5.3.19",
-        "@storybook/addon-notes": ">=5.3.19",
+        "@storybook/addon-notes": ">=5.3.20",
         "@storybook/vue": ">=5.3.19",
         "@types/chart.js": "^2.9.24",
         "@types/jest": "^26.0.10",
