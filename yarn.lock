@@ -14277,7 +14277,7 @@ table@^5.2.3:
     slice-ansi "^2.1.0"
     string-width "^3.0.0"
 
-tailwindcss@^1.6.2, tailwindcss@^1.8.10:
+tailwindcss@^1.8.10, tailwindcss@^1.8.9:
   version "1.8.10"
   resolved "https://registry.yarnpkg.com/tailwindcss/-/tailwindcss-1.8.10.tgz#945ef151c401c04a1c95e6a6bc747387a8d1b9dc"
   integrity sha512-7QkERG/cWCzsuMqHMwjOaLMVixOGLNBiXsrkssxlE1aWfkxVbGqiuMokR2162xRyaH2mBIHKxmlf1qb3DvIPqw==
@@ -15182,13 +15182,13 @@ vue-cli-plugin-storybook@~1.3.0:
     commander "^2.19.0"
     semver "^7.1.1"
 
-vue-cli-plugin-tailwind@~1.4.2:
-  version "1.4.2"
-  resolved "https://registry.yarnpkg.com/vue-cli-plugin-tailwind/-/vue-cli-plugin-tailwind-1.4.2.tgz#29994ab9c2e41dc75d7dcc9aa19a20e4902a7a82"
-  integrity sha512-OtCNMrckoC6KaJ7lgVK4ZNrHEqondRpCJTQ5Lr1cTvafiSQJmal3Om5s9MTjxadX1TniHg/GR1OLJa1vDcqtog==
+vue-cli-plugin-tailwind@~1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/vue-cli-plugin-tailwind/-/vue-cli-plugin-tailwind-1.5.0.tgz#d32eced1eb77ce9946ee861f1883d5c9ba3bef88"
+  integrity sha512-uLzAhudKcioOerL/n/17YDonH9kHNJy1xrSYWIdIQUwq7804Rj/oIufWTDcbdtib0kQ7TIPAwEM0xo+XqnPwIg==
   dependencies:
     "@fullhuman/postcss-purgecss" "^2.3.0"
-    tailwindcss "^1.6.2"
+    tailwindcss "^1.8.9"
 
 vue-docgen-api@^4.1.0:
   version "4.24.0"
