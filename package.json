@@ -27,7 +27,7 @@
     "devDependencies": {
         "@storybook/addon-actions": ">=6.1.19",
         "@storybook/addon-docs": ">=5.3.19",
-        "@storybook/addon-knobs": ">=6.1.18",
+        "@storybook/addon-knobs": ">=6.1.19",
         "@storybook/addon-links": ">=6.1.19",
         "@storybook/addon-notes": ">=5.3.21",
         "@storybook/vue": ">=5.3.19",
